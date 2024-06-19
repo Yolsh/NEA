@@ -9,21 +9,37 @@ namespace Prototype
     internal class Program
     {
         public static Random rand = new Random();
+        public static Garage MyGarage = new Garage(20, 10);
         static void Main(string[] args)
         {
-            TestDraw();
+            TestPlace();
             Console.ReadKey();
         }
 
-        static void TestDraw()
+        static void TestPlace()
         {
-            Garage MyGarage = new Garage(20, 10);
-            MyGarage
-                .AddBoxes("bob", 2.2, rand.Next(1, 8), rand.Next(1, 4), rand.Next(0, 20), rand.Next(0, 10))
-                .AddBoxes("jeff", 2.2, rand.Next(1, 8), rand.Next(1, 4), rand.Next(0, 20), rand.Next(0, 10))
-                .AddBoxes("ed", 2.2, rand.Next(1, 8), rand.Next(1, 4), rand.Next(0, 20), rand.Next(0, 10))
-                .AddBoxes("Joe", 2.2, rand.Next(1, 8), rand.Next(1, 4), rand.Next(0, 20), rand.Next(0, 10));
-            MyGarage.Draw();
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Give the box a name");
+                string name = Console.ReadLine();
+                Console.WriteLine("What is the boxes weight");
+                double weight = double.Parse(Console.ReadLine());
+                Console.WriteLine("Whats its Length");
+                int Length = int.Parse(Console.ReadLine());
+                Console.WriteLine("Whats its Width");
+                int Width = int.Parse(Console.ReadLine());
+                Console.WriteLine("X Coordinate");
+                int x = int.Parse(Console.ReadLine());
+                Console.WriteLine("Y Coordinate");
+                int y = int.Parse(Console.ReadLine());
+
+                MyGarage
+                .AddBoxes(name, weight, Length, Width, x, y);
+                Console.Clear();
+                MyGarage.Draw();
+                Console.ReadKey();
+            }
         }
     }
 }

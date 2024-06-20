@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Prototype
 {
-    public abstract class BaseBox
+    public  class BaseBox
     {
         public struct Dimensions
         {
@@ -17,7 +17,14 @@ namespace Prototype
 
         public Dimensions Size;
         public Dimensions Position;
-        public Color col;
+
+
+        public BaseBox(int inX, int inY)
+        {
+            this.Size = new Dimensions();
+            Size.X = inX;
+            Size.Y = inY;
+        }
 
         public void SetPosition(int inX, int inY)
         {

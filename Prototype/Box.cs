@@ -13,14 +13,12 @@ namespace Prototype
         public string Name;
         private double Weight;
         private List<string> Contents;
-        
-        public Box(string inBoxName, double inWeight, int inX, int inY, Color inCol) 
+        public Color col;
+
+        public Box(string inBoxName, double inWeight, int inX, int inY, Color inCol) : base(inX, inY)
         {
             Name = inBoxName;
             Weight = inWeight;
-            this.Size = new Dimensions();
-            Size.X = inX;
-            Size.Y = inY;
             col = inCol;
         }
     }

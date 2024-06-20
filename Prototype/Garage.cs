@@ -13,7 +13,7 @@ namespace Prototype
     public class Garage
     {
         private Random rand;
-        private Box[,] floorplan;
+        private BaseBox[,] floorplan;
         private int Width;
         private int Length;
         private int bufferWidth;
@@ -23,7 +23,7 @@ namespace Prototype
             Width = inWidth;
             Length = inLength;
             bufferWidth = inBufferWidth;
-            floorplan = new Box[Width, Length];
+            floorplan = new BaseBox[Width, Length];
             rand = new Random();
         }
 
@@ -44,14 +44,12 @@ namespace Prototype
             b.Position.X = PosX;
             b.Position.Y = PosY;
 
-            for (int i = PosY; i < PosY + SizeY; i++)
+            for (int i = PosY - bufferWidth; i < PosY + SizeY + 2*bufferWidth; i++)
             {
-                for (int j = PosX; j < PosX + SizeX; j++)
+                for (int j = PosX - bufferWidth; j < PosX + SizeX + 2*bufferWidth; j++)
                 {
-                    if (i < floorplan.GetLength(0) && j < floorplan.GetLength(1))
-                    {
-                        floorplan[i, j] = b;
-                    }
+                    if (i >= PosX && i <= PosX + SizeX && j >= PosY && j <= PosY + SizeY) floorplan[i, j] = b;
+                    else floorplan[i, j] = new BoxBuffer(b, bufferWidth);
                 }
             }
 
@@ -100,8 +98,11 @@ namespace Prototype
                     Console.SetCursorPosition(x*2+1, y+1);
                     if (floorplan[y, x] != null)
                     {
-                        Box b = floorplan[y, x];
-                        Console.Write((x == b.Position.X && y == b.Position.Y ? b.Name : "\u2588\u2588").Pastel(b.col));
+                        BaseBox b = floorplan[y, x];
+                        if (b.Equals(typeof(Box)))
+                        {
+                            Console.Write((x == b.Position.X && y == b.Position.Y ? b.Name : "\u2588\u2588").Pastel(b.col));
+                        }
                     }
                     else Console.Write("  ");
                 }

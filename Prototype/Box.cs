@@ -18,6 +18,7 @@ namespace Prototype
 
         public string Name;
         private double Weight;
+        private int BufferWidth;
         private List<string> Contents;
         public Dimensions Size;
         public Dimensions Position;

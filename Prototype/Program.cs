@@ -9,9 +9,11 @@ namespace Prototype
     internal class Program
     {
         public static Random rand = new Random();
-        public static Garage MyGarage = new Garage(20, 10);
+        public static Garage MyGarage;
         static void Main(string[] args)
         {
+            Console.WriteLine("Enter a minimum Hallway Width");
+            MyGarage = new Garage(20, 10, int.Parse(Console.ReadLine()));
             TestPlace();
             Console.ReadKey();
         }
@@ -37,7 +39,7 @@ namespace Prototype
                 MyGarage
                 .AddBoxes(name, weight, Length, Width, x, y);
                 Console.Clear();
-                MyGarage.Draw();
+                MyGarage.DrawWithArray();
                 Console.ReadKey();
             }
         }

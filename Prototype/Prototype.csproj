@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Box.cs" />
     <Compile Include="Garage.cs" />
+    <Compile Include="IncorrectPlacementException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

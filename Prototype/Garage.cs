@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using Pastel;
+using System.Drawing.Configuration;
 
 namespace Prototype
 {
@@ -16,11 +17,13 @@ namespace Prototype
         private int[,] floorplan;
         private int Width;
         private int Length;
+        private int bufferWidth;
 
-        public Garage(int inLength, int inWidth)
+        public Garage(int inLength, int inWidth, int inBufferWidth)
         {
             Width = inWidth;
             Length = inLength;
+            bufferWidth = inBufferWidth;
             Boxes = new List<Box>();
             floorplan = new int[Width, Length];
             rand = new Random();
@@ -37,13 +40,15 @@ namespace Prototype
         {
             this.AddBoxes(name, weight, SizeX, SizeY);
 
+            if (PosX <= 0 || PosX + SizeX >= Length || PosY <= 0 || PosY + SizeY >= Width) throw new IncorrectPlacementException();
+
             for (int i = PosY; i < PosY + SizeY; i++)
             {
                 for (int j = PosX; j < PosX + SizeX; j++)
                 {
                     if (i < floorplan.GetLength(0) && j < floorplan.GetLength(1))
-                    { 
-                        floorplan[i, j] = 1; 
+                    {
+                        floorplan[i, j] = Boxes.Count();
                     }
                 }
             }
@@ -52,37 +57,75 @@ namespace Prototype
 
             return this;
         }
-        public void Draw()
+
+        private void DrawPerimeter(bool axis)
         {
             //Draw Garage primeter.
-            for (int i = 0; i < Length+1; i++)
+            for (int i = 0; i < Length + 1; i++)
             {
                 Console.Write("--");
             }
-            for (int y = 1; y < floorplan.GetLength(0)+1; y++)
+            for (int y = 1; y < floorplan.GetLength(0) + 1; y++)
             {
                 Console.SetCursorPosition(0, y);
                 Console.Write("|");
-                Console.SetCursorPosition(Length*2+1, y);
+                Console.SetCursorPosition(Length * 2 + 1, y);
                 Console.Write("|");
             }
             Console.SetCursorPosition(0, Width + 1);
-            for (int i = 0; i < Length+1; i++)
+            if (axis)
             {
-                Console.Write(i /10 != 0 ? $"{i}" : $"{i}{i}");
+                for (int i = 0; i < Length + 1; i++)
+                {
+                    Console.Write(i / 10 != 0 ? $"{i}" : i == 0 ? "0" : $"{i}{i}");
+                }
             }
+            else
+            {
+                for (int i = 0; i < Length + 1; i++)
+                {
+                    Console.Write("--");
+                }
+            }
+        }
+
+        public void Draw()
+        {
+            DrawPerimeter(true);
 
             foreach (Box b in Boxes)
+            { 
+                DrawBox(b);
+            }
+        }
+
+        public void DrawBox(Box b)
+        {
+            int layer = 0;
+            for (int i = b.Position.Y + 1 - bufferWidth; i < b.Position.Y + b.Size.Y + 1 + bufferWidth; i++)
             {
-                int layer = 0;
-                for (int i = b.Position.Y+1; i < b.Position.Y + b.Size.Y; i++)
+                Console.SetCursorPosition(b.Position.X * 2, b.Position.Y + 1 + layer);
+                for (int j = b.Position.X + 1-bufferWidth; j < b.Position.X + b.Size.X + 1 + bufferWidth; j++)
                 {
-                    Console.SetCursorPosition(b.Position.X+1, b.Position.Y+1 + layer);
-                    for (int j = b.Position.X+1; j < b.Position.X + b.Size.X; j++)
-                    {
-                        Console.Write((layer == 0 && j == b.Position.X + 1 ? $"{b.Position.X}{b.Position.Y}" : "\u2588\u2588").Pastel(b.col));
-                    }
-                    layer++;
+                    Console.Write(i == b.Position.Y + 1 - bufferWidth || i == b.Position.Y + b.Size.Y + bufferWidth ||
+                        j == b.Position.X + 1 - bufferWidth  || j == b.Position.X + b.Size.X + bufferWidth ? "\u2588\u2588".Pastel("#FFE5B4") : 
+                        (i == b.Position.Y+1 && j == b.Position.X + 1 ? $"{b.Position.X}{b.Position.Y}" : "\u2588\u2588").Pastel(b.col));
+                }
+                layer++;
+            }
+        }
+
+        public void DrawWithArray()
+        {
+            DrawPerimeter(false);
+
+            for (int y = 1; y < Width+1; y++)
+            {
+                for (int x = 1; x < Length+1; x++)
+                {
+                    Console.SetCursorPosition(x, y);
+                    int i = floorplan[y - 1, x - 1];
+                    Console.Write(i / 10 != 0 ? $"{i}" : $"0{i}");
                 }
             }
         }

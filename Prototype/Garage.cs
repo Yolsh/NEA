@@ -13,8 +13,7 @@ namespace Prototype
     public class Garage
     {
         private Random rand;
-        private List<Box> Boxes;
-        private int[,] floorplan;
+        private Box[,] floorplan;
         private int Width;
         private int Length;
         private int bufferWidth;
@@ -24,23 +23,26 @@ namespace Prototype
             Width = inWidth;
             Length = inLength;
             bufferWidth = inBufferWidth;
-            Boxes = new List<Box>();
-            floorplan = new int[Width, Length];
+            floorplan = new Box[Width, Length];
             rand = new Random();
         }
 
-        public Garage AddBoxes(string name, double weight, int x, int y)
+        public Box AddBoxes(string name, double weight, int x, int y)
         {
             Box NewBox = new Box(name, weight, x, y, Color.FromArgb(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256)));
-            Boxes.Add(NewBox);
-            return this;
+            //this is the bit where we add a Queue. for now it just creates a box.
+            return NewBox;
         }
 
         public Garage AddBoxes(string name, double weight, int SizeX, int SizeY, int PosX, int PosY)
         {
-            this.AddBoxes(name, weight, SizeX, SizeY);
+            Box b = this.AddBoxes(name, weight, SizeX, SizeY);
 
-            if (PosX <= 0 || PosX + SizeX >= Length || PosY <= 0 || PosY + SizeY >= Width) throw new IncorrectPlacementException();
+            if (PosX <= 1 || PosX + SizeX >= Length || PosY <= 1 || PosY + SizeY >= Width) throw new IncorrectPlacementException();
+            PosX--;
+            PosY--;
+            b.Position.X = PosX;
+            b.Position.Y = PosY;
 
             for (int i = PosY; i < PosY + SizeY; i++)
             {
@@ -48,12 +50,10 @@ namespace Prototype
                 {
                     if (i < floorplan.GetLength(0) && j < floorplan.GetLength(1))
                     {
-                        floorplan[i, j] = Boxes.Count();
+                        floorplan[i, j] = b;
                     }
                 }
             }
-
-            Boxes.Last().SetPosition(PosX, PosY);
 
             return this;
         }
@@ -89,43 +89,21 @@ namespace Prototype
             }
         }
 
-        public void Draw()
-        {
-            DrawPerimeter(true);
-
-            foreach (Box b in Boxes)
-            { 
-                DrawBox(b);
-            }
-        }
-
-        public void DrawBox(Box b)
-        {
-            int layer = 0;
-            for (int i = b.Position.Y + 1 - bufferWidth; i < b.Position.Y + b.Size.Y + 1 + bufferWidth; i++)
-            {
-                Console.SetCursorPosition(b.Position.X * 2, b.Position.Y + 1 + layer);
-                for (int j = b.Position.X + 1-bufferWidth; j < b.Position.X + b.Size.X + 1 + bufferWidth; j++)
-                {
-                    Console.Write(i == b.Position.Y + 1 - bufferWidth || i == b.Position.Y + b.Size.Y + bufferWidth ||
-                        j == b.Position.X + 1 - bufferWidth  || j == b.Position.X + b.Size.X + bufferWidth ? "\u2588\u2588".Pastel("#FFE5B4") : 
-                        (i == b.Position.Y+1 && j == b.Position.X + 1 ? $"{b.Position.X}{b.Position.Y}" : "\u2588\u2588").Pastel(b.col));
-                }
-                layer++;
-            }
-        }
-
         public void DrawWithArray()
         {
             DrawPerimeter(false);
 
-            for (int y = 1; y < Width+1; y++)
+            for (int y = 0; y < Width; y++)
             {
-                for (int x = 1; x < Length+1; x++)
+                for (int x = 0; x < Length; x++)
                 {
-                    Console.SetCursorPosition(x, y);
-                    int i = floorplan[y - 1, x - 1];
-                    Console.Write(i / 10 != 0 ? $"{i}" : $"0{i}");
+                    Console.SetCursorPosition(x*2+1, y+1);
+                    if (floorplan[y, x] != null)
+                    {
+                        Box b = floorplan[y, x];
+                        Console.Write((x == b.Position.X && y == b.Position.Y ? b.Name : "\u2588\u2588").Pastel(b.col));
+                    }
+                    else Console.Write("  ");
                 }
             }
         }

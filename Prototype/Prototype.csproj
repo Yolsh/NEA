@@ -70,6 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Door.cs" />
+    <Compile Include="Save.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="Box.cs" />
     <Compile Include="BoxBuffer.cs" />

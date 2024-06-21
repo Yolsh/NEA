@@ -32,7 +32,6 @@ namespace Prototype
                     if (movable.Position.Y + 2 * movable.BufferWidth +1 == Width) movable.CollapseBottom();
                     if (movable.Position.X - movable.BufferWidth == 0) movable.CollapseLeft();
                     if (movable.Position.X + 2* movable.BufferWidth + 1== Length) movable.CollapseRight();
-                    //check against floorplan if the buffer can be shrunk.
                 }
             }
         }

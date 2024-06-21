@@ -46,7 +46,7 @@ namespace Prototype
             Boxes.Add(new BoxBuffer(b, bufferWidth));
             Boxes.Add(b);
             UpdateFloor();
-            BoxBuffer.CollapseBuffers(Boxes, Length, Width);
+            BoxBuffer.CollapseBuffers(Boxes, floorplan, Length, Width);
             UpdateFloor();
             return this;
         }
@@ -109,8 +109,8 @@ namespace Prototype
                 {
                     for (int x = S.Position.X; x < S.Position.X + S.Size.X; x++)
                     {
-                        if (S is Box) NewFloorplan[y, x] = 2;
-                        else if (S is BoxBuffer) NewFloorplan[y, x] = 1;
+                        if (S is BoxBuffer) NewFloorplan[y, x] = 1;
+                        else if (S is Box) NewFloorplan[y, x] = 2;
                     }
                 }
             }

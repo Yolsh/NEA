@@ -9,9 +9,11 @@ namespace Prototype
     public class Door
     {
         private int radius;
-        public Door()
+        public Door(int Length)
         {
-            
+            radius = Length;
         }
+
+
     }
 }

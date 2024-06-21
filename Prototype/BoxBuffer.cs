@@ -21,9 +21,9 @@ namespace Prototype
             BufferWidth = Width;
         }
 
-        public static void CollapseBuffers(List<Square> floorplan, int Length, int Width)
+        public static void CollapseBuffers(List<Square> Boxes, int[,] floorplan, int Length, int Width)
         {
-            foreach (Square S in floorplan)
+            foreach (Square S in Boxes)
             {
                 if (S is BoxBuffer)
                 {
@@ -32,6 +32,7 @@ namespace Prototype
                     if (movable.Position.Y + 2 * movable.BufferWidth +1 == Width) movable.CollapseBottom();
                     if (movable.Position.X - movable.BufferWidth == 0) movable.CollapseLeft();
                     if (movable.Position.X + 2* movable.BufferWidth + 1== Length) movable.CollapseRight();
+                    //check against floorplan if the buffer can be shrunk.
                 }
             }
         }

@@ -13,7 +13,8 @@ namespace Prototype
     public class Garage
     {
         private Random rand;
-        private List<Square> floor;
+        private List<Square> Boxes;
+        private int[,] floorplan;
         private int Width;
         private int Length;
         private int bufferWidth;
@@ -23,7 +24,8 @@ namespace Prototype
             Width = inWidth;
             Length = inLength;
             bufferWidth = inBufferWidth;
-            floor = new List<Square>();
+            Boxes = new List<Square>();
+            floorplan = new int[Width, Length];
             rand = new Random();
         }
 
@@ -41,9 +43,11 @@ namespace Prototype
             if (PosX <= 1 || PosX + SizeX > Length || PosY <= 1 || PosY + SizeY > Width) throw new IncorrectPlacementException();
             b.Position.X = PosX;
             b.Position.Y = PosY;
-            floor.Add(new BoxBuffer(b, bufferWidth));
-            floor.Add(b);
-            BoxBuffer.CollapseBuffers(floor, Length, Width);
+            Boxes.Add(new BoxBuffer(b, bufferWidth));
+            Boxes.Add(b);
+            UpdateFloor();
+            BoxBuffer.CollapseBuffers(Boxes, Length, Width);
+            UpdateFloor();
             return this;
         }
 
@@ -83,7 +87,7 @@ namespace Prototype
             Console.Clear();
             DrawPerimeter(true);
 
-            foreach (Square b in floor)
+            foreach (Square b in Boxes)
             {
                 if (b is Box)
                 {
@@ -94,6 +98,23 @@ namespace Prototype
                     (b as BoxBuffer).Draw();
                 }
             }
+        }
+
+        private void UpdateFloor()
+        {
+            int[,] NewFloorplan = new int[Length, Width];
+            foreach (Square S in Boxes)
+            {
+                for (int y = S.Position.Y; y < S.Position.Y + S.Size.Y; y++)
+                {
+                    for (int x = S.Position.X; x < S.Position.X + S.Size.X; x++)
+                    {
+                        if (S is Box) NewFloorplan[y, x] = 2;
+                        else if (S is BoxBuffer) NewFloorplan[y, x] = 1;
+                    }
+                }
+            }
+            floorplan = NewFloorplan;
         }
     }
 }

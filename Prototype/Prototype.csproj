@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseBox.cs" />
+    <Compile Include="Square.cs" />
     <Compile Include="Box.cs" />
     <Compile Include="BoxBuffer.cs" />
     <Compile Include="Garage.cs" />

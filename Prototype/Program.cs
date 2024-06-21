@@ -39,7 +39,7 @@ namespace Prototype
                 MyGarage
                 .AddBoxes(name, weight, Length, Width, x, y);
                 Console.Clear();
-                MyGarage.DrawWithArray();
+                MyGarage.Draw();
                 Console.ReadKey();
             }
         }

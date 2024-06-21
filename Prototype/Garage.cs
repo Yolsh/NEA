@@ -13,7 +13,7 @@ namespace Prototype
     public class Garage
     {
         private Random rand;
-        private BaseBox[,] floorplan;
+        private List<Square> floor;
         private int Width;
         private int Length;
         private int bufferWidth;
@@ -23,7 +23,7 @@ namespace Prototype
             Width = inWidth;
             Length = inLength;
             bufferWidth = inBufferWidth;
-            floorplan = new BaseBox[Width, Length];
+            floor = new List<Square>();
             rand = new Random();
         }
 
@@ -38,21 +38,12 @@ namespace Prototype
         {
             Box b = this.AddBoxes(name, weight, SizeX, SizeY);
 
-            if (PosX <= 1 || PosX + SizeX >= Length || PosY <= 1 || PosY + SizeY >= Width) throw new IncorrectPlacementException();
-            PosX--;
-            PosY--;
+            if (PosX <= 1 || PosX + SizeX > Length || PosY <= 1 || PosY + SizeY > Width) throw new IncorrectPlacementException();
             b.Position.X = PosX;
             b.Position.Y = PosY;
-
-            for (int i = PosY - bufferWidth; i < PosY + SizeY + 2*bufferWidth; i++)
-            {
-                for (int j = PosX - bufferWidth; j < PosX + SizeX + 2*bufferWidth; j++)
-                {
-                    if (i >= PosX && i <= PosX + SizeX && j >= PosY && j <= PosY + SizeY) floorplan[i, j] = b;
-                    else floorplan[i, j] = new BoxBuffer(b, bufferWidth);
-                }
-            }
-
+            floor.Add(new BoxBuffer(b, bufferWidth));
+            floor.Add(b);
+            BoxBuffer.CollapseBuffers(floor, Length, Width);
             return this;
         }
 
@@ -63,7 +54,7 @@ namespace Prototype
             {
                 Console.Write("--");
             }
-            for (int y = 1; y < floorplan.GetLength(0) + 1; y++)
+            for (int y = 1; y < Width + 1; y++)
             {
                 Console.SetCursorPosition(0, y);
                 Console.Write("|");
@@ -75,7 +66,7 @@ namespace Prototype
             {
                 for (int i = 0; i < Length + 1; i++)
                 {
-                    Console.Write(i / 10 != 0 ? $"{i}" : i == 0 ? "0" : $"{i}{i}");
+                    Console.Write(i / 10 != 0 ? $"{i}" : i == 0 ? "0" : $"0{i}");
                 }
             }
             else
@@ -87,24 +78,20 @@ namespace Prototype
             }
         }
 
-        public void DrawWithArray()
+        public void Draw()
         {
-            DrawPerimeter(false);
+            Console.Clear();
+            DrawPerimeter(true);
 
-            for (int y = 0; y < Width; y++)
+            foreach (Square b in floor)
             {
-                for (int x = 0; x < Length; x++)
+                if (b is Box)
                 {
-                    Console.SetCursorPosition(x*2+1, y+1);
-                    if (floorplan[y, x] != null)
-                    {
-                        BaseBox b = floorplan[y, x];
-                        if (b.Equals(typeof(Box)))
-                        {
-                            Console.Write((x == b.Position.X && y == b.Position.Y ? b.Name : "\u2588\u2588").Pastel(b.col));
-                        }
-                    }
-                    else Console.Write("  ");
+                    (b as Box).Draw();
+                }
+                else if (b is BoxBuffer)
+                {
+                    (b as BoxBuffer).Draw();
                 }
             }
         }

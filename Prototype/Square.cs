@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Prototype
 {
-    public  class BaseBox
+    public  class Square
     {
         public struct Dimensions
         {
@@ -19,7 +20,7 @@ namespace Prototype
         public Dimensions Position;
 
 
-        public BaseBox(int inX, int inY)
+        public Square(int inX, int inY)
         {
             this.Size = new Dimensions();
             Size.X = inX;

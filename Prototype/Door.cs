@@ -8,10 +8,15 @@ namespace Prototype
 {
     public class Door
     {
-        private int radius;
-        public Door()
+        public int radius;
+        public int arc;
+        public Square.Dimensions location;
+        public Door(int radius, int arc, int x, int y)
         {
-            
+            if (arc < 90) throw new IncorrectPlacementException("door doesnt open enough");
+            this.radius = radius;
+            this.arc = arc;
+            this.location = Square.DimCreate(x, y);
         }
     }
 }

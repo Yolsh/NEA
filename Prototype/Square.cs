@@ -33,5 +33,13 @@ namespace Prototype
             Position.X = inX;
             Position.Y = inY;
         }
+
+        public static Dimensions DimCreate(int x, int y)
+        {
+            Dimensions dim = new Dimensions();
+            dim.X = x;
+            dim.Y = y;
+            return dim;
+        }
     }
 }

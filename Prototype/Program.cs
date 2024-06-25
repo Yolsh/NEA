@@ -13,7 +13,7 @@ namespace Prototype
         static void Main(string[] args)
         {
             Console.WriteLine("Enter a minimum Hallway Width");
-            MyGarage = new Garage(20, 10, int.Parse(Console.ReadLine()));
+            MyGarage = new Garage(20, 10, int.Parse(Console.ReadLine()), 2, 90, 0, 0);
             TestPlace();
             Console.ReadKey();
         }
@@ -39,6 +39,9 @@ namespace Prototype
                 MyGarage
                 .AddBoxes(name, weight, Length, Width, x, y);
                 Console.Clear();
+                MyGarage.Draw();
+                Console.ReadKey();
+                MyGarage.Organise();
                 MyGarage.Draw();
                 Console.ReadKey();
             }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using Pastel;
 using System.Drawing.Configuration;
+using System.Security.Cryptography.X509Certificates;
+using System.Runtime.InteropServices;
 
 namespace Prototype
 {
@@ -14,12 +16,13 @@ namespace Prototype
     {
         private Random rand;
         private List<Square> Boxes;
+        private List<Door> doors;
         private int[,] floorplan;
         private int Width;
         private int Length;
         private int bufferWidth;
 
-        public Garage(int inLength, int inWidth, int inBufferWidth)
+        public Garage(int inLength, int inWidth, int inBufferWidth, int rad, int arc, int x, int y)
         {
             Width = inWidth;
             Length = inLength;
@@ -27,6 +30,7 @@ namespace Prototype
             Boxes = new List<Square>();
             floorplan = new int[Width, Length];
             rand = new Random();
+            doors = new List<Door>{new Door(rad, arc, x, y)};
         }
 
         public Box AddBoxes(string name, double weight, int x, int y)
@@ -100,6 +104,20 @@ namespace Prototype
             }
         }
 
+        public void Organise()
+        {
+            SortNode root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1)); //create to nearest door later
+            foreach (Square S in Boxes)
+            {
+                if (S is BoxBuffer)
+                {
+                    SortNode.AddBox(S as BoxBuffer, root);
+                }
+            }
+            SortNode.CorrectPositions(root);
+            BoxBuffer.CollapseBuffers(Boxes, floorplan, Length, Width);
+        }
+        
         private void UpdateFloor()
         {
             int[,] NewFloorplan = new int[Length, Width];

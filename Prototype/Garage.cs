@@ -49,8 +49,9 @@ namespace Prototype
             b.Position.Y = PosY;
             Boxes.Add(new BoxBuffer(b, bufferWidth));
             Boxes.Add(b);
+            BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
             UpdateFloor();
-            BoxBuffer.CollapseBuffers(Boxes, floorplan, Length, Width);
+            //BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
             UpdateFloor();
             return this;
         }
@@ -104,8 +105,23 @@ namespace Prototype
             }
         }
 
+        public void DrawFloorPlan()
+        {
+            Console.Clear();
+            DrawPerimeter(true);
+            for (int y = 0; y < Width; y++)
+            {
+                for (int x = 0; x < Length; x++)
+                {
+                    Console.SetCursorPosition(x*2+1, y+1);
+                    Console.Write($"{floorplan[y, x]}{floorplan[y,x]}");
+                }
+            }
+        }
+
         public void Organise()
         {
+            BoxBuffer.ResetBuffers(Boxes);
             SortNode root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1)); //create to nearest door later
             foreach (Square S in Boxes)
             {
@@ -115,17 +131,22 @@ namespace Prototype
                 }
             }
             SortNode.CorrectPositions(root);
-            BoxBuffer.CollapseBuffers(Boxes, floorplan, Length, Width);
+            Draw();
+            Console.ReadKey();
+            BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
+            UpdateFloor();
+            //BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
+            UpdateFloor();
         }
         
-        private void UpdateFloor()
+        public void UpdateFloor()
         {
-            int[,] NewFloorplan = new int[Length, Width];
+            int[,] NewFloorplan = new int[Width, Length];
             foreach (Square S in Boxes)
             {
-                for (int y = S.Position.Y; y < S.Position.Y + S.Size.Y; y++)
+                for (int y = S.Position.Y-1; y < S.Position.Y + S.Size.Y-1; y++)
                 {
-                    for (int x = S.Position.X; x < S.Position.X + S.Size.X; x++)
+                    for (int x = S.Position.X-1; x < S.Position.X + S.Size.X-1; x++)
                     {
                         if (S is BoxBuffer) NewFloorplan[y, x] = 1;
                         else if (S is Box) NewFloorplan[y, x] = 2;

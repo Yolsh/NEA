@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Prototype
 {
-    public  class Square
+    public class Square
     {
         public struct Dimensions
         {

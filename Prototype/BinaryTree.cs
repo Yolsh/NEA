@@ -14,12 +14,14 @@ namespace Prototype
         public BoxBuffer b;
         public Square.Dimensions Position;
         public Square.Dimensions Size;
+        public bool lineType; //true is vertical false is horizontal
 
-        public SortNode(Square.Dimensions size, Square.Dimensions location)
+        public SortNode(Square.Dimensions size, Square.Dimensions location, bool lineType = false)
         {
             this.Size = size;
             this.Area = Size.X * Size.Y;
             Position = location;
+            this.lineType = lineType;
         }
 
         public static void AddBox(BoxBuffer b, SortNode root)
@@ -28,11 +30,11 @@ namespace Prototype
             if (root.b is null) //randomly pick up or down cuts later
             {
                 root.b = b;
-                root.Left = new SortNode(Square.DimCreate(root.Size.X - b.Size.X, b.Size.Y), Square.DimCreate(root.Position.X + b.Size.X, root.Position.Y));
-                root.Right = new SortNode(Square.DimCreate(root.Size.X, root.Size.Y - b.Size.Y), Square.DimCreate(root.Position.X, root.Position.Y + b.Size.Y));
+                root.Left = new SortNode(Square.DimCreate(root.Size.X - b.Size.X, b.Size.Y), Square.DimCreate(root.Position.X + b.Size.X, root.Position.Y), !root.lineType);
+                root.Right = new SortNode(Square.DimCreate(root.Size.X, root.Size.Y - b.Size.Y), Square.DimCreate(root.Position.X, root.Position.Y + b.Size.Y), !root.lineType);
             }
-            else if (BoxArea < root.Area) AddBox(b, root.Left);
-            else if (BoxArea >= root.Area) AddBox(b, root.Right);
+            else if (BoxArea < root.Left.Area) AddBox(b, root.Left);
+            else if (BoxArea >= root.Right.Area) AddBox(b, root.Right);
         }
 
         public static void CorrectPositions(SortNode root)

@@ -20,31 +20,17 @@ namespace Prototype
 
         static void TestPlace()
         {
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("Give the box a name");
-                string name = Console.ReadLine();
-                Console.WriteLine("What is the boxes weight");
-                double weight = double.Parse(Console.ReadLine());
-                Console.WriteLine("Whats its Length");
-                int Length = int.Parse(Console.ReadLine());
-                Console.WriteLine("Whats its Width");
-                int Width = int.Parse(Console.ReadLine());
-                Console.WriteLine("X Coordinate");
-                int x = int.Parse(Console.ReadLine());
-                Console.WriteLine("Y Coordinate");
-                int y = int.Parse(Console.ReadLine());
-
-                MyGarage
-                .AddBoxes(name, weight, Length, Width, x, y);
-                Console.Clear();
-                MyGarage.Draw();
-                Console.ReadKey();
-                MyGarage.Organise();
-                MyGarage.Draw();
-                Console.ReadKey();
-            }
+            MyGarage
+            .AddBoxes("Box1", 2.2, 3, 3, 2, 2)
+            .AddBoxes("Box2", 1.3, 3, 3, 2, 2)
+            .AddBoxes("Box3", 4.5, 1, 1, 2, 2)
+            .AddBoxes("Box4", 0.3, 2, 2, 2, 2)
+            .AddBoxes("Box5", 6.67, 5, 5, 2, 2);
+            Console.Clear();
+            MyGarage.Draw();
+            Console.ReadKey();
+            MyGarage.Organise();
+            MyGarage.Draw();
         }
     }
 }

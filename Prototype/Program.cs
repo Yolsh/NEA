@@ -10,12 +10,12 @@ namespace Prototype
     {
         public static Random rand = new Random();
         public static Garage MyGarage;
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             for (; ; )
             {
                 Console.WriteLine("Enter a minimum Hallway Width");
-                MyGarage = new Garage(20, 10, int.Parse(Console.ReadLine()), 2, 90, 0, 0);
+                MyGarage = new Garage(40, 20, int.Parse(Console.ReadLine()), 2, 90, 0, 0);
                 TestPlace();
                 Console.ReadKey();
                 Console.Clear();

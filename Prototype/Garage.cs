@@ -121,13 +121,38 @@ namespace Prototype
 
         public void Organise()
         {
+            SortNode root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1), false); //create to nearest door later
             BoxBuffer.ResetBuffers(Boxes);
-            SortNode root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1)); //create to nearest door later
-            foreach (Square S in Boxes)
+            try
             {
-                if (S is BoxBuffer)
+                foreach (Square S in Boxes)
                 {
-                    SortNode.AddBox(S as BoxBuffer, root);
+                    if (S is BoxBuffer)
+                    {
+                        SortNode.AddBox(S as BoxBuffer, root);
+                    }
+                }
+            }
+            catch (IncorrectPlacementException)
+            {
+                Console.Clear();
+                Console.WriteLine("flipped");
+                Console.ReadKey();
+                try
+                {
+                    root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1), true); //create to nearest door later
+                    foreach (Square S in Boxes)
+                    {
+                        if (S is BoxBuffer)
+                        {
+                            SortNode.AddBox(S as BoxBuffer, root);
+                        }
+                    }
+                }
+                catch (IncorrectPlacementException)
+                {
+                    string[] lol = new string[0];
+                    Program.Main(lol);
                 }
             }
             SortNode.CorrectPositions(root);

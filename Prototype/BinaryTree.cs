@@ -34,6 +34,11 @@ namespace Prototype
                     root.Left = new SortNode(Square.DimCreate(root.Size.X - b.Size.X, b.Size.Y), Square.DimCreate(root.Position.X + b.Size.X, root.Position.Y), !root.lineType);
                     root.Right = new SortNode(Square.DimCreate(root.Size.X, root.Size.Y - b.Size.Y), Square.DimCreate(root.Position.X, root.Position.Y + b.Size.Y), !root.lineType);
                 }
+                else
+                {
+                    root.Left = new SortNode(Square.DimCreate(b.Size.X, root.Size.Y - b.Size.Y), Square.DimCreate(root.Position.X, root.Position.Y + b.Size.Y), !root.lineType);
+                    root.Right = new SortNode(Square.DimCreate(root.Size.X - b.Size.X, root.Size.Y), Square.DimCreate(root.Position.X + b.Size.X, root.Position.Y), !root.lineType);
+                }
             }
             else if (b.Size.Y <= root.Left.Size.Y && b.Size.X <= root.Left.Size.X) AddBox(b, root.Left);
             else if (b.Size.Y <= root.Right.Size.Y && b.Size.X <= root.Right.Size.X) AddBox(b, root.Right);

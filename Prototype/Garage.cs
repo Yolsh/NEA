@@ -130,14 +130,18 @@ namespace Prototype
                     if (S is BoxBuffer)
                     {
                         SortNode.AddBox(S as BoxBuffer, root);
+                        SortNode.CorrectPositions(root);
+                        Console.ReadKey();
+                        Draw();
                     }
                 }
             }
             catch (IncorrectPlacementException)
             {
+                Console.Clear();
+                DrawTree(root, 0);
+                Console.ReadKey();
             }
-            SortNode.CorrectPositions(root);
-            Draw();
             Console.ReadKey();
             BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
             UpdateFloor();
@@ -160,6 +164,15 @@ namespace Prototype
                 }
             }
             floorplan = NewFloorplan;
+        }
+
+        private void DrawTree(SortNode root, int dir)
+        {
+            Console.WriteLine(dir == 0 ? "" : dir == 1 ? "/" : "\\") ;
+            Console.WriteLine(root.b is null ? root.Size.X + "," + root.Size.Y : "\u2588");
+            if (root.Left != null) DrawTree(root.Left, 1);
+            if (root.Right != null) DrawTree(root.Right, 2);
+            else Console.WriteLine("_");
         }
     }
 }

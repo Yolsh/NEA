@@ -135,25 +135,6 @@ namespace Prototype
             }
             catch (IncorrectPlacementException)
             {
-                Console.Clear();
-                Console.WriteLine("flipped");
-                Console.ReadKey();
-                try
-                {
-                    root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1), true); //create to nearest door later
-                    foreach (Square S in Boxes)
-                    {
-                        if (S is BoxBuffer)
-                        {
-                            SortNode.AddBox(S as BoxBuffer, root);
-                        }
-                    }
-                }
-                catch (IncorrectPlacementException)
-                {
-                    string[] lol = new string[0];
-                    Program.Main(lol);
-                }
             }
             SortNode.CorrectPositions(root);
             Draw();

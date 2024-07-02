@@ -121,7 +121,8 @@ namespace Prototype
 
         public void Organise()
         {
-            SortNode root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1), false); //create to nearest door later
+            SortBoxList();
+            SortNode root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1)); //create to nearest door later
             BoxBuffer.ResetBuffers(Boxes);
             try
             {
@@ -131,8 +132,6 @@ namespace Prototype
                     {
                         SortNode.AddBox(S as BoxBuffer, root);
                         SortNode.CorrectPositions(root);
-                        Console.ReadKey();
-                        Draw();
                     }
                 }
             }
@@ -142,11 +141,49 @@ namespace Prototype
                 DrawTree(root, 0);
                 Console.ReadKey();
             }
-            Console.ReadKey();
             BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
             UpdateFloor();
             //BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
             UpdateFloor();
+        }
+
+        private void SortBoxList() //this should be a merge sort later
+        {
+            List<Square> NewList = new List<Square>();
+            for (int i = 0; i < Boxes.Count(); i++)
+            {
+                if (Boxes[i] is BoxBuffer)
+                {
+                    NewList.Add(Boxes[i]);
+                    Boxes.Remove(Boxes[i]);
+                }
+            }
+
+            bool Swapped = true;
+
+            while (Swapped)
+            {
+                Swapped = false;
+                for (int i = 1; i < NewList.Count(); i++)
+                {
+                    if (NewList[i-1].Size.X * NewList[i-1].Size.Y > NewList[i].Size.X * NewList[i].Size.Y)
+                    {
+                        Square temp = NewList[i];
+                        NewList[i] = NewList[i-1];
+                        NewList[i-1] = temp;
+                        Swapped = true;
+                    }
+                }
+            }
+
+            NewList.AddRange(Boxes);
+            Boxes = NewList;
+            Console.Clear();
+            foreach (Square square in NewList) 
+            {
+                Console.WriteLine(square.Size.X * square.Size.Y);
+            }
+            Console.ReadKey();
         }
         
         public void UpdateFloor()

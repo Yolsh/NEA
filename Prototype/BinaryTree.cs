@@ -14,31 +14,21 @@ namespace Prototype
         public BoxBuffer b;
         public Square.Dimensions Position;
         public Square.Dimensions Size;
-        public bool lineType; //true is vertical false is horizontal
 
-        public SortNode(Square.Dimensions size, Square.Dimensions location, bool lineType)
+        public SortNode(Square.Dimensions size, Square.Dimensions location)
         {
             this.Size = size;
             this.Area = Size.X * Size.Y;
             Position = location;
-            this.lineType = lineType;
         }
 
         public static void AddBox(BoxBuffer b, SortNode root)
         {
-            if (root.b is null) //randomly pick up or down cuts later
+            if (root.b is null)
             {
                 root.b = b;
-                if (root.lineType)
-                {
-                    root.Left = new SortNode(Square.DimCreate(root.Size.X - b.Size.X, b.Size.Y), Square.DimCreate(root.Position.X + b.Size.X, root.Position.Y), !root.lineType);
-                    root.Right = new SortNode(Square.DimCreate(root.Size.X, root.Size.Y - b.Size.Y), Square.DimCreate(root.Position.X, root.Position.Y + b.Size.Y), !root.lineType);
-                }
-                else
-                {
-                    root.Left = new SortNode(Square.DimCreate(b.Size.X, root.Size.Y - b.Size.Y), Square.DimCreate(root.Position.X, root.Position.Y + b.Size.Y), !root.lineType);
-                    root.Right = new SortNode(Square.DimCreate(root.Size.X - b.Size.X, root.Size.Y), Square.DimCreate(root.Position.X + b.Size.X, root.Position.Y), !root.lineType);
-                }
+                root.Left = new SortNode(Square.DimCreate(root.Size.X - b.Size.X, b.Size.Y), Square.DimCreate(root.Position.X + b.Size.X, root.Position.Y));
+                root.Right = new SortNode(Square.DimCreate(root.Size.X, root.Size.Y - b.Size.Y), Square.DimCreate(root.Position.X, root.Position.Y + b.Size.Y));
             }
             else if (b.Size.Y <= root.Left.Size.Y && b.Size.X <= root.Left.Size.X) AddBox(b, root.Left);
             else if (b.Size.Y <= root.Right.Size.Y && b.Size.X <= root.Right.Size.X) AddBox(b, root.Right);

@@ -17,7 +17,7 @@ namespace Prototype
         private Random rand;
         private List<Square> Boxes;
         private List<Door> doors;
-        private int[,] floorplan;
+        private Square[,] floorplan;
         private int Width;
         private int Length;
         private int bufferWidth;
@@ -28,7 +28,7 @@ namespace Prototype
             Length = inLength;
             bufferWidth = inBufferWidth;
             Boxes = new List<Square>();
-            floorplan = new int[Width, Length];
+            floorplan = new Square[Width, Length];
             rand = new Random();
             doors = new List<Door>{new Door(rad, arc, x, y)};
         }
@@ -44,15 +44,12 @@ namespace Prototype
         {
             Box b = this.AddBoxes(name, weight, SizeX, SizeY);
 
-            if (PosX <= 1 || PosX + SizeX > Length || PosY <= 1 || PosY + SizeY > Width) throw new IncorrectPlacementException();
+            if (PosX < 1 || PosX + SizeX > Length || PosY < 1 || PosY + SizeY > Width) throw new IncorrectPlacementException();
             b.Position.X = PosX;
             b.Position.Y = PosY;
             Boxes.Add(new BoxBuffer(b, bufferWidth));
             Boxes.Add(b);
-            BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
-            UpdateFloor();
-            //BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
-            UpdateFloor();
+            //BoxBuffer.CollapseBuffers(Boxes, Length, Width);
             return this;
         }
 
@@ -121,8 +118,8 @@ namespace Prototype
 
         public void Organise()
         {
-            SortBoxList();
-            SortNode root = new SortNode(Square.DimCreate(Length, Width), Square.DimCreate(1, 1)); //create to nearest door later
+            SortBoxListLTS();
+            SortNode root = new SortNode(Square.DimCreate(0, 0), Square.DimCreate(Length, Width)); //create to nearest door later
             BoxBuffer.ResetBuffers(Boxes);
             try
             {
@@ -140,63 +137,46 @@ namespace Prototype
                 Console.Clear();
                 DrawTree(root, 0);
                 Console.ReadKey();
-            }
-            BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
-            UpdateFloor();
-            //BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
-            UpdateFloor();
-        }
-
-        private void SortBoxList() //this should be a merge sort later
-        {
-            List<Square> NewList = new List<Square>();
-            for (int i = 0; i < Boxes.Count(); i++)
-            {
-                if (Boxes[i] is BoxBuffer)
+                Console.Clear();
+                foreach(Square S in Boxes)
                 {
-                    NewList.Add(Boxes[i]);
-                    Boxes.Remove(Boxes[i]);
+                    Console.WriteLine($"{S.Size.X}, {S.Size.Y}");
                 }
             }
+            BoxBuffer.CollapseBuffers(Boxes, Length, Width);
+        }
 
+        private void SortBoxListLTS() //this should be a merge sort later
+        {
             bool Swapped = true;
 
             while (Swapped)
             {
                 Swapped = false;
-                for (int i = 1; i < NewList.Count(); i++)
+                for (int i = 1; i < Boxes.Count(); i++)
                 {
-                    if (NewList[i-1].Size.X * NewList[i-1].Size.Y > NewList[i].Size.X * NewList[i].Size.Y)
+                    if (Boxes[i-1].Size.X * Boxes[i-1].Size.Y > Boxes[i].Size.X * Boxes[i].Size.Y)
                     {
-                        Square temp = NewList[i];
-                        NewList[i] = NewList[i-1];
-                        NewList[i-1] = temp;
+                        Square temp = Boxes[i];
+                        Boxes[i] = Boxes[i-1];
+                        Boxes[i-1] = temp;
                         Swapped = true;
                     }
                 }
             }
-
-            NewList.AddRange(Boxes);
-            Boxes = NewList;
-            Console.Clear();
-            foreach (Square square in NewList) 
-            {
-                Console.WriteLine(square.Size.X * square.Size.Y);
-            }
-            Console.ReadKey();
+            Boxes.Reverse();
         }
         
         public void UpdateFloor()
         {
-            int[,] NewFloorplan = new int[Width, Length];
+            Square[,] NewFloorplan = new Square[Width, Length];
             foreach (Square S in Boxes)
             {
-                for (int y = S.Position.Y-1; y < S.Position.Y + S.Size.Y-1; y++)
+                for (int y = S.Position.Y; y < S.Position.Y + S.Size.Y; y++)
                 {
-                    for (int x = S.Position.X-1; x < S.Position.X + S.Size.X-1; x++)
+                    for (int x = S.Position.X; x < S.Position.X + S.Size.X; x++)
                     {
-                        if (S is BoxBuffer) NewFloorplan[y, x] = 1;
-                        else if (S is Box) NewFloorplan[y, x] = 2;
+                        NewFloorplan[y, x] = S;
                     }
                 }
             }
@@ -207,8 +187,8 @@ namespace Prototype
         {
             Console.WriteLine(dir == 0 ? "" : dir == 1 ? "/" : "\\") ;
             Console.WriteLine(root.b is null ? root.Size.X + "," + root.Size.Y : "\u2588");
-            if (root.Left != null) DrawTree(root.Left, 1);
-            if (root.Right != null) DrawTree(root.Right, 2);
+            if (root.Right != null) DrawTree(root.Right, 1);
+            if (root.Down != null) DrawTree(root.Down, 2);
             else Console.WriteLine("_");
         }
     }

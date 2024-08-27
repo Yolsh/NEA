@@ -31,7 +31,7 @@ namespace Prototype
                 {
                     if (x == Position.X && y == Position.Y)
                     {
-                        Console.SetCursorPosition(x * 2 - 1, y);
+                        Console.SetCursorPosition(x * 2 + 1, y+1);
                         //Console.Write($"{x},{y}");
                         //for (int i = x.ToString().Length+y.ToString().Length+1; i < Size.X*2; i++)
                         //{
@@ -46,7 +46,7 @@ namespace Prototype
                     }
                     else
                     {
-                        Console.SetCursorPosition(x * 2 - 1, y);
+                        Console.SetCursorPosition(x * 2 + 1, y+1);
                         Console.Write("\u2588\u2588".Pastel(col));
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,14 +9,14 @@ namespace Prototype
 {
     public class SortNode
     {
-        public SortNode Left;
         public SortNode Right;
+        public SortNode Down;
         public int Area;
         public BoxBuffer b;
         public Square.Dimensions Position;
         public Square.Dimensions Size;
 
-        public SortNode(Square.Dimensions size, Square.Dimensions location)
+        public SortNode(Square.Dimensions location, Square.Dimensions size)
         {
             this.Size = size;
             this.Area = Size.X * Size.Y;
@@ -24,18 +25,34 @@ namespace Prototype
 
         public static void AddBox(BoxBuffer b, SortNode root)
         {
-            if (root.b is null)
+            SortNode fit = FindNode(root, b.Size.X, b.Size.Y);
+
+            if (fit != null)
             {
-                root.b = b;
-                root.Left = new SortNode(Square.DimCreate(root.Size.X - b.Size.X, b.Size.Y), Square.DimCreate(root.Position.X + b.Size.X, root.Position.Y));
-                root.Right = new SortNode(Square.DimCreate(root.Size.X, root.Size.Y - b.Size.Y), Square.DimCreate(root.Position.X, root.Position.Y + b.Size.Y));
+                fit.b = b;
+                fit.Right = new SortNode(Square.DimCreate(fit.Position.X + b.Size.X, b.Position.Y), Square.DimCreate(fit.Size.X - b.Size.X, fit.Size.Y));
+                fit.Down = new SortNode(Square.DimCreate(fit.Position.X, fit.Position.Y + b.Size.Y), Square.DimCreate(fit.Size.X, fit.Size.Y - b.Size.Y));
             }
-            else if (b.Size.Y <= root.Left.Size.Y && b.Size.X <= root.Left.Size.X) AddBox(b, root.Left);
-            else if (b.Size.Y <= root.Right.Size.Y && b.Size.X <= root.Right.Size.X) AddBox(b, root.Right);
             else
             {
                 throw new IncorrectPlacementException();
             }
+        }
+
+        private static SortNode FindNode(SortNode root, int length, int width)
+        {
+            if (root.b != null)
+            {
+                SortNode r = FindNode(root.Right, length, width);
+                if (r != null) return r;
+                SortNode l = FindNode(root.Down, length, width);
+                if (l != null) return l;
+            }
+            else if (width <= root.Size.Y && length <= root.Size.X)
+            {
+                return root;
+            }
+            return null;
         }
 
         public static void CorrectPositions(SortNode root)
@@ -45,8 +62,8 @@ namespace Prototype
             int YMov = root.Position.Y - root.b.Position.Y;
             root.b.Buffered.SetPosition(root.b.Buffered.Position.X + XMov, root.b.Buffered.Position.Y + YMov);
             root.b.SetPosition(root.Position.X, root.Position.Y);
-            CorrectPositions(root.Left);
             CorrectPositions(root.Right);
+            CorrectPositions(root.Down);
         }
     }
 }

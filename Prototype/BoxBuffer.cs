@@ -28,7 +28,7 @@ namespace Prototype
             BufferWidth = Width;
         }
 
-        public static void CollapseBuffersWalls(List<Square> Boxes, int Length, int Width)
+        public static void CollapseBuffers(List<Square> Boxes, int Length, int Width)
         {
             foreach (Square S in Boxes)
             {
@@ -37,47 +37,10 @@ namespace Prototype
                     BoxBuffer movable = S as BoxBuffer;
 
                     //collapse buffers when touching walls.
-                    if (movable.Position.Y == 1 && !movable.Collapsed.Top) movable.CollapseTop();
+                    if (movable.Position.Y == 0 && !movable.Collapsed.Top) movable.CollapseTop();
                     if (movable.Position.Y + movable.Size.Y >= Width && !movable.Collapsed.Bottom) movable.CollapseBottom();
-                    if (movable.Position.X == 1 && !movable.Collapsed.Left) movable.CollapseLeft();
+                    if (movable.Position.X == 0 && !movable.Collapsed.Left) movable.CollapseLeft();
                     if (movable.Position.X + movable.Size.X >= Length && !movable.Collapsed.Right) movable.CollapseRight();
-                }
-            }
-        }
-
-        public static void CollapseBuffersContact(List<Square> Boxes, int[,] floorplan, int Length, int Width)
-        {
-            foreach (Square S in Boxes)
-            {
-                if (S is BoxBuffer)
-                {
-                    BoxBuffer movable = S as BoxBuffer;
-
-                    //collapse buffers covered by other buffers.
-                    if (movable.Position.X - 1 > 0 && floorplan[movable.Position.Y, movable.Position.X - 1] == 1)
-                    {
-                        bool covered = true;
-                        for (int y = movable.Position.Y - 1; y < movable.Position.Y + movable.Size.Y - 1; y++) if (floorplan[y, movable.Position.X - 2] != 1) covered = false;
-                        if (covered) movable.CollapseLeft();
-                    }
-                    if (movable.Position.Y - 1 > 0 && floorplan[movable.Position.Y - 1, movable.Position.X] == 1)
-                    {
-                        bool covered = true;
-                        for (int x = movable.Position.X - 1; x < movable.Position.X + movable.Size.X - 1; x++) if (floorplan[movable.Position.Y - 2, x] != 1) covered = false;
-                        if (covered) movable.CollapseTop();
-                    }
-                    if (movable.Position.X + movable.Size.X + 1 < floorplan.GetLength(1) && floorplan[movable.Position.Y, movable.Position.X + movable.Size.X] == 1)
-                    {
-                        bool covered = true;
-                        for (int y = movable.Position.Y - 1; y < movable.Position.Y + movable.Size.Y - 1; y++) if (floorplan[y, movable.Position.X + movable.Size.X] != 1) covered = false;
-                        if (covered) movable.CollapseRight();
-                    }
-                    if (movable.Position.Y + movable.Size.Y + 1 < floorplan.GetLength(0) && floorplan[movable.Position.Y + movable.Size.Y, movable.Position.X] == 1)
-                    {
-                        bool covered = true;
-                        for (int x = movable.Position.X - 1; x < movable.Position.X + movable.Size.X - 1; x++) if (floorplan[movable.Position.Y + movable.Size.Y, x] != 1) covered = false;
-                        if (covered) movable.CollapseBottom();
-                    }
                 }
             }
         }
@@ -119,21 +82,21 @@ namespace Prototype
             }
         }
 
-        public void CollapseLeft()
+        private void CollapseLeft()
         {
             Size.X--;
-            Buffered.Position.X = Position.X;
+            Buffered.Position.X = Position.Y;
             Collapsed.Left = true;
         }
 
-        public void CollapseTop()
+        private void CollapseTop()
         {
-            Size.Y--;
-            Buffered.Position.Y = Position.Y;
+            Size.Y-=BufferWidth;
+            Buffered.Position.Y--;
             Collapsed.Top = true;
         }
 
-        public void CollapseRight()
+        private void CollapseRight()
         {
             Size.X--;
             Buffered.Position.X++;
@@ -141,7 +104,7 @@ namespace Prototype
             Collapsed.Right = true;
         }
 
-        public void CollapseBottom()
+        private void CollapseBottom()
         {
             Size.Y--;
             Buffered.Position.Y++;
@@ -155,10 +118,10 @@ namespace Prototype
             {
                 for (int x = Position.X; x < Position.X + Size.X; x++)
                 {
-                    if (x > Buffered.Size.X || x < Buffered.Position.X ||
-                        y > Buffered.Size.Y || y < Buffered.Position.X)
+                    if (x > Buffered.Size.X-1 || x < Buffered.Position.X+1 ||
+                        y > Buffered.Size.Y-1 || y < Buffered.Position.X+1)
                     {
-                        Console.SetCursorPosition(x * 2-1, y);
+                        Console.SetCursorPosition(x * 2+1, y+1);
                         Console.Write("\u2588\u2588".Pastel("#FFE5B4"));
                     }
                 }

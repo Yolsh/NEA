@@ -25,11 +25,15 @@ namespace Prototype
         static void TestPlace()
         {
             MyGarage
-            .AddBoxes("Box1", 2.2, rand.Next(1, 5), rand.Next(1, 5), 2, 2)
-            .AddBoxes("Box2", 1.3, rand.Next(1, 5), rand.Next(1, 5), 2, 2)
-            .AddBoxes("Box3", 4.5, rand.Next(1, 5), rand.Next(1, 5), 2, 2)
-            .AddBoxes("Box4", 0.3, rand.Next(1, 5), rand.Next(1, 5), 2, 2)
-            .AddBoxes("Box5", 6.67, rand.Next(1, 5), rand.Next(1, 5), 2, 2);
+            .AddBoxes("Box1", 2.2, rand.Next(3, 6), rand.Next(3, 6), 1, 1)
+            .AddBoxes("Box2", 1.3, rand.Next(3, 6), rand.Next(3, 6), 1, 1)
+            .AddBoxes("Box3", 4.5, rand.Next(3, 6), rand.Next(3, 6), 1, 1)
+            .AddBoxes("Box4", 0.3, rand.Next(3, 6), rand.Next(3, 6), 1, 1)
+            .AddBoxes("Box5", 0.3, rand.Next(3, 6), rand.Next(3, 6), 1, 1)
+            .AddBoxes("Box6", 0.3, rand.Next(3, 6), rand.Next(3, 6), 1, 1)
+            .AddBoxes("Box7", 0.3, rand.Next(3, 6), rand.Next(3, 6), 1, 1)
+            .AddBoxes("Box8", 0.3, rand.Next(3, 6), rand.Next(3, 6), 1, 1)
+            .AddBoxes("Box9", 6.67, rand.Next(3, 6), rand.Next(3, 6), 1, 1);
             Console.Clear();
             MyGarage.Draw();
             Console.ReadKey();

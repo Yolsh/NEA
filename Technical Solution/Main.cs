@@ -7,46 +7,170 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using System.IO;
+using System.Xml.Schema;
+using System.Text.RegularExpressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using System.Threading;
 
 namespace Technical_Solution
 {
     public partial class Main : Form
     {
-        private Garage garage;
-        private List<Box> Boxes;
-        private LoadMenu loadMenu;
+        private Random rand;
+        public Garage garage;
+        public List<Box> Box_Queue;
+        private double Scale;
 
-        public Main(LoadMenu loadMenu)
+        public Main()
         {
-            garage = new Garage(300, 300, 5, 6, 90, 0, 3);
             InitializeComponent();
-            Boxes = new List<Box>();
-            Box newBox = new Box("bob", 2.2, 40, 40, Color.Brown);
-            newBox.SetPosition(10, 20);
-            Boxes.Add(newBox);
-            this.loadMenu = loadMenu;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            foreach (Box B in Boxes)
-            {
-                Panel P = new Panel();
-                P.BackColor = B.col;
-                P.Location = new Point(B.Position.X, B.Position.Y);
-                P.Size = new Size(B.Size.X, B.Size.Y);
-                FloorView.Controls.Add(P);
-            }
+            rand = new Random();
+            Box_Queue = new List<Box>();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Forms.JSONContainer collected = new Forms.JSONContainer();
+            collected.garage = garage;
+            collected.Box_Queue = Box_Queue;
+            string save = JsonConvert.SerializeObject(collected, Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter($"{garage.Name}.json", false))
+            {
+                sw.Write(save);
+            }
+            MessageBox.Show("This Garage has been saved");
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            loadMenu.Show();
+            Forms.L_Menu.Show();
+        }
+
+        public void Draw()
+        {
+            DrawFloor();
+            DrawQueue();
+        }
+
+        private void DrawQueue()
+        {
+            int Offset_Y = 25;
+            foreach (Box box in Box_Queue)
+            {
+                MyPane BoxPan = new MyPane(box);
+                BoxPan.MouseMove += new MouseEventHandler(this.Box_Drag);
+                BoxPan.BackColor = box.col;
+                BoxPan.Location = new Point(25, Offset_Y);
+                BoxPan.Size = new Size((int)Math.Round(box.Size.Width * Scale), (int)Math.Round(box.Size.Height * Scale));
+                Offset_Y = Offset_Y + BoxPan.Size.Height + 25;
+
+                Box_Queue_Group.Controls.Add(BoxPan);
+            }
+        }
+
+        private void DrawFloor()
+        {
+            Panel Floor = new Panel();
+            Floor.BackColor = Color.Coral;
+            Floor.Name = "Floor";
+            Floor.Location = new Point(15, 15);
+            Scale = 1.0;
+
+            if ((double)(FloorView.Size.Width - 30) / garage.Length < (double)(FloorView.Size.Height - 30) / garage.Width) Scale = (double)(FloorView.Size.Width - 30) / garage.Length;
+            else if ((double)(FloorView.Size.Width - 30) / garage.Length > (double)(FloorView.Size.Height - 30) / garage.Width) Scale = (double)(FloorView.Size.Height - 30) / garage.Width;
+            Floor.Size = new Size((int)(garage.Length * Scale), (int)(garage.Width * Scale));
+
+            if (!FloorView.Controls.ContainsKey("Floor")) FloorView.Controls.Add(Floor);
+
+            foreach (Box b in garage.Boxes.OfType<Box>())
+            {
+                Panel BuffPan = new Panel();
+                BuffPan.Name = $"BuffPan{b.Name}";
+                BuffPan.BackColor = Color.AliceBlue;
+                BuffPan.Location = new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale));
+                BuffPan.Size = new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale));
+
+                if (!Floor.Controls.ContainsKey($"BuffPan{b.Name}")) Floor.Controls.Add(BuffPan);
+                BuffPan.BringToFront();
+
+                MyPane Pan = new MyPane(b);
+                Pan.Name = b.Name;
+                Pan.BackColor = b.col;
+                Pan.MouseMove += new MouseEventHandler(this.Box_Drag);
+                Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
+                Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
+
+                if (!Floor.Controls.ContainsKey(b.Name)) Floor.Controls.Add(Pan);
+                Pan.BringToFront();
+            }
+        }
+
+        private void Add_Btn_Click(object sender, EventArgs e)
+        {
+            Err_Lbl.Hide();
+            if (Name_Txt.Text != "" && Weight_Txt.Text != "" && Length_Txt.Text != "" && Width_Txt.Text != "" &&
+                Weight_Txt.Text.Split('.').Length <= 2 &&
+                Regex.IsMatch(Weight_Txt.Text, "[0-9]*\\.*[0-9]+") &&
+                Regex.IsMatch(Length_Txt.Text, "[0-9]+") &&
+                Regex.IsMatch(Width_Txt.Text, "[0-9]+") &&
+                Col_Pan.BackColor != Color.FromName("Control"))
+            {
+                Box NewBox = new Box(Name_Txt.Text, double.Parse(Weight_Txt.Text), new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text)), garage.bufferWidth, Col_Pan.BackColor);
+                Box_Queue.Add(NewBox);
+                DrawQueue();
+
+                Name_Txt.Text = "";
+                Weight_Txt.Text = "";
+                Length_Txt.Text = "";
+                Width_Txt.Text = "";
+                Colour_Txt.Text = "";
+            }
+            else Err_Lbl.Show();
+        }
+
+        private void Colour_Txt_TextChanged(object sender, EventArgs e)
+        {
+            Col_Pan.BackColor = Color.FromName(Colour_Txt.Text);
+        }
+
+        private void Rand_Col_Btn_Click(object sender, EventArgs e)
+        {
+            Col_Pan.BackColor = Color.FromArgb(rand.Next(0, 256), rand.Next(0, 256), rand.Next(0, 256));
+        }
+
+        private void Box_Drag(object sender, MouseEventArgs e)
+        {
+            MyPane Pan = sender as MyPane;
+
+            if (Box_Queue_Group.Contains(Pan))
+            {
+                Box_Queue_Group.Controls.Remove(Pan);
+                this.Controls.Add(Pan);
+                Pan.Location = new Point(Box_Queue_Group.Location.X + Pan.Location.X, Box_Queue_Group.Location.Y + Pan.Location.Y);
+                Pan.BringToFront();
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                Pan.Location = new Point(e.X + Pan.Location.X, e.Y + Pan.Location.Y);
+            }
+            else if (Pan.Location.X > FloorView.Location.X && Pan.Location.X + Pan.Size.Width < FloorView.Location.X + FloorView.Size.Width &&
+                Pan.Location.Y > FloorView.Location.Y && Pan.Location.Y + Pan.Size.Height < FloorView.Location.Y + FloorView.Size.Height)
+            {
+                Box_Queue.Remove(Pan.box);
+                Point NewLoc = new Point((int)Math.Round((Pan.Location.X - FloorView.Location.X) / Scale), (int)Math.Round((Pan.Location.Y - FloorView.Location.Y) / Scale));
+                if (!garage.Boxes.Contains(Pan.box)) garage.AddBox(Pan.box, NewLoc);
+                Pan.box.buffer.Position = new Point(NewLoc.X - garage.bufferWidth, NewLoc.Y - garage.bufferWidth);
+                DrawFloor();
+            }
+            else if (!(Pan.Location.X > Box_Queue_Group.Location.X && Pan.Location.X + Pan.Size.Width < Box_Queue_Group.Location.X + Box_Queue_Group.Size.Width &&
+                Pan.Location.Y > Box_Queue_Group.Location.Y && Pan.Location.Y + Pan.Size.Height < Box_Queue_Group.Location.Y + Box_Queue_Group.Size.Height))
+            {
+                this.Controls.Remove(Pan);
+                DrawQueue();
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Technical_Solution
 {
     public static class Program
     {
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +17,21 @@ namespace Technical_Solution
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main(new LoadMenu()));
+            Forms.MainWindow = new Main();
+            Forms.L_Menu = new LoadMenu();
+            Application.Run(Forms.MainWindow);
         }
+    }
+
+    public static class Forms
+    {
+        public struct JSONContainer
+        {
+            public Garage garage;
+            public List<Box> Box_Queue;
+        }
+
+        public static Main MainWindow;
+        public static LoadMenu L_Menu;
     }
 }

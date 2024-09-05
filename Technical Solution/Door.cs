@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace Technical_Solution
@@ -10,13 +11,11 @@ namespace Technical_Solution
     {
         public int radius;
         public int arc;
-        public Square.Dimensions location;
-        public Door(int radius, int arc, int x, int y)
+        public Point location;
+        public Door(int radius, int x, int y)
         {
-            if (arc < 90) throw new IncorrectPlacementException("door doesnt open enough");
             this.radius = radius;
-            this.arc = arc;
-            this.location = Square.DimCreate(x, y);
+            this.location = new Point(x, y);
         }
     }
 }

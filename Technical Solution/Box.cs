@@ -11,22 +11,24 @@ namespace Technical_Solution
     public class Box : Square
     {
         public string Name;
-        private double Weight;
-        private List<string> Contents;
+        public double Weight;
+        public BoxBuffer buffer;
+        public List<string> Contents { get; private set; }
         public Color col;
 
-        public Box(string inBoxName, double inWeight, int inX, int inY, Color inCol) : base(inX, inY)
+        public Box(string inBoxName, double inWeight, Size inSize, int BufferWidth, Color inCol) : base(inSize)
         {
             Name = inBoxName;
             Weight = inWeight;
             col = inCol;
+            buffer = new BoxBuffer(this, BufferWidth);
         }
 
         public void Draw()
         {
-            for (int y = Position.Y; y < Position.Y + Size.Y; y++)
+            for (int y = Position.Y; y < Position.Y + Size.Height; y++)
             {
-                for (int x = Position.X; x < Position.X + Size.X; x++)
+                for (int x = Position.X; x < Position.X + Size.Width; x++)
                 {
                     if (x == Position.X && y == Position.Y)
                     {
@@ -37,11 +39,11 @@ namespace Technical_Solution
                         //    Console.Write("\u2588".Pastel(col));
                         //}
                         Console.Write(Name);
-                        for (int i = Name.Length; i < Size.X * 2; i++)
+                        for (int i = Name.Length; i < Size.Width * 2; i++)
                         {
                             Console.Write("\u2588");
                         }
-                        x += Position.X + Size.X;
+                        x += Position.X + Size.Height;
                     }
                     else
                     {

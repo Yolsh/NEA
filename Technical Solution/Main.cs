@@ -58,7 +58,7 @@ namespace Technical_Solution
             {
                 MyPane BoxPan = new MyPane(box);
                 BoxPan.MouseMove += new MouseEventHandler(this.Box_Drag);
-                BoxPan.MouseDoubleClick += new MouseEventHandler(Forms.Box_Menu.FormShow);
+                BoxPan.MouseClick += new MouseEventHandler(Forms.Box_Menu.FormShow);
                 BoxPan.BackColor = box.col;
                 BoxPan.Location = new Point(25, Offset_Y);
                 BoxPan.Size = new Size((int)Math.Round(box.Size.Width * Scale), (int)Math.Round(box.Size.Height * Scale));
@@ -117,7 +117,7 @@ namespace Technical_Solution
                     Pan.Name = b.Name;
                     Pan.BackColor = b.col;
                     Pan.MouseMove += new MouseEventHandler(this.Box_Drag);
-                    Pan.MouseDoubleClick += new MouseEventHandler(Forms.Box_Menu.FormShow);
+                    Pan.MouseClick += new MouseEventHandler(Forms.Box_Menu.FormShow);
                     Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
                     Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
 

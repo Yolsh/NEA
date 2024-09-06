@@ -43,12 +43,18 @@
             this.Length_Txt = new System.Windows.Forms.TextBox();
             this.Weight_Txt = new System.Windows.Forms.TextBox();
             this.Name_Txt = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ContentsList = new System.Windows.Forms.GroupBox();
+            this.AddContentsBox = new System.Windows.Forms.GroupBox();
+            this.AddContBtn = new System.Windows.Forms.Button();
+            this.AddContTxt = new System.Windows.Forms.TextBox();
+            this.RemoveBox = new System.Windows.Forms.Button();
             this.Add_Box_Group.SuspendLayout();
+            this.AddContentsBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // Add_Box_Group
             // 
+            this.Add_Box_Group.Controls.Add(this.RemoveBox);
             this.Add_Box_Group.Controls.Add(this.Err_Lbl);
             this.Add_Box_Group.Controls.Add(this.Edit_Btn);
             this.Add_Box_Group.Controls.Add(this.label5);
@@ -191,26 +197,68 @@
             this.Name_Txt.Size = new System.Drawing.Size(100, 20);
             this.Name_Txt.TabIndex = 0;
             // 
-            // groupBox1
+            // ContentsList
             // 
-            this.groupBox1.Location = new System.Drawing.Point(12, 214);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(311, 224);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.ContentsList.Location = new System.Drawing.Point(329, 12);
+            this.ContentsList.Name = "ContentsList";
+            this.ContentsList.Size = new System.Drawing.Size(179, 283);
+            this.ContentsList.TabIndex = 4;
+            this.ContentsList.TabStop = false;
+            this.ContentsList.Text = "List of Box Contents";
+            // 
+            // AddContentsBox
+            // 
+            this.AddContentsBox.Controls.Add(this.AddContTxt);
+            this.AddContentsBox.Controls.Add(this.AddContBtn);
+            this.AddContentsBox.Location = new System.Drawing.Point(12, 214);
+            this.AddContentsBox.Name = "AddContentsBox";
+            this.AddContentsBox.Size = new System.Drawing.Size(311, 81);
+            this.AddContentsBox.TabIndex = 5;
+            this.AddContentsBox.TabStop = false;
+            this.AddContentsBox.Text = "Add New Contents";
+            // 
+            // AddContBtn
+            // 
+            this.AddContBtn.Location = new System.Drawing.Point(230, 34);
+            this.AddContBtn.Name = "AddContBtn";
+            this.AddContBtn.Size = new System.Drawing.Size(75, 20);
+            this.AddContBtn.TabIndex = 0;
+            this.AddContBtn.Text = "Add Item";
+            this.AddContBtn.UseVisualStyleBackColor = true;
+            this.AddContBtn.Click += new System.EventHandler(this.AddContBtn_Click);
+            // 
+            // AddContTxt
+            // 
+            this.AddContTxt.Location = new System.Drawing.Point(6, 34);
+            this.AddContTxt.Name = "AddContTxt";
+            this.AddContTxt.Size = new System.Drawing.Size(218, 20);
+            this.AddContTxt.TabIndex = 1;
+            // 
+            // RemoveBox
+            // 
+            this.RemoveBox.Location = new System.Drawing.Point(175, 165);
+            this.RemoveBox.Name = "RemoveBox";
+            this.RemoveBox.Size = new System.Drawing.Size(62, 23);
+            this.RemoveBox.TabIndex = 14;
+            this.RemoveBox.Text = "Delete";
+            this.RemoveBox.UseVisualStyleBackColor = true;
+            this.RemoveBox.Click += new System.EventHandler(this.RemoveBox_Click);
             // 
             // BoxMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(337, 450);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(519, 307);
+            this.Controls.Add(this.AddContentsBox);
+            this.Controls.Add(this.ContentsList);
             this.Controls.Add(this.Add_Box_Group);
             this.Name = "BoxMenu";
             this.Text = "BoxMenu";
+            this.Load += new System.EventHandler(this.BoxMenu_Load);
             this.Add_Box_Group.ResumeLayout(false);
             this.Add_Box_Group.PerformLayout();
+            this.AddContentsBox.ResumeLayout(false);
+            this.AddContentsBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -232,6 +280,10 @@
         private System.Windows.Forms.TextBox Length_Txt;
         private System.Windows.Forms.TextBox Weight_Txt;
         private System.Windows.Forms.TextBox Name_Txt;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox ContentsList;
+        private System.Windows.Forms.GroupBox AddContentsBox;
+        private System.Windows.Forms.TextBox AddContTxt;
+        private System.Windows.Forms.Button AddContBtn;
+        private System.Windows.Forms.Button RemoveBox;
     }
 }

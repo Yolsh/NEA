@@ -13,7 +13,6 @@ namespace Technical_Solution
 {
     public class Garage
     {
-        private Random rand;
         public List<Box> Boxes;
         public List<Door> doors;
         private int[,] floorplan;

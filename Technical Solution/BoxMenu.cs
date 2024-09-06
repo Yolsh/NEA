@@ -38,6 +38,22 @@ namespace Technical_Solution
             Width_Txt.Text = ToEdit.Size.Height.ToString();
             Col_Pan.BackColor = pan.BackColor;
             Colour_Txt.Text = pan.BackColor.Name;
+            DrawContents();
+        }
+
+        private void DrawContents()
+        {
+            ContentsList.Controls.Clear();
+            int spacing = 25;
+            foreach (string Item in ToEdit.Contents)
+            {
+                Label ItemLbl = new Label();
+                ItemLbl.MouseDoubleClick += new MouseEventHandler(this.RemoveLabel);
+                ItemLbl.Text = Item;
+                ItemLbl.Location = new Point(25, spacing);
+                spacing += 20;
+                ContentsList.Controls.Add(ItemLbl);
+            }
         }
 
         private void Edit_Btn_Click(object sender, EventArgs e)
@@ -57,6 +73,32 @@ namespace Technical_Solution
                 this.Close();
             }
             else Err_Lbl.Show();
+        }
+
+        private void BoxMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddContBtn_Click(object sender, EventArgs e)
+        {
+            if (AddContTxt.Text != "") ToEdit.Contents.Add(AddContTxt.Text);
+            AddContTxt.Text = "";
+            DrawContents();
+        }
+
+        private void RemoveLabel(object sender, MouseEventArgs e)
+        {
+            Label L = sender as Label;
+            ToEdit.Contents.Remove(L.Text);
+            DrawContents();
+        }
+
+        private void RemoveBox_Click(object sender, EventArgs e)
+        {
+            Forms.MainWindow.garage.Boxes.Remove(ToEdit);
+            Forms.MainWindow.Draw();
+            this.Close();
         }
     }
 }

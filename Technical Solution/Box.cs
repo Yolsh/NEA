@@ -22,6 +22,7 @@ namespace Technical_Solution
             Weight = inWeight;
             col = inCol;
             buffer = new BoxBuffer(this, BufferWidth);
+            Contents = new List<string>();
         }
 
         public void Draw()

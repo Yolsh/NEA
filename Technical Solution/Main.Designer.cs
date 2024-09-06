@@ -309,4 +309,3 @@ namespace Technical_Solution
         private Label Debug;
     }
 }
-

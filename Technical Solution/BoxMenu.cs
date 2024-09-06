@@ -52,6 +52,7 @@ namespace Technical_Solution
                 ToEdit.Size.Width = int.Parse(Length_Txt.Text);
                 ToEdit.Size.Height = int.Parse(Width_Txt.Text);
                 ToEdit.col = Col_Pan.BackColor;
+                ToEdit.buffer = new BoxBuffer(ToEdit, Forms.MainWindow.garage.bufferWidth);
                 Forms.MainWindow.Draw();
                 this.Close();
             }

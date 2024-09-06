@@ -9,10 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.IO;
-using System.Xml.Schema;
 using System.Text.RegularExpressions;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
-using System.Threading;
 
 namespace Technical_Solution
 {
@@ -183,11 +180,22 @@ namespace Technical_Solution
                 Pan.Location.Y > FloorView.Location.Y && Pan.Location.Y + Pan.Size.Height < FloorView.Location.Y + FloorView.Size.Height)
             {
                 Box_Queue.Remove(Pan.box);
-                Point NewLoc = new Point((int)Math.Round((Pan.Location.X - FloorView.Location.X) / Scale), (int)Math.Round((Pan.Location.Y - FloorView.Location.Y) / Scale));
-                if (!garage.Boxes.Contains(Pan.box)) garage.AddBox(Pan.box, NewLoc);
-                Pan.box.buffer.Position = new Point(NewLoc.X - garage.bufferWidth, NewLoc.Y - garage.bufferWidth);
-                Pan.box.Position = NewLoc;
-                DrawFloor();
+                Point OldPos;
+                if (!FloorView.Controls["Floor"].Controls.Contains(Pan))
+                {
+                    Point NewLoc = new Point((int)Math.Round((Pan.Location.X - FloorView.Location.X - FloorView.Controls["Floor"].Location.X) / Scale), (int)Math.Round((Pan.Location.Y - FloorView.Location.Y) / Scale));
+                    if (!garage.Boxes.Contains(Pan.box)) garage.AddBox(Pan.box, NewLoc);
+                    Pan.box.buffer.Position = new Point(NewLoc.X - garage.bufferWidth, NewLoc.Y - garage.bufferWidth);
+                    DrawFloor();
+                }
+                else
+                {
+                    Point NewLoc = new Point((int)Math.Round(Pan.Location.X / Scale), (int)Math.Round(Pan.Location.Y / Scale));
+                    Pan.box.buffer.Position = new Point(NewLoc.X - garage.bufferWidth, NewLoc.Y - garage.bufferWidth);
+                    OldPos = Pan.box.Position;
+                    Pan.box.Position = NewLoc;
+                    if (OldPos != NewLoc) DrawFloor();
+                }
             }
             else if (!(Pan.Location.X > Box_Queue_Group.Location.X && Pan.Location.X + Pan.Size.Width < Box_Queue_Group.Location.X + Box_Queue_Group.Size.Width &&
                 Pan.Location.Y > Box_Queue_Group.Location.Y && Pan.Location.Y + Pan.Size.Height < Box_Queue_Group.Location.Y + Box_Queue_Group.Size.Height))

@@ -77,6 +77,12 @@
     <Compile Include="BinaryTree.cs" />
     <Compile Include="Box.cs" />
     <Compile Include="BoxBuffer.cs" />
+    <Compile Include="BoxMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BoxMenu.Designer.cs">
+      <DependentUpon>BoxMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Door.cs" />
     <Compile Include="JSONContainer.cs" />
     <Compile Include="Main.cs">
@@ -99,6 +105,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Square.cs" />
+    <EmbeddedResource Include="BoxMenu.resx">
+      <DependentUpon>BoxMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoadMenu.resx">
       <DependentUpon>LoadMenu.cs</DependentUpon>
     </EmbeddedResource>

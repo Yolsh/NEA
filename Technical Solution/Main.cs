@@ -61,6 +61,7 @@ namespace Technical_Solution
             {
                 MyPane BoxPan = new MyPane(box);
                 BoxPan.MouseMove += new MouseEventHandler(this.Box_Drag);
+                BoxPan.MouseDoubleClick += new MouseEventHandler(Forms.Box_Menu.FormShow);
                 BoxPan.BackColor = box.col;
                 BoxPan.Location = new Point(25, Offset_Y);
                 BoxPan.Size = new Size((int)Math.Round(box.Size.Width * Scale), (int)Math.Round(box.Size.Height * Scale));
@@ -82,27 +83,49 @@ namespace Technical_Solution
             else if ((double)(FloorView.Size.Width - 30) / garage.Length > (double)(FloorView.Size.Height - 30) / garage.Width) Scale = (double)(FloorView.Size.Height - 30) / garage.Width;
             Floor.Size = new Size((int)(garage.Length * Scale), (int)(garage.Width * Scale));
 
-            if (!FloorView.Controls.ContainsKey("Floor")) FloorView.Controls.Add(Floor);
+            if (FloorView.Controls.ContainsKey("Floor")) Floor = FloorView.Controls["Floor"] as Panel;
+            else FloorView.Controls.Add(Floor);
 
             foreach (Box b in garage.Boxes.OfType<Box>())
             {
-                Panel BuffPan = new Panel();
-                BuffPan.Name = $"BuffPan{b.Name}";
-                BuffPan.BackColor = Color.AliceBlue;
-                BuffPan.Location = new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale));
-                BuffPan.Size = new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale));
+                Panel BuffPan;
+                if (Floor.Controls.ContainsKey($"BuffPan{b.Name}"))
+                {
+                    BuffPan = Floor.Controls[$"BuffPan{b.Name}"] as Panel;
+                    if (BuffPan.Location != new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale))) BuffPan.Location = new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale));
+                    if (BuffPan.Size != new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale))) BuffPan.Size = new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale));
+                }
+                else
+                {
+                    BuffPan = new Panel();
+                    BuffPan.Name = $"BuffPan{b.Name}";
+                    BuffPan.BackColor = Color.AliceBlue;
+                    BuffPan.Location = new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale));
+                    BuffPan.Size = new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale));
 
-                if (!Floor.Controls.ContainsKey($"BuffPan{b.Name}")) Floor.Controls.Add(BuffPan);
+                    Floor.Controls.Add(BuffPan);
+                }
                 BuffPan.BringToFront();
 
-                MyPane Pan = new MyPane(b);
-                Pan.Name = b.Name;
-                Pan.BackColor = b.col;
-                Pan.MouseMove += new MouseEventHandler(this.Box_Drag);
-                Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
-                Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
+                MyPane Pan;
+                if (Floor.Controls.ContainsKey(b.Name))
+                {
+                    Pan = Floor.Controls[b.Name] as MyPane;
+                    if (Pan.Location != new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale))) Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
+                    if (Pan.Size != new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale))) Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
+                }
+                else
+                {
+                    Pan = new MyPane(b);
+                    Pan.Name = b.Name;
+                    Pan.BackColor = b.col;
+                    Pan.MouseMove += new MouseEventHandler(this.Box_Drag);
+                    Pan.MouseDoubleClick += new MouseEventHandler(Forms.Box_Menu.FormShow);
+                    Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
+                    Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
 
-                if (!Floor.Controls.ContainsKey(b.Name)) Floor.Controls.Add(Pan);
+                    Floor.Controls.Add(Pan);
+                }
                 Pan.BringToFront();
             }
         }
@@ -163,6 +186,7 @@ namespace Technical_Solution
                 Point NewLoc = new Point((int)Math.Round((Pan.Location.X - FloorView.Location.X) / Scale), (int)Math.Round((Pan.Location.Y - FloorView.Location.Y) / Scale));
                 if (!garage.Boxes.Contains(Pan.box)) garage.AddBox(Pan.box, NewLoc);
                 Pan.box.buffer.Position = new Point(NewLoc.X - garage.bufferWidth, NewLoc.Y - garage.bufferWidth);
+                Pan.box.Position = NewLoc;
                 DrawFloor();
             }
             else if (!(Pan.Location.X > Box_Queue_Group.Location.X && Pan.Location.X + Pan.Size.Width < Box_Queue_Group.Location.X + Box_Queue_Group.Size.Width &&

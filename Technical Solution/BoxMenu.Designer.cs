@@ -1,8 +1,6 @@
-﻿using System.Windows.Forms;
-
-namespace Technical_Solution
+﻿namespace Technical_Solution
 {
-    partial class Main
+    partial class BoxMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -30,11 +28,9 @@ namespace Technical_Solution
         /// </summary>
         private void InitializeComponent()
         {
-            this.FloorView = new System.Windows.Forms.GroupBox();
-            this.Box_Queue_Group = new System.Windows.Forms.GroupBox();
             this.Add_Box_Group = new System.Windows.Forms.GroupBox();
             this.Err_Lbl = new System.Windows.Forms.Label();
-            this.Add_Btn = new System.Windows.Forms.Button();
+            this.Edit_Btn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -47,37 +43,14 @@ namespace Technical_Solution
             this.Length_Txt = new System.Windows.Forms.TextBox();
             this.Weight_Txt = new System.Windows.Forms.TextBox();
             this.Name_Txt = new System.Windows.Forms.TextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Debug = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Add_Box_Group.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // FloorView
-            // 
-            this.FloorView.Location = new System.Drawing.Point(12, 27);
-            this.FloorView.Name = "FloorView";
-            this.FloorView.Size = new System.Drawing.Size(1205, 597);
-            this.FloorView.TabIndex = 0;
-            this.FloorView.TabStop = false;
-            this.FloorView.Text = "Floorplan";
-            // 
-            // Box_Queue_Group
-            // 
-            this.Box_Queue_Group.Location = new System.Drawing.Point(1223, 27);
-            this.Box_Queue_Group.Name = "Box_Queue_Group";
-            this.Box_Queue_Group.Size = new System.Drawing.Size(245, 597);
-            this.Box_Queue_Group.TabIndex = 1;
-            this.Box_Queue_Group.TabStop = false;
-            this.Box_Queue_Group.Text = "Box Queue";
             // 
             // Add_Box_Group
             // 
             this.Add_Box_Group.Controls.Add(this.Err_Lbl);
-            this.Add_Box_Group.Controls.Add(this.Add_Btn);
+            this.Add_Box_Group.Controls.Add(this.Edit_Btn);
             this.Add_Box_Group.Controls.Add(this.label5);
             this.Add_Box_Group.Controls.Add(this.label4);
             this.Add_Box_Group.Controls.Add(this.label3);
@@ -90,12 +63,12 @@ namespace Technical_Solution
             this.Add_Box_Group.Controls.Add(this.Length_Txt);
             this.Add_Box_Group.Controls.Add(this.Weight_Txt);
             this.Add_Box_Group.Controls.Add(this.Name_Txt);
-            this.Add_Box_Group.Location = new System.Drawing.Point(12, 630);
+            this.Add_Box_Group.Location = new System.Drawing.Point(12, 12);
             this.Add_Box_Group.Name = "Add_Box_Group";
-            this.Add_Box_Group.Size = new System.Drawing.Size(311, 194);
-            this.Add_Box_Group.TabIndex = 2;
+            this.Add_Box_Group.Size = new System.Drawing.Size(311, 196);
+            this.Add_Box_Group.TabIndex = 3;
             this.Add_Box_Group.TabStop = false;
-            this.Add_Box_Group.Text = "Add Box To Queue";
+            this.Add_Box_Group.Text = "Edit Box Data";
             // 
             // Err_Lbl
             // 
@@ -108,15 +81,15 @@ namespace Technical_Solution
             this.Err_Lbl.Text = "Some Fields are incorrect";
             this.Err_Lbl.Visible = false;
             // 
-            // Add_Btn
+            // Edit_Btn
             // 
-            this.Add_Btn.Location = new System.Drawing.Point(219, 165);
-            this.Add_Btn.Name = "Add_Btn";
-            this.Add_Btn.Size = new System.Drawing.Size(86, 23);
-            this.Add_Btn.TabIndex = 12;
-            this.Add_Btn.Text = "Add To Queue";
-            this.Add_Btn.UseVisualStyleBackColor = true;
-            this.Add_Btn.Click += new System.EventHandler(this.Add_Btn_Click);
+            this.Edit_Btn.Location = new System.Drawing.Point(243, 165);
+            this.Edit_Btn.Name = "Edit_Btn";
+            this.Edit_Btn.Size = new System.Drawing.Size(62, 23);
+            this.Edit_Btn.TabIndex = 12;
+            this.Edit_Btn.Text = "Edit Box";
+            this.Edit_Btn.UseVisualStyleBackColor = true;
+            this.Edit_Btn.Click += new System.EventHandler(this.Edit_Btn_Click);
             // 
             // label5
             // 
@@ -182,7 +155,6 @@ namespace Technical_Solution
             this.Rand_Col_Btn.TabIndex = 5;
             this.Rand_Col_Btn.Text = "Random";
             this.Rand_Col_Btn.UseVisualStyleBackColor = true;
-            this.Rand_Col_Btn.Click += new System.EventHandler(this.Rand_Col_Btn_Click);
             // 
             // Colour_Txt
             // 
@@ -190,7 +162,6 @@ namespace Technical_Solution
             this.Colour_Txt.Name = "Colour_Txt";
             this.Colour_Txt.Size = new System.Drawing.Size(100, 20);
             this.Colour_Txt.TabIndex = 4;
-            this.Colour_Txt.TextChanged += new System.EventHandler(this.Colour_Txt_TextChanged);
             // 
             // Width_Txt
             // 
@@ -220,78 +191,35 @@ namespace Technical_Solution
             this.Name_Txt.Size = new System.Drawing.Size(100, 20);
             this.Name_Txt.TabIndex = 0;
             // 
-            // menuStrip1
+            // groupBox1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1469, 24);
-            this.menuStrip1.TabIndex = 3;
-            this.menuStrip1.Text = "menuStrip1";
+            this.groupBox1.Location = new System.Drawing.Point(12, 214);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(311, 224);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
             // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem,
-            this.loadToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // loadToolStripMenuItem
-            // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.loadToolStripMenuItem.Text = "Load";
-            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
-            // 
-            // Debug
-            // 
-            this.Debug.AutoSize = true;
-            this.Debug.Location = new System.Drawing.Point(1082, 686);
-            this.Debug.Name = "Debug";
-            this.Debug.Size = new System.Drawing.Size(35, 13);
-            this.Debug.TabIndex = 4;
-            this.Debug.Text = "label6";
-            // 
-            // Main
+            // BoxMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1469, 825);
-            this.Controls.Add(this.Debug);
+            this.ClientSize = new System.Drawing.Size(337, 450);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Add_Box_Group);
-            this.Controls.Add(this.Box_Queue_Group);
-            this.Controls.Add(this.FloorView);
-            this.Controls.Add(this.menuStrip1);
-            this.Name = "Main";
-            this.Text = "Form1";
+            this.Name = "BoxMenu";
+            this.Text = "BoxMenu";
             this.Add_Box_Group.ResumeLayout(false);
             this.Add_Box_Group.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox FloorView;
-        private System.Windows.Forms.GroupBox Box_Queue_Group;
         private System.Windows.Forms.GroupBox Add_Box_Group;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.Label Err_Lbl;
+        private System.Windows.Forms.Button Edit_Btn;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -304,9 +232,6 @@ namespace Technical_Solution
         private System.Windows.Forms.TextBox Length_Txt;
         private System.Windows.Forms.TextBox Weight_Txt;
         private System.Windows.Forms.TextBox Name_Txt;
-        private System.Windows.Forms.Button Add_Btn;
-        private System.Windows.Forms.Label Err_Lbl;
-        private Label Debug;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
-

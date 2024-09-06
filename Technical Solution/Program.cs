@@ -19,6 +19,7 @@ namespace Technical_Solution
             Application.SetCompatibleTextRenderingDefault(false);
             Forms.MainWindow = new Main();
             Forms.L_Menu = new LoadMenu();
+            Forms.Box_Menu = new BoxMenu();
             Application.Run(Forms.MainWindow);
         }
     }
@@ -33,5 +34,6 @@ namespace Technical_Solution
 
         public static Main MainWindow;
         public static LoadMenu L_Menu;
+        public static BoxMenu Box_Menu;
     }
 }

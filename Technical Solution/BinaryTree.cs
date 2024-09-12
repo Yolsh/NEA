@@ -12,7 +12,7 @@ namespace Technical_Solution
         public SortNode Left;
         public SortNode Right;
         public int Area;
-        public BoxBuffer b;
+        public Box b;
         public Point Position;
         public Size Size;
 
@@ -23,7 +23,7 @@ namespace Technical_Solution
             Position = location;
         }
 
-        public static void AddBox(BoxBuffer b, SortNode root)
+        public static void AddBox(Box b, SortNode root)
         {
             if (root.b is null)
             {
@@ -39,15 +39,15 @@ namespace Technical_Solution
             }
         }
 
-        //public static void CorrectPositions(SortNode root)
-        //{
-        //    if (root.b is null) return;
-        //    int XMov = root.Position.X - root.b.Position.X;
-        //    int YMov = root.Position.Y - root.b.Position.Y;
-        //    root.b.Buffered.SetPosition(new Point(root.b.Buffered.Position.X + XMov, root.b.Buffered.Position.Y + YMov));
-        //    root.b.SetPosition(new Point(root.Position.X, root.Position.Y));
-        //    CorrectPositions(root.Left);
-        //    CorrectPositions(root.Right);
-        //}
+        public static void CorrectPositions(SortNode root)
+        {
+            if (root.b is null) return;
+            int XMov = root.Position.X - root.b.Position.X;
+            int YMov = root.Position.Y - root.b.Position.Y;
+            root.b.Position = new Point(root.b.Position.X + XMov, root.b.Position.Y + YMov);
+            root.b.buffer.Position = new Point(root.Position.X, root.Position.Y);
+            CorrectPositions(root.Left);
+            CorrectPositions(root.Right);
+        }
     }
 }

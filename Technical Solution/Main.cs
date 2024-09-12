@@ -204,5 +204,13 @@ namespace Technical_Solution
                 DrawQueue();
             }
         }
+
+        private void OrgGarageBtn_Click(object sender, EventArgs e)
+        {
+            if (IncBoxQueueCheck.Checked)
+            {
+
+            }
+        }
     }
 }

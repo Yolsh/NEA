@@ -207,10 +207,7 @@ namespace Technical_Solution
 
         private void OrgGarageBtn_Click(object sender, EventArgs e)
         {
-            if (IncBoxQueueCheck.Checked)
-            {
-
-            }
+            Debug.Text = garage.Organise();
         }
     }
 }

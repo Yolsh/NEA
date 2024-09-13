@@ -54,6 +54,7 @@ namespace Technical_Solution
             this.OrganBox = new System.Windows.Forms.GroupBox();
             this.OrgGarageBtn = new System.Windows.Forms.Button();
             this.IncBoxQueueCheck = new System.Windows.Forms.CheckBox();
+            this.Debug = new System.Windows.Forms.Label();
             this.Add_Box_Group.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.OrganBox.SuspendLayout();
@@ -310,12 +311,22 @@ namespace Technical_Solution
             this.IncBoxQueueCheck.Text = "Include Boxes in Queue";
             this.IncBoxQueueCheck.UseVisualStyleBackColor = true;
             // 
+            // Debug
+            // 
+            this.Debug.AutoSize = true;
+            this.Debug.Location = new System.Drawing.Point(890, 1114);
+            this.Debug.Name = "Debug";
+            this.Debug.Size = new System.Drawing.Size(51, 20);
+            this.Debug.TabIndex = 5;
+            this.Debug.Text = "label6";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1924, 1050);
+            this.Controls.Add(this.Debug);
             this.Controls.Add(this.OrganBox);
             this.Controls.Add(this.Add_Box_Group);
             this.Controls.Add(this.Box_Queue_Group);
@@ -361,5 +372,6 @@ namespace Technical_Solution
         private GroupBox OrganBox;
         private CheckBox IncBoxQueueCheck;
         private Button OrgGarageBtn;
+        private Label Debug;
     }
 }

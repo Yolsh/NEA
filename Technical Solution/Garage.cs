@@ -10,6 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Runtime.InteropServices;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Technical_Solution
 {
@@ -51,55 +52,63 @@ namespace Technical_Solution
             return this;
         }
 
-        public void Organise()
+        public string Organise()
         {
-            SortBoxList();
-            SortNode root = new SortNode(new Size(Length, Width), new Point(1, 1)); //create to nearest door later
-            //BoxBuffer.ResetBuffers(Boxes);
-            try
+            SortBoxList(Boxes, 0, Boxes.Count() - 1);
+            string output = "";
+            foreach (Box b in Boxes )
             {
-                foreach (Box S in Boxes)
-                {
-                    SortNode.AddBox(S, root);
-                    SortNode.CorrectPositions(root);
-                }
+                output += $"{b.Size.Width}, ";
             }
-            catch (IncorrectPlacementException)
-            {
-                Console.Clear();
-                DrawTree(root, 0);
-                Console.ReadKey();
-            }
-            //BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
-            UpdateFloor();
-            //BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
-            UpdateFloor();
+            return output;
+            //SortNode root = new SortNode(new Size(Length, Width), new Point(1, 1)); //create to nearest door later
+            ////BoxBuffer.ResetBuffers(Boxes);
+            //try
+            //{
+            //    foreach (Box S in Boxes)
+            //    {
+            //        SortNode.AddBox(S, root);
+            //        SortNode.CorrectPositions(root);
+            //    }
+            //}
+            //catch (IncorrectPlacementException)
+            //{
+            //    Console.Clear();
+            //    DrawTree(root, 0);
+            //    Console.ReadKey();
+            //}
+            ////BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
+            //UpdateFloor();
+            ////BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
+            //UpdateFloor();
         }
 
-        private void SortBoxList() //this should be a merge sort later
+        private void SortBoxList(List<Box> BoxList, int start, int end) //this should be a merge sort later
         {
-            List<List<Box>> Collection = new List<List<Box>>();
-            foreach (Box b in Boxes)
+            void Merger(List<Box> NewList, int s, int m, int e)
             {
-                Collection.Add(new List<Box>{b});
-            }
+                List<Box> Left = new List<Box>();
+                List<Box> Right = new List<Box>();
+                for (int x = 0; x < m+1; x++) Left.Add(Boxes[x]);
+                for (int x = m+1; x < e; x++) Right.Add(Boxes[x]);
 
-            while(Collection.Count() > 1)
-            {
-                for (int i = 0; i < Collection.Count; i++)
+                int i = 0, j = 0;
+                while (i < Left.Count() && j < Right.Count())
                 {
-                    int count = 0;
-                    foreach (Box b in Collection[i+1])
-                    {
-                        if (b.Size.Width > Collection[i][count].Size.Width)
-                        {
-
-                        }
-                        count++;
-                    }
+                    if (Left[i].Size.Width <= Right[j].Size.Width) NewList.Add(Left[i]);
+                    else NewList.Add(Right[j]);
                 }
+                foreach (Box b in Left) NewList.Add(b);
+                foreach (Box b in Right) NewList.Add(b);
             }
 
+            if (start < end)
+            {
+                int midpoint = start + (end - 1)/2;
+                SortBoxList(BoxList, start, midpoint);
+                SortBoxList(BoxList, midpoint + 1, end);
+                Merger(BoxList, start, midpoint, end);
+            }
 
 
             //List<Box> NewList = new List<Box>();

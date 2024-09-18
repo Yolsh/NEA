@@ -15,67 +15,68 @@ namespace Merge_Sort_Test
             List<Box> Boxes = new List<Box>();
             Boxes.Add(new Box("b", 2, new Size(300, 200), 150, Color.AliceBlue));
             Boxes.Add(new Box("b", 2, new Size(200, 200), 150, Color.AliceBlue));
-            Boxes.Add(new Box("b", 2, new Size(600, 200), 150, Color.AliceBlue));
             Boxes.Add(new Box("b", 2, new Size(100, 200), 150, Color.AliceBlue));
+            Boxes.Add(new Box("b", 2, new Size(600, 200), 150, Color.AliceBlue));
+            foreach (Box b in Boxes)
+            {
+                Console.Write($"{b.Size.Width}, ");
+            }
             SortBoxList(Boxes, 0, Boxes.Count()-1);
             foreach (Box b in Boxes)
             {
-                Console.WriteLine(b.Size.Width);
+                Console.Write($"{b.Size.Width}, ");
             }
             Console.ReadKey();
         }
 
         private static void Merger(List<Box> NewList, int s, int m, int e)
         {
-            if (s != e)
+            int LSize = m - s + 1;
+            int RSize = e - m;
+
+            Box[] Left = new Box[LSize];
+            Box[] Right = new Box[RSize];
+
+            for (int i = 0; i < LSize; i++) Left[i] = NewList[s+i];
+            for (int i = 0; i < RSize; i++) Right[i] = NewList[m+i+1];
+
+            int L = 0, R = 0, pointer = s;
+            while (L < Left.Length && R < Right.Length)
             {
-
-            }
-
-            int SizeL = m - s + 1;
-            int SizeR = e - m;
-
-            List<Box> Left = new List<Box>();
-            List<Box> Right = new List<Box>();
-            for (int x = 0; x < SizeL; x++) Left.Add(NewList[s + x]);
-            for (int x = 0; x < SizeR; x++) Right.Add(NewList[m + x + 1]);
-
-            int i = 0, j = 0, pointer = s;
-            while (i < Left.Count() && j < Right.Count())
-            {
-                if (Left[i].Size.Width >= Right[j].Size.Width)
+                if (Left[L].Size.Width <= Right[R].Size.Width)
                 {
-                    NewList[pointer] = Left[i];
-                    i++;
+                    NewList[pointer] = Right[R];
+                    R++; 
                 }
                 else
                 {
-                    NewList[pointer] = Right[j];
-                    j++;
+                    NewList[pointer] = Left[L];
+                    L++;
                 }
                 pointer++;
             }
-            while (i < SizeL)
+
+            while (L < LSize)
             {
-                NewList[pointer] = Left[i];
-                i++;
+                NewList[pointer] = Left[L];
+                L++;
                 pointer++;
             }
-            while (j < SizeR)
+            while (R < RSize)
             {
-                NewList[pointer] = Right[j];
-                j++;
+                NewList[pointer] = Right[R];
+                R++;
                 pointer++;
             }
         }
 
         static private void SortBoxList(List<Box> BoxList, int start, int end)
         {
-            int midpoint = start + (end - 1) / 2;
+            int midpoint = (int)Math.Ceiling(((double)start + (end - 1)) / 2);
             if (start < end)
             {
                 SortBoxList(BoxList, start, midpoint);
-                SortBoxList(BoxList, midpoint + 1, end);
+                SortBoxList(BoxList, midpoint+1, end);
             }
             Merger(BoxList, start, midpoint, end);
         }

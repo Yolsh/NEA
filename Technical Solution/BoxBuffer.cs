@@ -27,10 +27,10 @@ namespace Technical_Solution
         }
 
         [JsonConstructor]
-        public BoxBuffer(int Width, Size inSize, Point inLoc) : base(inSize)
+        public BoxBuffer(int BufferWidth, Size inSize, Point inLoc) : base(inSize)
         {
             Position = inLoc;
-            BufferWidth = Width;
+            this.BufferWidth = BufferWidth;
         }
 
         //public static void CollapseBuffersWalls(List<Square> Boxes, int Length, int Width)

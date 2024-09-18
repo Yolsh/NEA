@@ -208,6 +208,7 @@ namespace Technical_Solution
         private void OrgGarageBtn_Click(object sender, EventArgs e)
         {
             Debug.Text = garage.Organise();
+            Draw();
         }
     }
 }

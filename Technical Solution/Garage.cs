@@ -54,98 +54,72 @@ namespace Technical_Solution
 
         public string Organise()
         {
-            SortBoxList(Boxes, 0, Boxes.Count() - 1);
+            SortBoxList(Boxes, Boxes.Count() - 1);
+
+            //check Sorted
             string output = "";
             foreach (Box b in Boxes )
             {
-                output += $"{b.Size.Width}, ";
+                output += $"{b.Size.Width * b.Size.Height}, ";
             }
-            return output;
-            //SortNode root = new SortNode(new Size(Length, Width), new Point(1, 1)); //create to nearest door later
-            ////BoxBuffer.ResetBuffers(Boxes);
-            //try
-            //{
-            //    foreach (Box S in Boxes)
-            //    {
-            //        SortNode.AddBox(S, root);
-            //        SortNode.CorrectPositions(root);
-            //    }
-            //}
-            //catch (IncorrectPlacementException)
-            //{
-            //    Console.Clear();
-            //    DrawTree(root, 0);
-            //    Console.ReadKey();
-            //}
-            ////BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
-            //UpdateFloor();
-            ////BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
-            //UpdateFloor();
+
+            SortNode root = new SortNode(new Size(Length, Width), new Point(1, 1)); //create to nearest door later
+
+            foreach (Box S in Boxes) SortNode.AddBox(S, root);
+            SortNode.CorrectPositions(root);
+            return Boxes[0].buffer.BufferWidth.ToString();
         }
 
-        private void SortBoxList(List<Box> BoxList, int start, int end) //this should be a merge sort later
+        private static void Merger(List<Box> NewList, int s, int m, int e)
         {
-            void Merger(List<Box> NewList, int s, int m, int e)
-            {
-                List<Box> Left = new List<Box>();
-                List<Box> Right = new List<Box>();
-                for (int x = 0; x < m+1; x++) Left.Add(Boxes[x]);
-                for (int x = m+1; x < e; x++) Right.Add(Boxes[x]);
+            int LSize = m - s + 1;
+            int RSize = e - m;
 
-                int i = 0, j = 0;
-                while (i < Left.Count() && j < Right.Count())
+            Box[] Left = new Box[LSize];
+            Box[] Right = new Box[RSize];
+
+            for (int i = 0; i < LSize; i++) Left[i] = NewList[s + i];
+            for (int i = 0; i < RSize; i++) Right[i] = NewList[m + i + 1];
+
+            int L = 0, R = 0, pointer = s;
+            while (L < Left.Length && R < Right.Length)
+            {
+                if (Left[L].Size.Width * Left[L].Size.Height <= Right[R].Size.Width * Right[R].Size.Height)
                 {
-                    if (Left[i].Size.Width <= Right[j].Size.Width) NewList.Add(Left[i]);
-                    else NewList.Add(Right[j]);
+                    NewList[pointer] = Right[R];
+                    R++;
                 }
-                foreach (Box b in Left) NewList.Add(b);
-                foreach (Box b in Right) NewList.Add(b);
+                else
+                {
+                    NewList[pointer] = Left[L];
+                    L++;
+                }
+                pointer++;
             }
 
+            while (L < LSize)
+            {
+                NewList[pointer] = Left[L];
+                L++;
+                pointer++;
+            }
+            while (R < RSize)
+            {
+                NewList[pointer] = Right[R];
+                R++;
+                pointer++;
+            }
+        }
+
+        static private void SortBoxList(List<Box> BoxList, int end, int start = 0)
+        {
+            int midpoint = (int)Math.Ceiling(((double)start + (end - 1)) / 2);
             if (start < end)
             {
-                int midpoint = start + (end - 1)/2;
                 SortBoxList(BoxList, start, midpoint);
                 SortBoxList(BoxList, midpoint + 1, end);
-                Merger(BoxList, start, midpoint, end);
             }
-
-
-            //List<Box> NewList = new List<Box>();
-            //for (int i = 0; i < Boxes.Count(); i++)
-            //{
-            //    if (Boxes[i] is BoxBuffer)
-            //    {
-            //        NewList.Add(Boxes[i]);
-            //        Boxes.Remove(Boxes[i]);
-            //    }
-            //}
-
-            //bool Swapped = true;
-
-            //while (Swapped)
-            //{
-            //    Swapped = false;
-            //    for (int i = 1; i < NewList.Count(); i++)
-            //    {
-            //        if (NewList[i - 1].Size.Width * NewList[i - 1].Size.Height > NewList[i].Size.Width * NewList[i].Size.Height)
-            //        {
-            //            Square temp = NewList[i];
-            //            NewList[i] = NewList[i - 1];
-            //            NewList[i - 1] = temp;
-            //            Swapped = true;
-            //        }
-            //    }
-            //}
-
-            //NewList.AddRange(Boxes);
-            //Boxes = NewList;
-            //Console.Clear();
-            //foreach (Square square in NewList)
-            //{
-            //    Console.WriteLine(square.Size.Width * square.Size.Height);
-            //}
-            //Console.ReadKey();
+            Merger(BoxList, start, midpoint, end);
         }
 
         public void UpdateFloor()
@@ -163,15 +137,6 @@ namespace Technical_Solution
                 }
             }
             floorplan = NewFloorplan;
-        }
-
-        private void DrawTree(SortNode root, int dir)
-        {
-            Console.WriteLine(dir == 0 ? "" : dir == 1 ? "/" : "\\") ;
-            Console.WriteLine(root.b is null ? root.Size.Width + "," + root.Size.Height : "\u2588");
-            if (root.Left != null) DrawTree(root.Left, 1);
-            if (root.Right != null) DrawTree(root.Right, 2);
-            else Console.WriteLine("_");
         }
     }
 }

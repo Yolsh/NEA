@@ -19,6 +19,7 @@ namespace Technical_Solution
         public Garage garage;
         public List<Box> Box_Queue;
         private double Scale;
+        private int BoxCount = 0;
 
         public Main()
         {
@@ -57,8 +58,9 @@ namespace Technical_Solution
             foreach (Box box in Box_Queue)
             {
                 MyPane BoxPan = new MyPane(box);
+                BoxPan.Name = box.Boxid.ToString();
                 BoxPan.MouseMove += new MouseEventHandler(this.Box_Drag);
-                BoxPan.MouseClick += new MouseEventHandler(Forms.Box_Menu.FormShow);
+                BoxPan.MouseClick += new MouseEventHandler(this.OpenBoxMenuRC);
                 BoxPan.BackColor = box.col;
                 BoxPan.Location = new Point(25, Offset_Y);
                 BoxPan.Size = new Size((int)Math.Round(box.Size.Width * Scale), (int)Math.Round(box.Size.Height * Scale));
@@ -86,16 +88,16 @@ namespace Technical_Solution
             foreach (Box b in garage.Boxes.OfType<Box>())
             {
                 Panel BuffPan;
-                if (Floor.Controls.ContainsKey($"BuffPan{b.Name}"))
+                if (Floor.Controls.ContainsKey($"BuffPan{b.Boxid}"))
                 {
-                    BuffPan = Floor.Controls[$"BuffPan{b.Name}"] as Panel;
+                    BuffPan = Floor.Controls[$"BuffPan{b.Boxid}"] as Panel;
                     if (BuffPan.Location != new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale))) BuffPan.Location = new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale));
                     if (BuffPan.Size != new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale))) BuffPan.Size = new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale));
                 }
                 else
                 {
                     BuffPan = new Panel();
-                    BuffPan.Name = $"BuffPan{b.Name}";
+                    BuffPan.Name = $"BuffPan{b.Boxid}";
                     BuffPan.BackColor = Color.AliceBlue;
                     BuffPan.Location = new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale));
                     BuffPan.Size = new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale));
@@ -105,19 +107,20 @@ namespace Technical_Solution
                 BuffPan.BringToFront();
 
                 MyPane Pan;
-                if (Floor.Controls.ContainsKey(b.Name))
+                if (Floor.Controls.ContainsKey(b.Boxid.ToString()))
                 {
-                    Pan = Floor.Controls[b.Name] as MyPane;
+                    Pan = Floor.Controls[b.Boxid.ToString()] as MyPane;
                     if (Pan.Location != new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale))) Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
                     if (Pan.Size != new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale))) Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
                 }
                 else
                 {
                     Pan = new MyPane(b);
-                    Pan.Name = b.Name;
+                    if (this.Controls.ContainsKey(b.Boxid.ToString())) this.Controls.RemoveByKey(b.Boxid.ToString());
+                    Pan.Name = b.Boxid.ToString();
                     Pan.BackColor = b.col;
                     Pan.MouseMove += new MouseEventHandler(this.Box_Drag);
-                    Pan.MouseClick += new MouseEventHandler(Forms.Box_Menu.FormShow);
+                    Pan.MouseClick += new MouseEventHandler(this.OpenBoxMenuRC);
                     Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
                     Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
 
@@ -137,7 +140,8 @@ namespace Technical_Solution
                 Regex.IsMatch(Width_Txt.Text, "[0-9]+") &&
                 Col_Pan.BackColor != Color.FromName("Control"))
             {
-                Box NewBox = new Box(Name_Txt.Text, double.Parse(Weight_Txt.Text), new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text)), garage.bufferWidth, Col_Pan.BackColor);
+                Box NewBox = new Box(BoxCount, Name_Txt.Text, double.Parse(Weight_Txt.Text), new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text)), garage.bufferWidth, Col_Pan.BackColor);
+                BoxCount++;
                 Box_Queue.Add(NewBox);
                 DrawQueue();
 
@@ -203,6 +207,11 @@ namespace Technical_Solution
                 this.Controls.Remove(Pan);
                 DrawQueue();
             }
+        }
+
+        private void OpenBoxMenuRC(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right) Forms.Box_Menu.FormShow(sender, e);
         }
 
         private void OrgGarageBtn_Click(object sender, EventArgs e)

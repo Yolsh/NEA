@@ -138,18 +138,27 @@ namespace Technical_Solution
                 Regex.IsMatch(Weight_Txt.Text, "[0-9]*\\.*[0-9]+") &&
                 Regex.IsMatch(Length_Txt.Text, "[0-9]+") &&
                 Regex.IsMatch(Width_Txt.Text, "[0-9]+") &&
-                Col_Pan.BackColor != Color.FromName("Control"))
+                Math.Abs(Col_Pan.BackColor.R - 255) > 5 &&
+                Math.Abs(Col_Pan.BackColor.G - 127) > 5 && 
+                Math.Abs(Col_Pan.BackColor.B - 80) > 5)
             {
-                Box NewBox = new Box(BoxCount, Name_Txt.Text, double.Parse(Weight_Txt.Text), new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text)), garage.bufferWidth, Col_Pan.BackColor);
-                BoxCount++;
-                Box_Queue.Add(NewBox);
-                DrawQueue();
+                try
+                {
+                    Box NewBox = new Box(BoxCount, Name_Txt.Text, double.Parse(Weight_Txt.Text), new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text)), garage.bufferWidth, Col_Pan.BackColor);
+                    BoxCount++;
+                    Box_Queue.Add(NewBox);
+                    DrawQueue();
 
-                Name_Txt.Text = "";
-                Weight_Txt.Text = "";
-                Length_Txt.Text = "";
-                Width_Txt.Text = "";
-                Colour_Txt.Text = "";
+                    Name_Txt.Text = "";
+                    Weight_Txt.Text = "";
+                    Length_Txt.Text = "";
+                    Width_Txt.Text = "";
+                    Colour_Txt.Text = "";
+                }
+                catch (NullReferenceException)
+                {
+                    Err_Lbl.Show();
+                }
             }
             else Err_Lbl.Show();
         }

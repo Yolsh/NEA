@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -165,7 +166,10 @@ namespace Technical_Solution
 
         private void Colour_Txt_TextChanged(object sender, EventArgs e)
         {
-            Col_Pan.BackColor = Color.FromName(Colour_Txt.Text);
+            Col_Pan.BackColor = Regex.IsMatch(Colour_Txt.Text,
+                "(#([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9]))") ? 
+                ColorTranslator.FromHtml(Colour_Txt.Text) : Regex.Match(Colour_Txt.Text, "((25[0-5]|2[0-4][0-9])|1?[0-9][0-9]), ?((25[0-5]|2[0-4][0-9])|1?[0-9][0-9]), ?((25[0-5]|2[0-4][0-9])|1?[0-9][0-9])").Length == Colour_Txt.Text.Length ? 
+                RGBString(Colour_Txt.Text): Color.FromName(Colour_Txt.Text);
         }
 
         private void Rand_Col_Btn_Click(object sender, EventArgs e)
@@ -227,6 +231,12 @@ namespace Technical_Solution
         {
             Debug.Text = garage.Organise();
             Draw();
+        }
+
+        private Color RGBString(string ColourString)
+        {
+            string[] Cols = ColourString.Split(',').Select(x => x.Replace(" ", "")).ToArray();
+            int
         }
     }
 }

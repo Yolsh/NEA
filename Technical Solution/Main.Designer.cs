@@ -52,8 +52,8 @@ namespace Technical_Solution
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OrganBox = new System.Windows.Forms.GroupBox();
-            this.OrgGarageBtn = new System.Windows.Forms.Button();
             this.IncBoxQueueCheck = new System.Windows.Forms.CheckBox();
+            this.OrgGarageBtn = new System.Windows.Forms.Button();
             this.Debug = new System.Windows.Forms.Label();
             this.Add_Box_Group.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -62,22 +62,18 @@ namespace Technical_Solution
             // 
             // FloorView
             // 
-            this.FloorView.Location = new System.Drawing.Point(18, 42);
-            this.FloorView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.FloorView.Location = new System.Drawing.Point(12, 27);
             this.FloorView.Name = "FloorView";
-            this.FloorView.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.FloorView.Size = new System.Drawing.Size(1808, 918);
+            this.FloorView.Size = new System.Drawing.Size(1205, 597);
             this.FloorView.TabIndex = 0;
             this.FloorView.TabStop = false;
             this.FloorView.Text = "Floorplan";
             // 
             // Box_Queue_Group
             // 
-            this.Box_Queue_Group.Location = new System.Drawing.Point(1834, 42);
-            this.Box_Queue_Group.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Box_Queue_Group.Location = new System.Drawing.Point(1223, 27);
             this.Box_Queue_Group.Name = "Box_Queue_Group";
-            this.Box_Queue_Group.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Box_Queue_Group.Size = new System.Drawing.Size(368, 918);
+            this.Box_Queue_Group.Size = new System.Drawing.Size(245, 597);
             this.Box_Queue_Group.TabIndex = 1;
             this.Box_Queue_Group.TabStop = false;
             this.Box_Queue_Group.Text = "Box Queue";
@@ -98,11 +94,9 @@ namespace Technical_Solution
             this.Add_Box_Group.Controls.Add(this.Length_Txt);
             this.Add_Box_Group.Controls.Add(this.Weight_Txt);
             this.Add_Box_Group.Controls.Add(this.Name_Txt);
-            this.Add_Box_Group.Location = new System.Drawing.Point(18, 969);
-            this.Add_Box_Group.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Add_Box_Group.Location = new System.Drawing.Point(12, 630);
             this.Add_Box_Group.Name = "Add_Box_Group";
-            this.Add_Box_Group.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Add_Box_Group.Size = new System.Drawing.Size(466, 298);
+            this.Add_Box_Group.Size = new System.Drawing.Size(311, 194);
             this.Add_Box_Group.TabIndex = 2;
             this.Add_Box_Group.TabStop = false;
             this.Add_Box_Group.Text = "Add Box To Queue";
@@ -111,20 +105,18 @@ namespace Technical_Solution
             // 
             this.Err_Lbl.AutoSize = true;
             this.Err_Lbl.ForeColor = System.Drawing.Color.Crimson;
-            this.Err_Lbl.Location = new System.Drawing.Point(9, 254);
-            this.Err_Lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Err_Lbl.Location = new System.Drawing.Point(6, 165);
             this.Err_Lbl.Name = "Err_Lbl";
-            this.Err_Lbl.Size = new System.Drawing.Size(189, 20);
+            this.Err_Lbl.Size = new System.Drawing.Size(126, 13);
             this.Err_Lbl.TabIndex = 13;
             this.Err_Lbl.Text = "Some Fields are incorrect";
             this.Err_Lbl.Visible = false;
             // 
             // Add_Btn
             // 
-            this.Add_Btn.Location = new System.Drawing.Point(328, 254);
-            this.Add_Btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Add_Btn.Location = new System.Drawing.Point(219, 165);
             this.Add_Btn.Name = "Add_Btn";
-            this.Add_Btn.Size = new System.Drawing.Size(129, 35);
+            this.Add_Btn.Size = new System.Drawing.Size(86, 23);
             this.Add_Btn.TabIndex = 12;
             this.Add_Btn.Text = "Add To Queue";
             this.Add_Btn.UseVisualStyleBackColor = true;
@@ -133,30 +125,27 @@ namespace Technical_Solution
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 195);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(6, 127);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 20);
+            this.label5.Size = new System.Drawing.Size(40, 13);
             this.label5.TabIndex = 11;
             this.label5.Text = "Colour:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 154);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(6, 100);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 20);
+            this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 10;
             this.label4.Text = "Width:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 114);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(6, 74);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 20);
+            this.label3.Size = new System.Drawing.Size(43, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "Length:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -164,10 +153,9 @@ namespace Technical_Solution
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 74);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(6, 48);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 20);
+            this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 8;
             this.label2.Text = "Weight:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -175,10 +163,9 @@ namespace Technical_Solution
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 34);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(6, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 20);
+            this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "Name:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -186,18 +173,16 @@ namespace Technical_Solution
             // Col_Pan
             // 
             this.Col_Pan.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Col_Pan.Location = new System.Drawing.Point(117, 198);
-            this.Col_Pan.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Col_Pan.Location = new System.Drawing.Point(78, 129);
             this.Col_Pan.Name = "Col_Pan";
-            this.Col_Pan.Size = new System.Drawing.Size(18, 22);
+            this.Col_Pan.Size = new System.Drawing.Size(12, 14);
             this.Col_Pan.TabIndex = 6;
             // 
             // Rand_Col_Btn
             // 
-            this.Rand_Col_Btn.Location = new System.Drawing.Point(303, 189);
-            this.Rand_Col_Btn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Rand_Col_Btn.Location = new System.Drawing.Point(202, 123);
             this.Rand_Col_Btn.Name = "Rand_Col_Btn";
-            this.Rand_Col_Btn.Size = new System.Drawing.Size(87, 31);
+            this.Rand_Col_Btn.Size = new System.Drawing.Size(58, 20);
             this.Rand_Col_Btn.TabIndex = 5;
             this.Rand_Col_Btn.Text = "Random";
             this.Rand_Col_Btn.UseVisualStyleBackColor = true;
@@ -205,55 +190,49 @@ namespace Technical_Solution
             // 
             // Colour_Txt
             // 
-            this.Colour_Txt.Location = new System.Drawing.Point(144, 189);
-            this.Colour_Txt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Colour_Txt.Location = new System.Drawing.Point(96, 123);
             this.Colour_Txt.Name = "Colour_Txt";
-            this.Colour_Txt.Size = new System.Drawing.Size(148, 26);
+            this.Colour_Txt.Size = new System.Drawing.Size(100, 20);
             this.Colour_Txt.TabIndex = 4;
             this.Colour_Txt.TextChanged += new System.EventHandler(this.Colour_Txt_TextChanged);
             // 
             // Width_Txt
             // 
-            this.Width_Txt.Location = new System.Drawing.Point(144, 149);
-            this.Width_Txt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Width_Txt.Location = new System.Drawing.Point(96, 97);
             this.Width_Txt.Name = "Width_Txt";
-            this.Width_Txt.Size = new System.Drawing.Size(148, 26);
+            this.Width_Txt.Size = new System.Drawing.Size(100, 20);
             this.Width_Txt.TabIndex = 3;
             // 
             // Length_Txt
             // 
-            this.Length_Txt.Location = new System.Drawing.Point(144, 109);
-            this.Length_Txt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Length_Txt.Location = new System.Drawing.Point(96, 71);
             this.Length_Txt.Name = "Length_Txt";
-            this.Length_Txt.Size = new System.Drawing.Size(148, 26);
+            this.Length_Txt.Size = new System.Drawing.Size(100, 20);
             this.Length_Txt.TabIndex = 2;
             // 
             // Weight_Txt
             // 
-            this.Weight_Txt.Location = new System.Drawing.Point(144, 69);
-            this.Weight_Txt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Weight_Txt.Location = new System.Drawing.Point(96, 45);
             this.Weight_Txt.Name = "Weight_Txt";
-            this.Weight_Txt.Size = new System.Drawing.Size(148, 26);
+            this.Weight_Txt.Size = new System.Drawing.Size(100, 20);
             this.Weight_Txt.TabIndex = 1;
             // 
             // Name_Txt
             // 
-            this.Name_Txt.Location = new System.Drawing.Point(144, 29);
-            this.Name_Txt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name_Txt.Location = new System.Drawing.Point(96, 19);
             this.Name_Txt.Name = "Name_Txt";
-            this.Name_Txt.Size = new System.Drawing.Size(148, 26);
+            this.Name_Txt.Size = new System.Drawing.Size(100, 20);
             this.Name_Txt.TabIndex = 0;
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(2202, 33);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
+            this.menuStrip1.Size = new System.Drawing.Size(1468, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -263,20 +242,20 @@ namespace Technical_Solution
             this.saveToolStripMenuItem,
             this.loadToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(153, 34);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(153, 34);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -284,55 +263,59 @@ namespace Technical_Solution
             // 
             this.OrganBox.Controls.Add(this.IncBoxQueueCheck);
             this.OrganBox.Controls.Add(this.OrgGarageBtn);
-            this.OrganBox.Location = new System.Drawing.Point(491, 969);
+            this.OrganBox.Location = new System.Drawing.Point(327, 630);
+            this.OrganBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.OrganBox.Name = "OrganBox";
-            this.OrganBox.Size = new System.Drawing.Size(233, 298);
+            this.OrganBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OrganBox.Size = new System.Drawing.Size(155, 194);
             this.OrganBox.TabIndex = 4;
             this.OrganBox.TabStop = false;
             this.OrganBox.Text = "Organise Garage";
             // 
+            // IncBoxQueueCheck
+            // 
+            this.IncBoxQueueCheck.AutoSize = true;
+            this.IncBoxQueueCheck.Location = new System.Drawing.Point(15, 21);
+            this.IncBoxQueueCheck.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.IncBoxQueueCheck.Name = "IncBoxQueueCheck";
+            this.IncBoxQueueCheck.Size = new System.Drawing.Size(139, 17);
+            this.IncBoxQueueCheck.TabIndex = 1;
+            this.IncBoxQueueCheck.Text = "Include Boxes in Queue";
+            this.IncBoxQueueCheck.UseVisualStyleBackColor = true;
+            // 
             // OrgGarageBtn
             // 
-            this.OrgGarageBtn.Location = new System.Drawing.Point(6, 254);
+            this.OrgGarageBtn.Location = new System.Drawing.Point(4, 165);
+            this.OrgGarageBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.OrgGarageBtn.Name = "OrgGarageBtn";
-            this.OrgGarageBtn.Size = new System.Drawing.Size(152, 36);
+            this.OrgGarageBtn.Size = new System.Drawing.Size(101, 23);
             this.OrgGarageBtn.TabIndex = 0;
             this.OrgGarageBtn.Text = "Organise Garage";
             this.OrgGarageBtn.UseVisualStyleBackColor = true;
             this.OrgGarageBtn.Click += new System.EventHandler(this.OrgGarageBtn_Click);
             // 
-            // IncBoxQueueCheck
-            // 
-            this.IncBoxQueueCheck.AutoSize = true;
-            this.IncBoxQueueCheck.Location = new System.Drawing.Point(23, 33);
-            this.IncBoxQueueCheck.Name = "IncBoxQueueCheck";
-            this.IncBoxQueueCheck.Size = new System.Drawing.Size(203, 24);
-            this.IncBoxQueueCheck.TabIndex = 1;
-            this.IncBoxQueueCheck.Text = "Include Boxes in Queue";
-            this.IncBoxQueueCheck.UseVisualStyleBackColor = true;
-            // 
             // Debug
             // 
             this.Debug.AutoSize = true;
-            this.Debug.Location = new System.Drawing.Point(890, 1114);
+            this.Debug.Location = new System.Drawing.Point(593, 724);
+            this.Debug.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Debug.Name = "Debug";
-            this.Debug.Size = new System.Drawing.Size(51, 20);
+            this.Debug.Size = new System.Drawing.Size(35, 13);
             this.Debug.TabIndex = 5;
             this.Debug.Text = "label6";
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1924, 1050);
+            this.ClientSize = new System.Drawing.Size(1300, 699);
             this.Controls.Add(this.Debug);
             this.Controls.Add(this.OrganBox);
             this.Controls.Add(this.Add_Box_Group);
             this.Controls.Add(this.Box_Queue_Group);
             this.Controls.Add(this.FloorView);
             this.Controls.Add(this.menuStrip1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Main";
             this.Text = "Form1";
             this.Add_Box_Group.ResumeLayout(false);

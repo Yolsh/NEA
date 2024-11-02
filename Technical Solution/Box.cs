@@ -11,14 +11,16 @@ namespace Technical_Solution
     public class Box : Square
     {
         public string Name;
+        public int Boxid;
         public double Weight;
         public BoxBuffer buffer;
         public List<string> Contents { get; private set; }
         public Color col;
 
-        public Box(string inBoxName, double inWeight, Size inSize, int BufferWidth, Color inCol) : base(inSize)
+        public Box(int Boxid, string inBoxName, double inWeight, Size inSize, int BufferWidth, Color inCol) : base(inSize)
         {
             Name = inBoxName;
+            this.Boxid = Boxid;
             Weight = inWeight;
             col = inCol;
             buffer = new BoxBuffer(this, BufferWidth);

@@ -23,12 +23,14 @@ namespace Technical_Solution
         public int Length;
         public int bufferWidth;
         public string Name;
+        public int BoxCount;
 
-        public Garage(string inName, int inLength, int inWidth, int inBufferWidth, int rad, int x, int y)
+        public Garage(int bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int x, int y)
         {
             Width = inWidth;
             Length = inLength;
             bufferWidth = inBufferWidth;
+            BoxCount = bc;
             Name = inName;
             Boxes = new List<Box>();
             floorplan = new int[Width, Length];

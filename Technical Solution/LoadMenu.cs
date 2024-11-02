@@ -92,10 +92,10 @@ namespace Technical_Solution
 
                 if (count == 0)
                 {
-                    if (DoorVals[2] == 0) NewGarage = new Garage(GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], 0);
-                    else if (DoorVals[2] == 1) NewGarage = new Garage(GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], GWidth);
-                    else if (DoorVals[2] == 2) NewGarage = new Garage(GarageName, GLength, GWidth, MinSpacing, DoorVals[0], 0, DoorVals[1]);
-                    else if (DoorVals[2] == 3) NewGarage = new Garage(GarageName, GLength, GWidth, MinSpacing, DoorVals[0], GLength, DoorVals[1]);
+                    if (DoorVals[2] == 0) NewGarage = new Garage(0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], 0);
+                    else if (DoorVals[2] == 1) NewGarage = new Garage(0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], GWidth);
+                    else if (DoorVals[2] == 2) NewGarage = new Garage(0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], 0, DoorVals[1]);
+                    else if (DoorVals[2] == 3) NewGarage = new Garage(0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], GLength, DoorVals[1]);
                 }
                 else
                 {

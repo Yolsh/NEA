@@ -23,8 +23,22 @@ namespace Technical_Solution
         public Main()
         {
             InitializeComponent();
+            MyInitializer();
             rand = new Random();
             Box_Queue = new List<Box>();
+        }
+
+        private void MyInitializer()
+        {
+            int Space = 16;
+            this.Size = new Size(Screen.PrimaryScreen.WorkingArea.Size.Width, Screen.PrimaryScreen.WorkingArea.Size.Height - 24);
+            this.MenuStrip.Size = new Size(this.Size.Width, 24);
+            this.FloorView.Location = new Point(Space, this.MenuStrip.Size.Height + Space);
+            this.FloorView.Size = new Size((int)(0.8 * this.Size.Width), (int)(0.75 * this.Size.Height));
+            this.Box_Queue_Group.Location = new Point(this.FloorView.Location.X + this.FloorView.Size.Width + Space, this.FloorView.Location.Y);
+            this.Box_Queue_Group.Size = new Size(this.Size.Width - this.Box_Queue_Group.Location.X - Space, this.Size.Height - (this.MenuStrip.Size.Height + (2 * Space)));
+            this.Add_Box_Group.Location = new Point(this.FloorView.Location.X, this.FloorView.Location.Y + this.FloorView.Size.Height + Space);
+            this.OrganBox.Location = new Point(this.Add_Box_Group.Location.X + this.Add_Box_Group.Size.Width + Space, this.Add_Box_Group.Location.Y);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

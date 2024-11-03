@@ -47,6 +47,7 @@ namespace Technical_Solution
             //if (PosX <= 1 || PosX + SizeX > Length || PosY <= 1 || PosY + SizeY > Width) throw new IncorrectPlacementException();
             b.Position = Pos;
             Boxes.Add(b);
+            BoxCount = Boxes.Count();
             //BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
             //UpdateFloor();
             //BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
@@ -69,7 +70,28 @@ namespace Technical_Solution
 
             foreach (Box S in Boxes) SortNode.AddBox(S, root);
             SortNode.CorrectPositions(root);
-            return Boxes[0].buffer.BufferWidth.ToString();
+            return output;
+        }
+
+        public string Organise(List<Box> BoxQueue)
+        {
+            List<Box> newList = new List<Box>();
+            for (int i = 0; i < BoxQueue.Count(); i++) Boxes.Add(BoxQueue[i]);
+
+            SortBoxList(Boxes, newList.Count() - 1);
+
+            //check Sorted
+            string output = "";
+            foreach (Box b in Boxes)
+            {
+                output += $"{b.Size.Width * b.Size.Height}, ";
+            }
+
+            SortNode root = new SortNode(new Size(Length, Width), new Point(1, 1)); //create to nearest door later
+
+            foreach (Box S in Boxes) SortNode.AddBox(S, root);
+            SortNode.CorrectPositions(root);
+            return output;
         }
 
         private static void Merger(List<Box> NewList, int s, int m, int e)

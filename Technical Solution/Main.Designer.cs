@@ -55,13 +55,20 @@ namespace Technical_Solution
             this.IncBoxQueueCheck = new System.Windows.Forms.CheckBox();
             this.OrgGarageBtn = new System.Windows.Forms.Button();
             this.Debug = new System.Windows.Forms.Label();
+            this.SearchGroupBox = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.FloorView.SuspendLayout();
             this.Add_Box_Group.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             this.OrganBox.SuspendLayout();
+            this.SearchGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // FloorView
             // 
+            this.FloorView.Controls.Add(this.Debug);
             this.FloorView.Location = new System.Drawing.Point(12, 27);
             this.FloorView.Name = "FloorView";
             this.FloorView.Size = new System.Drawing.Size(1205, 597);
@@ -232,7 +239,7 @@ namespace Technical_Solution
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.MenuStrip.Size = new System.Drawing.Size(1300, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(1468, 24);
             this.MenuStrip.TabIndex = 3;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -297,19 +304,58 @@ namespace Technical_Solution
             // Debug
             // 
             this.Debug.AutoSize = true;
-            this.Debug.Location = new System.Drawing.Point(593, 724);
+            this.Debug.Location = new System.Drawing.Point(5, 559);
             this.Debug.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Debug.Name = "Debug";
             this.Debug.Size = new System.Drawing.Size(35, 13);
             this.Debug.TabIndex = 5;
             this.Debug.Text = "label6";
             // 
+            // SearchGroupBox
+            // 
+            this.SearchGroupBox.Controls.Add(this.button1);
+            this.SearchGroupBox.Controls.Add(this.label6);
+            this.SearchGroupBox.Controls.Add(this.textBox1);
+            this.SearchGroupBox.Location = new System.Drawing.Point(492, 637);
+            this.SearchGroupBox.Name = "SearchGroupBox";
+            this.SearchGroupBox.Size = new System.Drawing.Size(260, 187);
+            this.SearchGroupBox.TabIndex = 5;
+            this.SearchGroupBox.TabStop = false;
+            this.SearchGroupBox.Text = "Search";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(61, 38);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(193, 20);
+            this.textBox1.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 41);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(30, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Item:";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(179, 158);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Search";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1300, 699);
-            this.Controls.Add(this.Debug);
+            this.Controls.Add(this.SearchGroupBox);
             this.Controls.Add(this.OrganBox);
             this.Controls.Add(this.Add_Box_Group);
             this.Controls.Add(this.Box_Queue_Group);
@@ -318,12 +364,16 @@ namespace Technical_Solution
             this.Name = "Main";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FloorView.ResumeLayout(false);
+            this.FloorView.PerformLayout();
             this.Add_Box_Group.ResumeLayout(false);
             this.Add_Box_Group.PerformLayout();
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
             this.OrganBox.ResumeLayout(false);
             this.OrganBox.PerformLayout();
+            this.SearchGroupBox.ResumeLayout(false);
+            this.SearchGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,5 +406,9 @@ namespace Technical_Solution
         private CheckBox IncBoxQueueCheck;
         private Button OrgGarageBtn;
         private Label Debug;
+        private GroupBox SearchGroupBox;
+        private TextBox textBox1;
+        private Label label6;
+        private Button button1;
     }
 }

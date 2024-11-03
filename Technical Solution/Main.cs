@@ -41,6 +41,7 @@ namespace Technical_Solution
             this.Box_Queue_Group.Size = new Size(this.Size.Width - this.Box_Queue_Group.Location.X - Space, this.Size.Height - (this.MenuStrip.Size.Height + (2 * Space)));
             this.Add_Box_Group.Location = new Point(this.FloorView.Location.X, this.FloorView.Location.Y + this.FloorView.Size.Height + Space);
             this.OrganBox.Location = new Point(this.Add_Box_Group.Location.X + this.Add_Box_Group.Size.Width + Space, this.Add_Box_Group.Location.Y);
+            this.SearchGroupBox.Location = new Point(this.OrganBox.Location.X + this.OrganBox.Size.Width + Space, this.OrganBox.Location.Y);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -70,6 +71,7 @@ namespace Technical_Solution
         private void DrawQueue()
         {
             int Offset_Y = 25;
+            Box_Queue_Group.Controls.Clear();
             foreach (Box box in Box_Queue)
             {
                 MyPane BoxPan = new MyPane(box);
@@ -100,7 +102,7 @@ namespace Technical_Solution
             if (FloorView.Controls.ContainsKey("Floor")) Floor = FloorView.Controls["Floor"] as Panel;
             else FloorView.Controls.Add(Floor);
 
-            foreach (Box b in garage.Boxes.OfType<Box>())
+            foreach (Box b in garage.Boxes)
             {
                 Panel BuffPan;
                 if (Floor.Controls.ContainsKey($"BuffPan{b.Boxid}"))
@@ -120,7 +122,10 @@ namespace Technical_Solution
                     Floor.Controls.Add(BuffPan);
                 }
                 BuffPan.BringToFront();
+            }
 
+            foreach (Box b in garage.Boxes)
+            {
                 MyPane Pan;
                 if (Floor.Controls.ContainsKey(b.Boxid.ToString()))
                 {
@@ -159,7 +164,7 @@ namespace Technical_Solution
             {
                 try
                 {
-                    Box NewBox = new Box(BoxCount, Name_Txt.Text, double.Parse(Weight_Txt.Text), new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text)), garage.bufferWidth, Col_Pan.BackColor);
+                    Box NewBox = new Box(BoxCount + garage.BoxCount, Name_Txt.Text, double.Parse(Weight_Txt.Text), new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text)), garage.bufferWidth, Col_Pan.BackColor);
                     BoxCount++;
                     Box_Queue.Add(NewBox);
                     DrawQueue();
@@ -243,14 +248,27 @@ namespace Technical_Solution
 
         private void OrgGarageBtn_Click(object sender, EventArgs e)
         {
-            Debug.Text = garage.Organise();
+            if (this.IncBoxQueueCheck.Checked)
+            {
+                Debug.Text = garage.Organise(Box_Queue);
+                Box_Queue.Clear();
+            }
+            else
+            {
+                Debug.Text = garage.Organise();
+            }
             Draw();
         }
 
         private Color RGBString(string ColourString)
         {
             string[] Cols = ColourString.Split(',').Select(x => x.Replace(" ", "")).ToArray();
-            int
+            return Color.FromArgb(int.Parse(Cols[0]), int.Parse(Cols[1]), int.Parse(Cols[2]));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

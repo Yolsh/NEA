@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Technical_Solution
 {
@@ -161,6 +162,18 @@ namespace Technical_Solution
                 }
             }
             floorplan = NewFloorplan;
+        }
+
+        public int SearchBoxes(string item)
+        {
+            foreach (Box b in Boxes)
+            {
+                foreach (string S in b.Contents)
+                {
+                    if (item.ToUpper() == S.ToUpper()) return b.Boxid;
+                }
+            }
+            return -1;
         }
     }
 }

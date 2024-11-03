@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Technical Solution", "Techn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merge Sort Test", "Merge Sort Test\Merge Sort Test.csproj", "{9457AC6F-94E4-4377-AC80-20CC7C692C47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorInverter", "ColorInverter\ColorInverter.csproj", "{7540691A-3B24-45CD-AC70-B57C00514709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9457AC6F-94E4-4377-AC80-20CC7C692C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9457AC6F-94E4-4377-AC80-20CC7C692C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9457AC6F-94E4-4377-AC80-20CC7C692C47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7540691A-3B24-45CD-AC70-B57C00514709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7540691A-3B24-45CD-AC70-B57C00514709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7540691A-3B24-45CD-AC70-B57C00514709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7540691A-3B24-45CD-AC70-B57C00514709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -31,6 +31,7 @@ namespace Technical_Solution
         private void InitializeComponent()
         {
             this.FloorView = new System.Windows.Forms.GroupBox();
+            this.Debug = new System.Windows.Forms.Label();
             this.Box_Queue_Group = new System.Windows.Forms.GroupBox();
             this.Add_Box_Group = new System.Windows.Forms.GroupBox();
             this.Err_Lbl = new System.Windows.Forms.Label();
@@ -54,11 +55,11 @@ namespace Technical_Solution
             this.OrganBox = new System.Windows.Forms.GroupBox();
             this.IncBoxQueueCheck = new System.Windows.Forms.CheckBox();
             this.OrgGarageBtn = new System.Windows.Forms.Button();
-            this.Debug = new System.Windows.Forms.Label();
             this.SearchGroupBox = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SearchButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.SearchBar = new System.Windows.Forms.TextBox();
+            this.SearchError = new System.Windows.Forms.Label();
             this.FloorView.SuspendLayout();
             this.Add_Box_Group.SuspendLayout();
             this.MenuStrip.SuspendLayout();
@@ -75,6 +76,16 @@ namespace Technical_Solution
             this.FloorView.TabIndex = 0;
             this.FloorView.TabStop = false;
             this.FloorView.Text = "Floorplan";
+            // 
+            // Debug
+            // 
+            this.Debug.AutoSize = true;
+            this.Debug.Location = new System.Drawing.Point(5, 559);
+            this.Debug.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Debug.Name = "Debug";
+            this.Debug.Size = new System.Drawing.Size(35, 13);
+            this.Debug.TabIndex = 5;
+            this.Debug.Text = "label6";
             // 
             // Box_Queue_Group
             // 
@@ -301,21 +312,12 @@ namespace Technical_Solution
             this.OrgGarageBtn.UseVisualStyleBackColor = true;
             this.OrgGarageBtn.Click += new System.EventHandler(this.OrgGarageBtn_Click);
             // 
-            // Debug
-            // 
-            this.Debug.AutoSize = true;
-            this.Debug.Location = new System.Drawing.Point(5, 559);
-            this.Debug.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.Debug.Name = "Debug";
-            this.Debug.Size = new System.Drawing.Size(35, 13);
-            this.Debug.TabIndex = 5;
-            this.Debug.Text = "label6";
-            // 
             // SearchGroupBox
             // 
-            this.SearchGroupBox.Controls.Add(this.button1);
+            this.SearchGroupBox.Controls.Add(this.SearchError);
+            this.SearchGroupBox.Controls.Add(this.SearchButton);
             this.SearchGroupBox.Controls.Add(this.label6);
-            this.SearchGroupBox.Controls.Add(this.textBox1);
+            this.SearchGroupBox.Controls.Add(this.SearchBar);
             this.SearchGroupBox.Location = new System.Drawing.Point(492, 637);
             this.SearchGroupBox.Name = "SearchGroupBox";
             this.SearchGroupBox.Size = new System.Drawing.Size(260, 187);
@@ -323,12 +325,15 @@ namespace Technical_Solution
             this.SearchGroupBox.TabStop = false;
             this.SearchGroupBox.Text = "Search";
             // 
-            // textBox1
+            // SearchButton
             // 
-            this.textBox1.Location = new System.Drawing.Point(61, 38);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(193, 20);
-            this.textBox1.TabIndex = 0;
+            this.SearchButton.Location = new System.Drawing.Point(179, 158);
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(75, 23);
+            this.SearchButton.TabIndex = 3;
+            this.SearchButton.Text = "Search";
+            this.SearchButton.UseVisualStyleBackColor = true;
+            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
             // 
             // label6
             // 
@@ -339,15 +344,23 @@ namespace Technical_Solution
             this.label6.TabIndex = 2;
             this.label6.Text = "Item:";
             // 
-            // button1
+            // SearchBar
             // 
-            this.button1.Location = new System.Drawing.Point(179, 158);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Search";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.SearchBar.Location = new System.Drawing.Point(61, 38);
+            this.SearchBar.Name = "SearchBar";
+            this.SearchBar.Size = new System.Drawing.Size(193, 20);
+            this.SearchBar.TabIndex = 0;
+            // 
+            // SearchError
+            // 
+            this.SearchError.AutoSize = true;
+            this.SearchError.ForeColor = System.Drawing.Color.Crimson;
+            this.SearchError.Location = new System.Drawing.Point(6, 146);
+            this.SearchError.Name = "SearchError";
+            this.SearchError.Size = new System.Drawing.Size(35, 13);
+            this.SearchError.TabIndex = 4;
+            this.SearchError.Text = "label7";
+            this.SearchError.Visible = false;
             // 
             // Main
             // 
@@ -407,8 +420,9 @@ namespace Technical_Solution
         private Button OrgGarageBtn;
         private Label Debug;
         private GroupBox SearchGroupBox;
-        private TextBox textBox1;
+        private TextBox SearchBar;
         private Label label6;
-        private Button button1;
+        private Button SearchButton;
+        private Label SearchError;
     }
 }

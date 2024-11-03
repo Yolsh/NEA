@@ -11,6 +11,7 @@ using System.Windows;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Technical_Solution
 {
@@ -266,9 +267,52 @@ namespace Technical_Solution
             return Color.FromArgb(int.Parse(Cols[0]), int.Parse(Cols[1]), int.Parse(Cols[2]));
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SearchButton_Click(object sender, EventArgs e)
         {
+            SearchError.Visible = false;
+            if (FloorView.Controls.ContainsKey("Floor"))
+            {
+                int BID = garage.SearchBoxes(SearchBar.Text);
+                Panel Floor = FloorView.Controls["Floor"] as Panel;
+                if (Floor.Controls.ContainsKey(BID.ToString()))
+                {
+                    MyPane FoundBox = Floor.Controls[BID.ToString()] as MyPane;
+                    Task.Run(() => FlashBox(FoundBox));
+                }
+                else
+                {
+                    SearchError.Text = "there is no item which matches that search";
+                    SearchError.Visible = true;
+                }
+            }
+            else
+            {
+                SearchError.Text = "There is no garage loaded";
+                SearchError.Visible = true;
+            }
+        }
 
+        private void FlashBox(MyPane BX)
+        {
+            Color Original = BX.BackColor;
+            string B = Convert.ToString(int.Parse(Original.B.ToString()), 2);
+            while (B.Length < 8) B = "0" + B;
+            int InvB = Convert.ToInt32(B.Substring(0, 4).Reverse().Aggregate("", (tot, cur) => tot += cur) + B.Substring(4, 4).Reverse().Aggregate("", (tot, cur) => tot += cur), 2);
+            string G = Convert.ToString(int.Parse(Original.G.ToString()), 2);
+            while (G.Length < 8) G = "0" + G;
+            int InvG = Convert.ToInt32(G.Substring(0, 4).Reverse().Aggregate("", (tot, cur) => tot += cur) + G.Substring(4, 4).Reverse().Aggregate("", (tot, cur) => tot += cur), 2);
+            string R = Convert.ToString(int.Parse(Original.R.ToString()), 2);
+            while (R.Length < 8) R = "0" + R;
+            int InvR = Convert.ToInt32(R.Substring(0, 4).Reverse().Aggregate("", (tot, cur) => tot += cur) + R.Substring(4, 4).Reverse().Aggregate("", (tot, cur) => tot += cur), 2);
+            Color Inverted = Color.FromArgb(InvB, InvG, InvR);
+
+            for (int i = 0; i < 10; i++)
+            {
+                BX.BackColor = Inverted;
+                Thread.Sleep(300);
+                BX.BackColor = Original;
+                Thread.Sleep(300);
+            }
         }
     }
 }

@@ -251,12 +251,12 @@ namespace Technical_Solution
         {
             if (this.IncBoxQueueCheck.Checked)
             {
-                Debug.Text = garage.Organise(Box_Queue);
+                garage.Organise(Box_Queue);
                 Box_Queue.Clear();
             }
             else
             {
-                Debug.Text = garage.Organise();
+                garage.Organise();
             }
             Draw();
         }
@@ -306,7 +306,7 @@ namespace Technical_Solution
             int InvR = Convert.ToInt32(R.Substring(0, 4).Reverse().Aggregate("", (tot, cur) => tot += cur) + R.Substring(4, 4).Reverse().Aggregate("", (tot, cur) => tot += cur), 2);
             Color Inverted = Color.FromArgb(InvB, InvG, InvR);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
                 BX.BackColor = Inverted;
                 Thread.Sleep(300);

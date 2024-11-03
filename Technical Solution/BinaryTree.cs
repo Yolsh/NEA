@@ -50,20 +50,54 @@ namespace Technical_Solution
         public static void CorrectPositions(SortNode root)
         {
             if (root.b is null) return;
-            root.b.Position = new Point(root.Position.X + root.b.buffer.BufferWidth, root.Position.Y + root.b.buffer.BufferWidth);
-            root.b.buffer.Position = root.Position;
             CorrectPositions(root.Left);
             CorrectPositions(root.Right);
-        }
-
-        public static string CorrectPositions(SortNode root, string output)
-        {
-            if (root.b is null) return output += $"|{root.Position.X}, {root.Position.Y}|, ";
-            output = CorrectPositions(root.Left, output);
-            output = CorrectPositions(root.Right, output);
             root.b.Position = new Point(root.Position.X + root.b.buffer.BufferWidth, root.Position.Y + root.b.buffer.BufferWidth);
             root.b.buffer.Position = root.Position;
-            return output += $"({root.Position.X}, {root.Position.Y}), ";
+            if (root.Left.b != null)
+            {
+                root.b.CollapseRight();
+                MoveLeft(root.Left);
+            }
+            if (root.Right.b != null)
+            {
+                root.b.CollapseBottom();
+                MoveUp(root.Right);
+            }
+            if (root.b.buffer.Position.X == 0)
+            {
+                root.b.CollapseLeft();
+                MoveLeft(root.Left);
+            }
+            if (root.b.buffer.Position.Y == 0)
+            {
+                root.b.CollapseTop();
+                MoveUp(root.Right);
+            }
+            return;
+        }
+
+
+        private static void MoveLeft(SortNode ToMove)
+        {
+            if (ToMove.b == null) return;
+            ToMove.b.buffer.Position.X -= ToMove.b.buffer.BufferWidth;
+            ToMove.b.Position.X -= ToMove.b.buffer.BufferWidth;
+            if (ToMove.Left.b == null) ToMove.b.CollapseLeft();
+            if (ToMove.Right.b == null) ToMove.b.CollapseTop();
+            MoveLeft(ToMove.Left);
+            MoveLeft(ToMove.Right);
+        }
+
+        private static void MoveUp(SortNode ToMove)
+        {
+            if (ToMove.b == null) return;
+            ToMove.b.buffer.Position.Y -= ToMove.b.buffer.BufferWidth;
+            ToMove.b.Position.Y -= ToMove.b.buffer.BufferWidth;
+            if (ToMove.Left.b == null) ToMove.b.CollapseLeft();
+            if (ToMove.Right.b == null) ToMove.b.CollapseTop();
+            MoveUp(ToMove.Left);
+            MoveUp(ToMove.Right);
         }
     }
 }

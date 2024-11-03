@@ -27,34 +27,30 @@ namespace Technical_Solution
             Contents = new List<string>();
         }
 
-        public void Draw()
+        public void CollapseLeft()
         {
-            for (int y = Position.Y; y < Position.Y + Size.Height; y++)
-            {
-                for (int x = Position.X; x < Position.X + Size.Width; x++)
-                {
-                    if (x == Position.X && y == Position.Y)
-                    {
-                        Console.SetCursorPosition(x * 2 - 1, y);
-                        //Console.Write($"{x},{y}");
-                        //for (int i = x.ToString().Length+y.ToString().Length+1; i < Size.X*2; i++)
-                        //{
-                        //    Console.Write("\u2588".Pastel(col));
-                        //}
-                        Console.Write(Name);
-                        for (int i = Name.Length; i < Size.Width * 2; i++)
-                        {
-                            Console.Write("\u2588");
-                        }
-                        x += Position.X + Size.Height;
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(x * 2 - 1, y);
-                        Console.Write("\u2588\u2588");
-                    }
-                }
-            }
+            buffer.Size.Width -= buffer.BufferWidth;
+            Position.X = buffer.Position.X;
+            buffer.Collapsed.Left = true;
+        }
+
+        public void CollapseTop()
+        {
+            buffer.Size.Height -= buffer.BufferWidth;
+            Position.Y = buffer.Position.Y;
+            buffer.Collapsed.Top = true;
+        }
+
+        public void CollapseRight()
+        {
+            buffer.Size.Width -= buffer.BufferWidth;
+            buffer.Collapsed.Right = true;
+        }
+
+        public void CollapseBottom()
+        {
+            buffer.Size.Height -= buffer.BufferWidth;
+            buffer.Collapsed.Bottom = true;
         }
     }
 }

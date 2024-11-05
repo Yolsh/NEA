@@ -75,7 +75,7 @@ namespace Technical_Solution
             Box_Queue_Group.Controls.Clear();
             foreach (Box box in Box_Queue)
             {
-                MyPane BoxPan = new MyPane(box);
+                BoxPane BoxPan = new BoxPane(box);
                 BoxPan.Name = box.Boxid.ToString();
                 BoxPan.MouseMove += new MouseEventHandler(this.Box_Drag);
                 BoxPan.MouseClick += new MouseEventHandler(this.OpenBoxMenuRC);
@@ -116,7 +116,7 @@ namespace Technical_Solution
                 {
                     BuffPan = new Panel();
                     BuffPan.Name = $"BuffPan{b.Boxid}";
-                    BuffPan.BackColor = Color.AliceBlue;
+                    BuffPan.BackColor = Color.Coral;
                     BuffPan.Location = new Point((int)Math.Round(b.buffer.Position.X * Scale), (int)Math.Round(b.buffer.Position.Y * Scale));
                     BuffPan.Size = new Size((int)Math.Round(b.buffer.Size.Width * Scale), (int)Math.Round(b.buffer.Size.Height * Scale));
 
@@ -127,16 +127,16 @@ namespace Technical_Solution
 
             foreach (Box b in garage.Boxes)
             {
-                MyPane Pan;
+                BoxPane Pan;
                 if (Floor.Controls.ContainsKey(b.Boxid.ToString()))
                 {
-                    Pan = Floor.Controls[b.Boxid.ToString()] as MyPane;
+                    Pan = Floor.Controls[b.Boxid.ToString()] as BoxPane;
                     if (Pan.Location != new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale))) Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
                     if (Pan.Size != new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale))) Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
                 }
                 else
                 {
-                    Pan = new MyPane(b);
+                    Pan = new BoxPane(b);
                     if (this.Controls.ContainsKey(b.Boxid.ToString())) this.Controls.RemoveByKey(b.Boxid.ToString());
                     Pan.Name = b.Boxid.ToString();
                     Pan.BackColor = b.col;
@@ -148,6 +148,21 @@ namespace Technical_Solution
                     Floor.Controls.Add(Pan);
                 }
                 Pan.BringToFront();
+            }
+
+            foreach (Door door in garage.doors)
+            {
+                if (!Floor.Controls.ContainsKey(door.ID.ToString()))
+                {
+                    DoorPane Pan = new DoorPane(door);
+                    Pan.Name = door.ID.ToString();
+                    Pan.BackColor = Color.Black;
+                    Pan.Location = new Point((int)Math.Round(door.location.X * Scale), (int)Math.Round(door.location.Y * Scale));
+                    if (door.location.Y == 0 || door.location.Y == garage.Width) Pan.Size = new Size((int)Math.Round(door.radius * Scale), 4);
+                    else Pan.Size = new Size(4, (int)Math.Round(door.radius * Scale));
+                    Floor.Controls.Add(Pan);
+                    Pan.BringToFront();
+                }
             }
         }
 
@@ -199,7 +214,7 @@ namespace Technical_Solution
 
         private void Box_Drag(object sender, MouseEventArgs e)
         {
-            MyPane Pan = sender as MyPane;
+            BoxPane Pan = sender as BoxPane;
 
             if (Box_Queue_Group.Contains(Pan))
             {
@@ -294,7 +309,7 @@ namespace Technical_Solution
                 Panel Floor = FloorView.Controls["Floor"] as Panel;
                 if (Floor.Controls.ContainsKey(BID.ToString()))
                 {
-                    MyPane FoundBox = Floor.Controls[BID.ToString()] as MyPane;
+                    BoxPane FoundBox = Floor.Controls[BID.ToString()] as BoxPane;
                     Task.Run(() => FlashBox(FoundBox));
                 }
                 else
@@ -310,7 +325,7 @@ namespace Technical_Solution
             }
         }
 
-        private void FlashBox(MyPane BX)
+        private void FlashBox(BoxPane BX)
         {
             Color Original = BX.BackColor;
             string B = Convert.ToString(int.Parse(Original.B.ToString()), 2);

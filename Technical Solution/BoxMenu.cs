@@ -30,7 +30,7 @@ namespace Technical_Solution
         public void FormShow(object sender, MouseEventArgs e)
         {
             this.Show();
-            MyPane pan = sender as MyPane;
+            BoxPane pan = sender as BoxPane;
             ToEdit = pan.box;
             Name_Txt.Text = ToEdit.Name;
             Weight_Txt.Text = ToEdit.Weight.ToString();

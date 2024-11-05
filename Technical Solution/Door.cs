@@ -12,10 +12,12 @@ namespace Technical_Solution
         public int radius;
         public int arc;
         public Point location;
-        public Door(int radius, int x, int y)
+        public int ID;
+        public Door(int radius, int x, int y, int iD)
         {
             this.radius = radius;
             this.location = new Point(x, y);
+            ID = iD;
         }
     }
 }

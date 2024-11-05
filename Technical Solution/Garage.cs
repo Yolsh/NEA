@@ -25,22 +25,24 @@ namespace Technical_Solution
         public int bufferWidth;
         public string Name;
         public int BoxCount;
+        public int doorCount;
 
-        public Garage(int bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int x, int y)
+        public Garage(int dc, int bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int x, int y)
         {
             Width = inWidth;
             Length = inLength;
             bufferWidth = inBufferWidth;
             BoxCount = bc;
+            doorCount = dc;
             Name = inName;
             Boxes = new List<Box>();
             floorplan = new int[Width, Length];
-            doors = new List<Door>{new Door(rad, x, y)};
+            doors = new List<Door>{new Door(rad, x, y, doorCount)};
         }
 
         public void AddDoor(int rad, int x, int y)
         {
-            doors.Add(new Door(rad, x, y));
+            doors.Add(new Door(rad, x, y, doorCount));
         }
 
         public Garage AddBox(Box b, Point Pos)
@@ -63,7 +65,7 @@ namespace Technical_Solution
             SortNode root = new SortNode(new Size(Length, Width), new Point(0, 0)); //create to nearest door later
 
             foreach (Box S in Boxes) SortNode.AddBox(S, root);
-            SortNode.CorrectPositions(root);
+            SortNode.CorrectPositions(root, doors);
         }
 
         public void Organise(List<Box> BoxQueue)
@@ -75,7 +77,7 @@ namespace Technical_Solution
             SortNode root = new SortNode(new Size(Length, Width), new Point(0, 0)); //create to nearest door later
 
             foreach (Box S in Boxes) SortNode.AddBox(S, root);
-            SortNode.CorrectPositions(root);
+            SortNode.CorrectPositions(root, doors);
         }
 
         private static void Merger(List<Box> NewList, int s, int m, int e)
@@ -92,7 +94,7 @@ namespace Technical_Solution
             int L = 0, R = 0, pointer = s;
             while (L < Left.Length && R < Right.Length)
             {
-                if (Left[L].Size.Width * Left[L].Size.Height <= Right[R].Size.Width * Right[R].Size.Height)
+                if (Left[L].buffer.Size.Width * Left[L].buffer.Size.Height <= Right[R].buffer.Size.Width * Right[R].buffer.Size.Height)
                 {
                     NewList[pointer] = Right[R];
                     R++;

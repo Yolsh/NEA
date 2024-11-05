@@ -7,10 +7,17 @@ using System.Windows.Forms;
 
 namespace Technical_Solution
 {
-    public class MyPane : Panel
+    public class BoxPane : Panel
     {
         public Box box;
 
-        public MyPane(Box inBox) : base() { box = inBox; }
+        public BoxPane(Box inBox) : base() { box = inBox; }
+    }
+
+    public class DoorPane : Panel
+    {
+        public Door door;
+
+        public DoorPane(Door inDoor) : base() { door = inDoor; }
     }
 }

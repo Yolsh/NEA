@@ -29,7 +29,7 @@ namespace Technical_Solution
                 root.Left = new SortNode(new Size(root.Size.Width - b.buffer.Size.Width, b.buffer.Size.Height), new Point(root.Position.X + b.buffer.Size.Width, root.Position.Y));
                 root.Right = new SortNode(new Size(root.Size.Width, root.Size.Height - b.buffer.Size.Height), new Point(root.Position.X, root.Position.Y + b.buffer.Size.Height));
             }
-            else if (b.buffer.Size.Height <= root.Left.Size.Height && b.buffer.Size.Width <= root.Left.Size.Width) 
+            else if (b.buffer.Size.Height <= root.Left.Size.Height && b.buffer.Size.Width <= root.Left.Size.Width)
             {
                 try
                 {
@@ -47,11 +47,11 @@ namespace Technical_Solution
             }
         }
 
-        public static void CorrectPositions(SortNode root)
+        public static void CorrectPositions(SortNode root, List<Door> doors)
         {
             if (root.b is null) return;
-            CorrectPositions(root.Left);
-            CorrectPositions(root.Right);
+            CorrectPositions(root.Left, doors);
+            CorrectPositions(root.Right, doors);
             root.b.Position = new Point(root.Position.X + root.b.buffer.BufferWidth, root.Position.Y + root.b.buffer.BufferWidth);
             root.b.buffer.Position = root.Position;
             if (root.Left.b != null)
@@ -66,13 +66,29 @@ namespace Technical_Solution
             }
             if (root.b.buffer.Position.X == 0)
             {
-                root.b.CollapseLeft();
-                MoveLeft(root.Left);
+                bool collideDoor = false;
+                foreach (Door door in doors)
+                {
+                    if (door.location.Y > root.b.Position.Y && door.location.Y < root.b.Position.Y + root.b.Size.Height) collideDoor = true;
+                }
+                if (!collideDoor)
+                {
+                    root.b.CollapseLeft();
+                    MoveLeft(root.Left);
+                }
             }
             if (root.b.buffer.Position.Y == 0)
             {
-                root.b.CollapseTop();
-                MoveUp(root.Right);
+                bool collideDoor = false;
+                foreach (Door door in doors)
+                {
+                    if (door.location.X > root.b.Position.X && door.location.X < root.b.Position.X + root.b.Size.Width) collideDoor = true;
+                }
+                if (!collideDoor)
+                {
+                    root.b.CollapseTop();
+                    MoveUp(root.Right);
+                }
             }
             return;
         }

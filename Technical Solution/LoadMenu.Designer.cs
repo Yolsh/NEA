@@ -49,10 +49,10 @@
             this._Length = new System.Windows.Forms.TextBox();
             this.Garage_Name = new System.Windows.Forms.TextBox();
             this.Load_File_Box = new System.Windows.Forms.GroupBox();
-            this.File_Name_Txt = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.File_Err = new System.Windows.Forms.Label();
             this.Find_File = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.File_Name_Txt = new System.Windows.Forms.TextBox();
+            this.File_Err = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.New_Inputs.SuspendLayout();
             this.Doors_In_Group.SuspendLayout();
@@ -243,7 +243,6 @@
             this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Garage Name:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // _Width
             // 
@@ -280,12 +279,15 @@
             this.Load_File_Box.Text = "groupBox2";
             this.Load_File_Box.Visible = false;
             // 
-            // File_Name_Txt
+            // Find_File
             // 
-            this.File_Name_Txt.Location = new System.Drawing.Point(88, 45);
-            this.File_Name_Txt.Name = "File_Name_Txt";
-            this.File_Name_Txt.Size = new System.Drawing.Size(100, 20);
-            this.File_Name_Txt.TabIndex = 0;
+            this.Find_File.Location = new System.Drawing.Point(21, 83);
+            this.Find_File.Name = "Find_File";
+            this.Find_File.Size = new System.Drawing.Size(75, 23);
+            this.Find_File.TabIndex = 4;
+            this.Find_File.Text = "Find File";
+            this.Find_File.UseVisualStyleBackColor = true;
+            this.Find_File.Click += new System.EventHandler(this.Find_File_Click);
             // 
             // label6
             // 
@@ -295,6 +297,13 @@
             this.label6.Size = new System.Drawing.Size(57, 13);
             this.label6.TabIndex = 1;
             this.label6.Text = "File Name:";
+            // 
+            // File_Name_Txt
+            // 
+            this.File_Name_Txt.Location = new System.Drawing.Point(88, 45);
+            this.File_Name_Txt.Name = "File_Name_Txt";
+            this.File_Name_Txt.Size = new System.Drawing.Size(100, 20);
+            this.File_Name_Txt.TabIndex = 0;
             // 
             // File_Err
             // 
@@ -307,24 +316,14 @@
             this.File_Err.Text = "File Couldn\'t be found";
             this.File_Err.Visible = false;
             // 
-            // Find_File
-            // 
-            this.Find_File.Location = new System.Drawing.Point(21, 83);
-            this.Find_File.Name = "Find_File";
-            this.Find_File.Size = new System.Drawing.Size(75, 23);
-            this.Find_File.TabIndex = 4;
-            this.Find_File.Text = "Find File";
-            this.Find_File.UseVisualStyleBackColor = true;
-            this.Find_File.Click += new System.EventHandler(this.Find_File_Click);
-            // 
             // LoadMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.Load_File_Box);
             this.Controls.Add(this.New_Inputs);
+            this.Controls.Add(this.Load_File_Box);
             this.Name = "LoadMenu";
             this.Text = "LoadMenu";
             this.groupBox1.ResumeLayout(false);

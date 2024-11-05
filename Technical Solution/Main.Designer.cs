@@ -252,7 +252,7 @@ namespace Technical_Solution
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.MenuStrip.Size = new System.Drawing.Size(1468, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(1300, 24);
             this.MenuStrip.TabIndex = 3;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -392,7 +392,6 @@ namespace Technical_Solution
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1300, 699);
             this.Controls.Add(this.SearchGroupBox);
             this.Controls.Add(this.OrganBox);

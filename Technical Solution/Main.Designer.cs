@@ -56,10 +56,12 @@ namespace Technical_Solution
             this.IncBoxQueueCheck = new System.Windows.Forms.CheckBox();
             this.OrgGarageBtn = new System.Windows.Forms.Button();
             this.SearchGroupBox = new System.Windows.Forms.GroupBox();
+            this.SearchError = new System.Windows.Forms.Label();
             this.SearchButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.SearchBar = new System.Windows.Forms.TextBox();
-            this.SearchError = new System.Windows.Forms.Label();
+            this.FailOrg2 = new System.Windows.Forms.Label();
+            this.FailOrg1 = new System.Windows.Forms.Label();
             this.FloorView.SuspendLayout();
             this.Add_Box_Group.SuspendLayout();
             this.MenuStrip.SuspendLayout();
@@ -279,13 +281,15 @@ namespace Technical_Solution
             // 
             // OrganBox
             // 
+            this.OrganBox.Controls.Add(this.FailOrg1);
+            this.OrganBox.Controls.Add(this.FailOrg2);
             this.OrganBox.Controls.Add(this.IncBoxQueueCheck);
             this.OrganBox.Controls.Add(this.OrgGarageBtn);
             this.OrganBox.Location = new System.Drawing.Point(327, 630);
             this.OrganBox.Margin = new System.Windows.Forms.Padding(2);
             this.OrganBox.Name = "OrganBox";
             this.OrganBox.Padding = new System.Windows.Forms.Padding(2);
-            this.OrganBox.Size = new System.Drawing.Size(155, 194);
+            this.OrganBox.Size = new System.Drawing.Size(288, 194);
             this.OrganBox.TabIndex = 4;
             this.OrganBox.TabStop = false;
             this.OrganBox.Text = "Organise Garage";
@@ -318,12 +322,23 @@ namespace Technical_Solution
             this.SearchGroupBox.Controls.Add(this.SearchButton);
             this.SearchGroupBox.Controls.Add(this.label6);
             this.SearchGroupBox.Controls.Add(this.SearchBar);
-            this.SearchGroupBox.Location = new System.Drawing.Point(492, 637);
+            this.SearchGroupBox.Location = new System.Drawing.Point(620, 637);
             this.SearchGroupBox.Name = "SearchGroupBox";
             this.SearchGroupBox.Size = new System.Drawing.Size(260, 187);
             this.SearchGroupBox.TabIndex = 5;
             this.SearchGroupBox.TabStop = false;
             this.SearchGroupBox.Text = "Search";
+            // 
+            // SearchError
+            // 
+            this.SearchError.AutoSize = true;
+            this.SearchError.ForeColor = System.Drawing.Color.Crimson;
+            this.SearchError.Location = new System.Drawing.Point(6, 146);
+            this.SearchError.Name = "SearchError";
+            this.SearchError.Size = new System.Drawing.Size(35, 13);
+            this.SearchError.TabIndex = 4;
+            this.SearchError.Text = "label7";
+            this.SearchError.Visible = false;
             // 
             // SearchButton
             // 
@@ -351,16 +366,27 @@ namespace Technical_Solution
             this.SearchBar.Size = new System.Drawing.Size(193, 20);
             this.SearchBar.TabIndex = 0;
             // 
-            // SearchError
+            // FailOrg2
             // 
-            this.SearchError.AutoSize = true;
-            this.SearchError.ForeColor = System.Drawing.Color.Crimson;
-            this.SearchError.Location = new System.Drawing.Point(6, 146);
-            this.SearchError.Name = "SearchError";
-            this.SearchError.Size = new System.Drawing.Size(35, 13);
-            this.SearchError.TabIndex = 4;
-            this.SearchError.Text = "label7";
-            this.SearchError.Visible = false;
+            this.FailOrg2.AutoSize = true;
+            this.FailOrg2.ForeColor = System.Drawing.Color.Crimson;
+            this.FailOrg2.Location = new System.Drawing.Point(12, 97);
+            this.FailOrg2.Name = "FailOrg2";
+            this.FailOrg2.Size = new System.Drawing.Size(241, 13);
+            this.FailOrg2.TabIndex = 2;
+            this.FailOrg2.Text = "boxes or moving some things in order to make it fit";
+            this.FailOrg2.Visible = false;
+            // 
+            // FailOrg1
+            // 
+            this.FailOrg1.AutoSize = true;
+            this.FailOrg1.ForeColor = System.Drawing.Color.Crimson;
+            this.FailOrg1.Location = new System.Drawing.Point(12, 84);
+            this.FailOrg1.Name = "FailOrg1";
+            this.FailOrg1.Size = new System.Drawing.Size(232, 13);
+            this.FailOrg1.TabIndex = 3;
+            this.FailOrg1.Text = "sorry but this is not organisable, try rotating your ";
+            this.FailOrg1.Visible = false;
             // 
             // Main
             // 
@@ -424,5 +450,7 @@ namespace Technical_Solution
         private Label label6;
         private Button SearchButton;
         private Label SearchError;
+        private Label FailOrg1;
+        private Label FailOrg2;
     }
 }

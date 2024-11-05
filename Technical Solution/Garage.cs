@@ -12,6 +12,8 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Linq.Expressions;
+using System.Windows.Forms;
 
 namespace Technical_Solution
 {
@@ -45,40 +47,60 @@ namespace Technical_Solution
 
         public Garage AddBox(Box b, Point Pos)
         {
-            //if (PosX <= 1 || PosX + SizeX > Length || PosY <= 1 || PosY + SizeY > Width) throw new IncorrectPlacementException();
             b.Position = Pos;
             Boxes.Add(b);
             BoxCount = Boxes.Count();
-            //BoxBuffer.CollapseBuffersWalls(Boxes, Length, Width);
-            //UpdateFloor();
-            //BoxBuffer.CollapseBuffersContact(Boxes, floorplan, Length, Width);
-            //UpdateFloor();
             return this;
         }
 
         public void Organise()
         {
-            SortBoxList(Boxes, Boxes.Count() - 1);
-
-            SortNode root = new SortNode(new Size(Length, Width), new Point(0, 0)); //create to nearest door later
-
-            foreach (Box S in Boxes) SortNode.AddBox(S, root);
+            SortNode root = new SortNode(new Size(Length, Width), new Point(0, 0));
+            bool failed = true;
+            int SortMethod = 0;
+            while (failed)
+            {
+                SortBoxList(Boxes, 0, Boxes.Count() - 1, SortMethod);
+                failed = false;
+                try
+                {
+                    foreach (Box S in Boxes) SortNode.AddBox(S, root);
+                }
+                catch (IncorrectPlacementException)
+                {
+                    failed = true;
+                    SortMethod++;
+                }
+                if (SortMethod > 3) throw new IncorrectPlacementException();
+            }
             SortNode.CorrectPositions(root);
         }
 
         public void Organise(List<Box> BoxQueue)
         {
             for (int i = 0; i < BoxQueue.Count(); i++) Boxes.Add(BoxQueue[i]);
-
-            SortBoxList(Boxes, Boxes.Count() - 1);
-
-            SortNode root = new SortNode(new Size(Length, Width), new Point(0, 0)); //create to nearest door later
-
-            foreach (Box S in Boxes) SortNode.AddBox(S, root);
+            SortNode root = new SortNode(new Size(Length, Width), new Point(0, 0));
+            bool failed = true;
+            int SortMethod = 0;
+            while (failed)
+            {
+                SortBoxList(Boxes, 0, Boxes.Count() - 1, SortMethod);
+                failed = false;
+                try
+                {
+                    foreach (Box S in Boxes) SortNode.AddBox(S, root);
+                }
+                catch (IncorrectPlacementException)
+                {
+                    failed = true;
+                    SortMethod++;
+                }
+                if (SortMethod > 3) throw new IncorrectPlacementException();
+            }
             SortNode.CorrectPositions(root);
         }
 
-        private static void Merger(List<Box> NewList, int s, int m, int e)
+        private static void Merger(List<Box> NewList, int s, int m, int e, int type)
         {
             int LSize = m - s + 1;
             int RSize = e - m;
@@ -92,17 +114,62 @@ namespace Technical_Solution
             int L = 0, R = 0, pointer = s;
             while (L < Left.Length && R < Right.Length)
             {
-                if (Left[L].Size.Width * Left[L].Size.Height <= Right[R].Size.Width * Right[R].Size.Height)
+                if (type == 0)
                 {
-                    NewList[pointer] = Right[R];
-                    R++;
+                    if (Left[L].Size.Width * Left[L].Size.Height <= Right[R].Size.Width * Right[R].Size.Height)
+                    {
+                        NewList[pointer] = Right[R];
+                        R++;
+                    }
+                    else
+                    {
+                        NewList[pointer] = Left[L];
+                        L++;
+                    }
+                    pointer++;
                 }
-                else
+                else if (type == 1)
                 {
-                    NewList[pointer] = Left[L];
-                    L++;
+                    if (Left[L].Size.Width <= Right[R].Size.Width)
+                    {
+                        NewList[pointer] = Right[R];
+                        R++;
+                    }
+                    else
+                    {
+                        NewList[pointer] = Left[L];
+                        L++;
+                    }
+                    pointer++;
                 }
-                pointer++;
+                else if (type == 2)
+                {
+                    if (Left[L].Size.Height <= Right[R].Size.Height)
+                    {
+                        NewList[pointer] = Right[R];
+                        R++;
+                    }
+                    else
+                    {
+                        NewList[pointer] = Left[L];
+                        L++;
+                    }
+                    pointer++;
+                }
+                else if (type == 3)
+                {
+                    if (Left[L].Size.Width + Left[L].Size.Height <= Right[R].Size.Width + Right[R].Size.Height)
+                    {
+                        NewList[pointer] = Right[R];
+                        R++;
+                    }
+                    else
+                    {
+                        NewList[pointer] = Left[L];
+                        L++;
+                    }
+                    pointer++;
+                }
             }
 
             while (L < LSize)
@@ -119,15 +186,15 @@ namespace Technical_Solution
             }
         }
 
-        static private void SortBoxList(List<Box> BoxList, int end, int start = 0)
+        static private void SortBoxList(List<Box> BoxList, int start, int end, int type)
         {
             int midpoint = (int)Math.Ceiling(((double)start + (end - 1)) / 2);
             if (start < end)
             {
-                SortBoxList(BoxList, start, midpoint);
-                SortBoxList(BoxList, midpoint + 1, end);
+                SortBoxList(BoxList, start, midpoint, type);
+                SortBoxList(BoxList, midpoint + 1, end, type);
             }
-            Merger(BoxList, start, midpoint, end);
+            Merger(BoxList, start, midpoint, end, type);
         }
 
         public void UpdateFloor()

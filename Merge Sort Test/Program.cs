@@ -13,18 +13,21 @@ namespace Merge_Sort_Test
         static void Main(string[] args)
         {
             List<Box> Boxes = new List<Box>();
-            Boxes.Add(new Box("b", 2, new Size(300, 200), 150, Color.AliceBlue));
             Boxes.Add(new Box("b", 2, new Size(200, 200), 150, Color.AliceBlue));
-            Boxes.Add(new Box("b", 2, new Size(100, 200), 150, Color.AliceBlue));
-            Boxes.Add(new Box("b", 2, new Size(600, 200), 150, Color.AliceBlue));
+            Boxes.Add(new Box("b", 2, new Size(300, 200), 150, Color.AliceBlue));
+            Boxes.Add(new Box("b", 2, new Size(70, 50), 150, Color.AliceBlue));
+            Boxes.Add(new Box("b", 2, new Size(350, 120), 150, Color.AliceBlue));
+            Boxes.Add(new Box("b", 2, new Size(400, 120), 150, Color.AliceBlue));
+            Boxes.Add(new Box("b", 2, new Size(110, 275), 150, Color.AliceBlue));
             foreach (Box b in Boxes)
             {
-                Console.Write($"{b.Size.Width}, ");
+                Console.Write($"{b.Size.Width * b.Size.Height}, ");
             }
             SortBoxList(Boxes, 0, Boxes.Count()-1);
+            Console.WriteLine();
             foreach (Box b in Boxes)
             {
-                Console.Write($"{b.Size.Width}, ");
+                Console.Write($"({b.Size.Width}, {b.Size.Height}) => {b.Size.Width * b.Size.Height}, ");
             }
             Console.ReadKey();
         }
@@ -37,8 +40,8 @@ namespace Merge_Sort_Test
             Box[] Left = new Box[LSize];
             Box[] Right = new Box[RSize];
 
-            for (int i = 0; i < LSize; i++) Left[i] = NewList[s+i];
-            for (int i = 0; i < RSize; i++) Right[i] = NewList[m+i+1];
+            for (int i = 0; i < LSize; i++) Left[i] = NewList[s + i];
+            for (int i = 0; i < RSize; i++) Right[i] = NewList[m + i + 1];
 
             int L = 0, R = 0, pointer = s;
             while (L < Left.Length && R < Right.Length)

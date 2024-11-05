@@ -249,14 +249,32 @@ namespace Technical_Solution
 
         private void OrgGarageBtn_Click(object sender, EventArgs e)
         {
+            FailOrg1.Visible = false;
+            FailOrg2.Visible = false;
             if (this.IncBoxQueueCheck.Checked)
             {
-                garage.Organise(Box_Queue);
+                try
+                {
+                    garage.Organise(Box_Queue);
+                }
+                catch (IncorrectPlacementException)
+                {
+                    FailOrg1.Visible = true;
+                    FailOrg2.Visible = true;
+                }
                 Box_Queue.Clear();
             }
             else
             {
-                garage.Organise();
+                try
+                {
+                    garage.Organise();
+                }
+                catch (IncorrectPlacementException)
+                {
+                    FailOrg1.Visible = true;
+                    FailOrg2.Visible = true;
+                }
             }
             Draw();
         }

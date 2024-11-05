@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace Technical_Solution
 {
@@ -22,6 +23,8 @@ namespace Technical_Solution
         public List<Box> Box_Queue;
         private double Scale;
         private int BoxCount = 0;
+        private System.Timers.Timer KeyPressTimeOut;
+        private bool keyAllow;
 
         public Main()
         {
@@ -29,6 +32,11 @@ namespace Technical_Solution
             MyInitializer();
             rand = new Random();
             Box_Queue = new List<Box>();
+            KeyPressTimeOut = new System.Timers.Timer(200);
+            KeyPressTimeOut.Elapsed += (Source, e) => keyAllow = true;
+            KeyPressTimeOut.Enabled = true;
+            KeyPressTimeOut.AutoReset = false;
+            LoadLastOpened();
         }
 
         private void MyInitializer()
@@ -45,6 +53,62 @@ namespace Technical_Solution
             this.SearchGroupBox.Location = new Point(this.OrganBox.Location.X + this.OrganBox.Size.Width + Space, this.OrganBox.Location.Y);
         }
 
+        private void LoadLastOpened() 
+        {
+            string GarageFile = "";
+            string JsonFile = "";
+            if (File.Exists("LastOpened.txt"))
+            {
+                using (StreamReader sr = new StreamReader("LastOpened.txt"))
+                {
+                    GarageFile = sr.ReadLine();
+                    if (GarageFile == "")
+                    {
+                        MessageBox.Show("You have not opened a file before to do so go to File > Load and either create a new garage or load an existing one");
+                        sr.Close();
+                        return;
+                    }
+                    sr.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("You have not opened a file before to do so go to File > Load and either create a new garage or load an existing one");
+                return;
+            }
+
+            if (File.Exists(GarageFile))
+            {
+                using (StreamReader sr = new StreamReader(GarageFile))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        JsonFile += sr.ReadLine();
+                    }
+                    sr.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Youre save can no longer be found to load a new file go to File > Load and either create a new garage or load an existing one");
+                return;
+            }
+
+            try
+            {
+                Forms.JSONContainer collected = JsonConvert.DeserializeObject<Forms.JSONContainer>(JsonFile);
+                garage = collected.garage;
+                Box_Queue = collected.Box_Queue;
+            }
+            catch (JsonException)
+            {
+                MessageBox.Show("Youre save can no longer be loaded to load a new file go to File > Load and either create a new garage or load an existing one");
+                return;
+            }
+
+            Draw();
+        }
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Forms.JSONContainer collected = new Forms.JSONContainer();
@@ -54,6 +118,14 @@ namespace Technical_Solution
             using (StreamWriter sw = new StreamWriter($"{garage.Name}.json", false))
             {
                 sw.Write(save);
+            }
+            using (FileStream fileStream = File.Open("LastOpened.txt", FileMode.Create))
+            {
+                using (StreamWriter sr = new StreamWriter(fileStream))
+                {
+                    sr.Write($"{garage.Name}.json");
+                    sr.Close();
+                }
             }
             MessageBox.Show("This Garage has been saved");
         }
@@ -79,6 +151,7 @@ namespace Technical_Solution
                 BoxPan.Name = box.Boxid.ToString();
                 BoxPan.MouseMove += new MouseEventHandler(this.Box_Drag);
                 BoxPan.MouseClick += new MouseEventHandler(this.OpenBoxMenuRC);
+                BoxPan.MouseHover += new EventHandler(this.Rotate);
                 BoxPan.BackColor = box.col;
                 BoxPan.Location = new Point(25, Offset_Y);
                 BoxPan.Size = new Size((int)Math.Round(box.Size.Width * Scale), (int)Math.Round(box.Size.Height * Scale));
@@ -142,6 +215,7 @@ namespace Technical_Solution
                     Pan.BackColor = b.col;
                     Pan.MouseMove += new MouseEventHandler(this.Box_Drag);
                     Pan.MouseClick += new MouseEventHandler(this.OpenBoxMenuRC);
+                    Pan.MouseHover += new EventHandler(this.Rotate);
                     Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
                     Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
 
@@ -152,17 +226,20 @@ namespace Technical_Solution
 
             foreach (Door door in garage.doors)
             {
-                if (!Floor.Controls.ContainsKey(door.ID.ToString()))
+                if (!Floor.Controls.ContainsKey($"door_{door.ID}"))
                 {
                     DoorPane Pan = new DoorPane(door);
-                    Pan.Name = door.ID.ToString();
+                    Pan.Name = $"door_{door.ID}";
                     Pan.BackColor = Color.Black;
-                    Pan.Location = new Point((int)Math.Round(door.location.X * Scale), (int)Math.Round(door.location.Y * Scale));
                     if (door.location.Y == 0 || door.location.Y == garage.Width) Pan.Size = new Size((int)Math.Round(door.radius * Scale), 4);
                     else Pan.Size = new Size(4, (int)Math.Round(door.radius * Scale));
+                    if (door.location.Y == garage.Width) Pan.Location = new Point((int)Math.Round(door.location.X * Scale), (int)Math.Round(door.location.Y * Scale) - 4);
+                    else if (door.location.X == garage.Length) Pan.Location = new Point((int)Math.Round(door.location.X * Scale) - 4, (int)Math.Round(door.location.Y * Scale));
+                    else Pan.Location = new Point((int)Math.Round(door.location.X * Scale), (int)Math.Round(door.location.Y * Scale));
                     Floor.Controls.Add(Pan);
                     Pan.BringToFront();
                 }
+                else Floor.Controls[$"door_{door.ID}"].BringToFront();
             }
         }
 
@@ -215,45 +292,62 @@ namespace Technical_Solution
         private void Box_Drag(object sender, MouseEventArgs e)
         {
             BoxPane Pan = sender as BoxPane;
+            Pan.box.ResetBuffer();
 
             if (Box_Queue_Group.Contains(Pan))
             {
                 Box_Queue_Group.Controls.Remove(Pan);
-                this.Controls.Add(Pan);
                 Pan.Location = new Point(Box_Queue_Group.Location.X + Pan.Location.X, Box_Queue_Group.Location.Y + Pan.Location.Y);
+                this.Controls.Add(Pan);
                 Pan.BringToFront();
             }
+
+            if (e.Button == MouseButtons.Right) OpenBoxMenuRC(sender, e);
+            Rotate(Pan, e);
 
             if (e.Button == MouseButtons.Left)
             {
                 Pan.Location = new Point(e.X + Pan.Location.X, e.Y + Pan.Location.Y);
             }
-            else if (Pan.Location.X > FloorView.Location.X && Pan.Location.X + Pan.Size.Width < FloorView.Location.X + FloorView.Size.Width &&
-                Pan.Location.Y > FloorView.Location.Y && Pan.Location.Y + Pan.Size.Height < FloorView.Location.Y + FloorView.Size.Height)
+            else if (Cursor.Position.X > FloorView.Location.X && Cursor.Position.X < FloorView.Location.X + FloorView.Size.Width &&
+                Cursor.Position.Y > FloorView.Location.Y && Cursor.Position.Y < FloorView.Location.Y + FloorView.Size.Height)
             {
                 Box_Queue.Remove(Pan.box);
                 Point OldPos;
                 if (!FloorView.Controls["Floor"].Controls.Contains(Pan))
                 {
                     Point NewLoc = new Point((int)Math.Round((Pan.Location.X - FloorView.Location.X - FloorView.Controls["Floor"].Location.X) / Scale), (int)Math.Round((Pan.Location.Y - FloorView.Location.Y) / Scale));
+                    if (Pan.Location.X + Pan.Size.Width > FloorView.Controls["Floor"].Size.Width) NewLoc.X = garage.Length - Pan.box.Size.Width;
+                    if (Pan.Location.Y + Pan.Size.Height > FloorView.Controls["Floor"].Size.Height) NewLoc.Y = garage.Width - Pan.box.Size.Height;
                     if (!garage.Boxes.Contains(Pan.box)) garage.AddBox(Pan.box, NewLoc);
                     Pan.box.buffer.Position = new Point(NewLoc.X - garage.bufferWidth, NewLoc.Y - garage.bufferWidth);
-                    DrawFloor();
+                    Draw();
                 }
                 else
                 {
                     Point NewLoc = new Point((int)Math.Round(Pan.Location.X / Scale), (int)Math.Round(Pan.Location.Y / Scale));
+                    if (Pan.Location.X + Pan.Size.Width > FloorView.Controls["Floor"].Size.Width) NewLoc.X = garage.Length - Pan.box.Size.Width;
+                    if (Pan.Location.Y + Pan.Size.Height > FloorView.Controls["Floor"].Size.Height) NewLoc.Y = garage.Width - Pan.box.Size.Height;
                     Pan.box.buffer.Position = new Point(NewLoc.X - garage.bufferWidth, NewLoc.Y - garage.bufferWidth);
                     OldPos = Pan.box.Position;
                     Pan.box.Position = NewLoc;
-                    if (OldPos != NewLoc) DrawFloor();
+                    if (OldPos != NewLoc) Draw();
                 }
             }
-            else if (!(Pan.Location.X > Box_Queue_Group.Location.X && Pan.Location.X + Pan.Size.Width < Box_Queue_Group.Location.X + Box_Queue_Group.Size.Width &&
-                Pan.Location.Y > Box_Queue_Group.Location.Y && Pan.Location.Y + Pan.Size.Height < Box_Queue_Group.Location.Y + Box_Queue_Group.Size.Height))
+            else if (Cursor.Position.X > Box_Queue_Group.Location.X && Cursor.Position.X < Box_Queue_Group.Location.X + Box_Queue_Group.Size.Width &&
+                Cursor.Position.Y > Box_Queue_Group.Location.Y && Cursor.Position.Y < Box_Queue_Group.Location.Y + Box_Queue_Group.Size.Height)
+            {
+                if (!Box_Queue.Contains(Pan.box))
+                {
+                    Box_Queue.Add(Pan.box);
+                }
+                this.Controls.Remove(Pan);
+                Draw();
+            }
+            else
             {
                 this.Controls.Remove(Pan);
-                DrawQueue();
+                Draw();
             }
         }
 
@@ -271,13 +365,14 @@ namespace Technical_Solution
                 try
                 {
                     garage.Organise(Box_Queue);
+                    Box_Queue.Clear();
                 }
                 catch (IncorrectPlacementException)
                 {
+                    garage.Boxes.RemoveAll((x) => Box_Queue.Contains(x));
                     FailOrg1.Visible = true;
                     FailOrg2.Visible = true;
                 }
-                Box_Queue.Clear();
             }
             else
             {
@@ -345,6 +440,37 @@ namespace Technical_Solution
                 Thread.Sleep(300);
                 BX.BackColor = Original;
                 Thread.Sleep(300);
+            }
+        }
+
+        public void RemovePane(Box box)
+        {
+            FloorView.Controls["Floor"].Controls.RemoveByKey(box.Boxid.ToString());
+            FloorView.Controls["Floor"].Controls.RemoveByKey($"BuffPan{box.Boxid}");
+            if (Box_Queue.Contains(box))
+            {
+                Box_Queue.Remove(box);
+                DrawQueue();
+            }
+            
+            //FloorView.Controls["Floor"].Controls.Remove(bp);
+        }
+
+        [DllImport("user32.dll")]
+        private static extern short GetKeyState(Keys key); // had to find this on the internet worlds best hidden function
+
+        private void Rotate(object sender, EventArgs e)
+        {
+            BoxPane Pan = sender as BoxPane;
+
+            if (keyAllow && int.Parse(GetKeyState(Keys.R).ToString()) < 0)
+            {
+                Pan.box.Size = new Size(Pan.box.Size.Height, Pan.box.Size.Width);
+                Pan.box.buffer.Size = new Size(Pan.box.buffer.Size.Height, Pan.box.buffer.Size.Width);
+                Pan.Size = new Size(Pan.Size.Height, Pan.Size.Width);
+                Draw();
+                keyAllow = false;
+                KeyPressTimeOut.Start();
             }
         }
     }

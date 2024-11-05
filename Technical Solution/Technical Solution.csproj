@@ -84,7 +84,6 @@
       <DependentUpon>BoxMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Door.cs" />
-    <Compile Include="JSONContainer.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

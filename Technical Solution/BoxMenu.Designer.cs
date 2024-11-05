@@ -254,7 +254,6 @@
             this.Controls.Add(this.Add_Box_Group);
             this.Name = "BoxMenu";
             this.Text = "BoxMenu";
-            this.Load += new System.EventHandler(this.BoxMenu_Load);
             this.Add_Box_Group.ResumeLayout(false);
             this.Add_Box_Group.PerformLayout();
             this.AddContentsBox.ResumeLayout(false);

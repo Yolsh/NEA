@@ -55,11 +55,15 @@ namespace Technical_Solution
 
         public void Organise()
         {
-            SortBoxList(Boxes, Boxes.Count() - 1);
+            SortBoxList(Boxes, 0, Boxes.Count() - 1);
 
             SortNode root = new SortNode(new Size(Length, Width), new Point(0, 0)); //create to nearest door later
 
-            foreach (Box S in Boxes) SortNode.AddBox(S, root);
+            foreach (Box S in Boxes)
+            {
+                S.ResetBuffer();
+                SortNode.AddBox(S, root);
+            }
             SortNode.CorrectPositions(root, doors);
         }
 
@@ -67,11 +71,15 @@ namespace Technical_Solution
         {
             for (int i = 0; i < BoxQueue.Count(); i++) Boxes.Add(BoxQueue[i]);
 
-            SortBoxList(Boxes, Boxes.Count() - 1);
+            SortBoxList(Boxes, 0, Boxes.Count() - 1);
 
             SortNode root = new SortNode(new Size(Length, Width), new Point(0, 0)); //create to nearest door later
 
-            foreach (Box S in Boxes) SortNode.AddBox(S, root);
+            foreach (Box S in Boxes)
+            {
+                S.ResetBuffer();
+                SortNode.AddBox(S, root);
+            }
             SortNode.CorrectPositions(root, doors);
         }
 
@@ -89,7 +97,7 @@ namespace Technical_Solution
             int L = 0, R = 0, pointer = s;
             while (L < Left.Length && R < Right.Length)
             {
-                if (Left[L].buffer.Size.Width * Left[L].buffer.Size.Height <= Right[R].buffer.Size.Width * Right[R].buffer.Size.Height)
+                if (Left[L].buffer.Size.Height <= Right[R].buffer.Size.Height)
                 {
                     NewList[pointer] = Right[R];
                     R++;
@@ -116,7 +124,7 @@ namespace Technical_Solution
             }
         }
 
-        static private void SortBoxList(List<Box> BoxList, int end, int start = 0)
+        static private void SortBoxList(List<Box> BoxList, int start, int end)
         {
             int midpoint = (int)Math.Ceiling(((double)start + (end - 1)) / 2);
             if (start < end)

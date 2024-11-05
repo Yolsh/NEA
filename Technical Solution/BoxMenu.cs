@@ -48,7 +48,7 @@ namespace Technical_Solution
             foreach (string Item in ToEdit.Contents)
             {
                 Label ItemLbl = new Label();
-                ItemLbl.MouseDoubleClick += new MouseEventHandler(this.RemoveLabel);
+                ItemLbl.Click += new EventHandler(this.RemoveLabel);
                 ItemLbl.Text = Item;
                 ItemLbl.Location = new Point(25, spacing);
                 spacing += 20;
@@ -75,11 +75,6 @@ namespace Technical_Solution
             else Err_Lbl.Show();
         }
 
-        private void BoxMenu_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void AddContBtn_Click(object sender, EventArgs e)
         {
             if (AddContTxt.Text != "") ToEdit.Contents.Add(AddContTxt.Text);
@@ -87,16 +82,22 @@ namespace Technical_Solution
             DrawContents();
         }
 
-        private void RemoveLabel(object sender, MouseEventArgs e)
+        private void RemoveLabel(object sender, EventArgs e)
         {
-            Label L = sender as Label;
-            ToEdit.Contents.Remove(L.Text);
-            DrawContents();
+            DialogResult dr = MessageBox.Show($"Delete {(sender as Label).Text}?", "Delete", MessageBoxButtons.YesNo);
+
+            if (dr == DialogResult.Yes)
+            {
+                Label L = sender as Label;
+                ToEdit.Contents.Remove(L.Text);
+                DrawContents();
+            }
         }
 
         private void RemoveBox_Click(object sender, EventArgs e)
         {
             Forms.MainWindow.garage.Boxes.Remove(ToEdit);
+            Forms.MainWindow.RemovePane(ToEdit);
             Forms.MainWindow.Draw();
             this.Close();
         }

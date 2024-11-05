@@ -52,5 +52,10 @@ namespace Technical_Solution
             buffer.Size.Height -= buffer.BufferWidth;
             buffer.Collapsed.Bottom = true;
         }
+
+        public void ResetBuffer()
+        {
+            buffer = new BoxBuffer(this, buffer.BufferWidth);
+        }
     }
 }

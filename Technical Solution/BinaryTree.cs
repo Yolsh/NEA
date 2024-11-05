@@ -37,14 +37,12 @@ namespace Technical_Solution
                 }
                 catch (IncorrectPlacementException)
                 {
-                    AddBox(b, root.Right);
+                    if (b.buffer.Size.Height <= root.Right.Size.Height && b.buffer.Size.Width <= root.Right.Size.Width) AddBox(b, root.Right);
+                    else throw new IncorrectPlacementException();
                 }
             }
             else if (b.buffer.Size.Height <= root.Right.Size.Height && b.buffer.Size.Width <= root.Right.Size.Width) AddBox(b, root.Right);
-            else
-            {
-                throw new IncorrectPlacementException();
-            }
+            else throw new IncorrectPlacementException();
         }
 
         public static void CorrectPositions(SortNode root, List<Door> doors)

@@ -183,7 +183,7 @@ namespace Technical_Solution
         private void Find_File_Click(object sender, EventArgs e)
         {
             string save = "";
-            try
+            if (File.Exists($"{File_Name_Txt.Text}.json"))
             {
                 using (StreamReader sr = new StreamReader($"{File_Name_Txt.Text}.json"))
                 {
@@ -191,15 +191,36 @@ namespace Technical_Solution
                     {
                         save += sr.ReadLine();
                     }
+                    sr.Close();
                 }
             }
-            catch (FileNotFoundException)
+            else
             {
                 File_Err.Show();
+                return;
             }
-            Forms.JSONContainer collected = JsonConvert.DeserializeObject<Forms.JSONContainer>(save);
-            Forms.MainWindow.garage = collected.garage;
-            Forms.MainWindow.Box_Queue = collected.Box_Queue;
+
+            try
+            {
+                Forms.JSONContainer collected = JsonConvert.DeserializeObject<Forms.JSONContainer>(save);
+                Forms.MainWindow.garage = collected.garage;
+                Forms.MainWindow.Box_Queue = collected.Box_Queue;
+            }
+            catch (JsonException)
+            {
+                MessageBox.Show("Youre save can no longer be loaded to load a new file go to File > Load and either create a new garage or load an existing one");
+                return;
+            }
+
+            using (FileStream fileStream = File.Open("LastOpened.txt", FileMode.Create))
+            {
+                using (StreamWriter sr = new StreamWriter(fileStream))
+                {
+                    sr.Write($"{File_Name_Txt.Text}.json");
+                    sr.Close();
+                }
+            }
+
             Forms.MainWindow.Draw(); 
             this.Hide();
         }

@@ -62,11 +62,14 @@ namespace Technical_Solution
             this.SearchBar = new System.Windows.Forms.TextBox();
             this.FailOrg2 = new System.Windows.Forms.Label();
             this.FailOrg1 = new System.Windows.Forms.Label();
+            this.ClearGB = new System.Windows.Forms.GroupBox();
+            this.ClearQueueButton = new System.Windows.Forms.Button();
             this.FloorView.SuspendLayout();
             this.Add_Box_Group.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             this.OrganBox.SuspendLayout();
             this.SearchGroupBox.SuspendLayout();
+            this.ClearGB.SuspendLayout();
             this.SuspendLayout();
             // 
             // FloorView
@@ -252,7 +255,7 @@ namespace Technical_Solution
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.MenuStrip.Size = new System.Drawing.Size(1300, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(1468, 24);
             this.MenuStrip.TabIndex = 3;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -322,9 +325,9 @@ namespace Technical_Solution
             this.SearchGroupBox.Controls.Add(this.SearchButton);
             this.SearchGroupBox.Controls.Add(this.label6);
             this.SearchGroupBox.Controls.Add(this.SearchBar);
-            this.SearchGroupBox.Location = new System.Drawing.Point(620, 637);
+            this.SearchGroupBox.Location = new System.Drawing.Point(620, 630);
             this.SearchGroupBox.Name = "SearchGroupBox";
-            this.SearchGroupBox.Size = new System.Drawing.Size(260, 187);
+            this.SearchGroupBox.Size = new System.Drawing.Size(260, 194);
             this.SearchGroupBox.TabIndex = 5;
             this.SearchGroupBox.TabStop = false;
             this.SearchGroupBox.Text = "Search";
@@ -388,11 +391,33 @@ namespace Technical_Solution
             this.FailOrg1.Text = "sorry but this is not organisable, try rotating your ";
             this.FailOrg1.Visible = false;
             // 
+            // ClearGB
+            // 
+            this.ClearGB.Controls.Add(this.ClearQueueButton);
+            this.ClearGB.Location = new System.Drawing.Point(886, 630);
+            this.ClearGB.Name = "ClearGB";
+            this.ClearGB.Size = new System.Drawing.Size(94, 194);
+            this.ClearGB.TabIndex = 6;
+            this.ClearGB.TabStop = false;
+            this.ClearGB.Text = "Queue Controls";
+            // 
+            // ClearQueueButton
+            // 
+            this.ClearQueueButton.Location = new System.Drawing.Point(9, 35);
+            this.ClearQueueButton.Name = "ClearQueueButton";
+            this.ClearQueueButton.Size = new System.Drawing.Size(75, 23);
+            this.ClearQueueButton.TabIndex = 0;
+            this.ClearQueueButton.Text = "Clear";
+            this.ClearQueueButton.UseVisualStyleBackColor = true;
+            this.ClearQueueButton.Click += new System.EventHandler(this.ClearQueueButton_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1300, 699);
+            this.Controls.Add(this.ClearGB);
             this.Controls.Add(this.SearchGroupBox);
             this.Controls.Add(this.OrganBox);
             this.Controls.Add(this.Add_Box_Group);
@@ -412,6 +437,7 @@ namespace Technical_Solution
             this.OrganBox.PerformLayout();
             this.SearchGroupBox.ResumeLayout(false);
             this.SearchGroupBox.PerformLayout();
+            this.ClearGB.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -451,5 +477,7 @@ namespace Technical_Solution
         private Label SearchError;
         private Label FailOrg1;
         private Label FailOrg2;
+        private GroupBox ClearGB;
+        private Button ClearQueueButton;
     }
 }

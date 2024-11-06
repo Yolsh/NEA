@@ -36,9 +36,8 @@
             this.Incorrect_Warn = new System.Windows.Forms.Label();
             this.No_Doors = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.Doors_In_Group = new System.Windows.Forms.GroupBox();
             this.Check_Btn = new System.Windows.Forms.Button();
-            this.Incorrect_Info_Lab = new System.Windows.Forms.Label();
+            this.Incorrect_Info_Lab1 = new System.Windows.Forms.Label();
             this.Create_Btn = new System.Windows.Forms.Button();
             this.Min_Spacing = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,10 +52,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.File_Name_Txt = new System.Windows.Forms.TextBox();
             this.File_Err = new System.Windows.Forms.Label();
+            this.Doors_In_Group = new System.Windows.Forms.Panel();
+            this.Incorrect_Info_Label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.New_Inputs.SuspendLayout();
-            this.Doors_In_Group.SuspendLayout();
             this.Load_File_Box.SuspendLayout();
+            this.Doors_In_Group.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -97,11 +98,11 @@
             // 
             // New_Inputs
             // 
+            this.New_Inputs.Controls.Add(this.Doors_In_Group);
             this.New_Inputs.Controls.Add(this.Load_New_Btn);
             this.New_Inputs.Controls.Add(this.Incorrect_Warn);
             this.New_Inputs.Controls.Add(this.No_Doors);
             this.New_Inputs.Controls.Add(this.label5);
-            this.New_Inputs.Controls.Add(this.Doors_In_Group);
             this.New_Inputs.Controls.Add(this.Create_Btn);
             this.New_Inputs.Controls.Add(this.Min_Spacing);
             this.New_Inputs.Controls.Add(this.label4);
@@ -143,7 +144,7 @@
             // 
             // No_Doors
             // 
-            this.No_Doors.Location = new System.Drawing.Point(88, 182);
+            this.No_Doors.Location = new System.Drawing.Point(104, 182);
             this.No_Doors.Name = "No_Doors";
             this.No_Doors.Size = new System.Drawing.Size(100, 20);
             this.No_Doors.TabIndex = 11;
@@ -157,22 +158,9 @@
             this.label5.TabIndex = 10;
             this.label5.Text = "Num Doors:";
             // 
-            // Doors_In_Group
-            // 
-            this.Doors_In_Group.AutoSize = true;
-            this.Doors_In_Group.Controls.Add(this.Check_Btn);
-            this.Doors_In_Group.Controls.Add(this.Incorrect_Info_Lab);
-            this.Doors_In_Group.Location = new System.Drawing.Point(304, 19);
-            this.Doors_In_Group.Name = "Doors_In_Group";
-            this.Doors_In_Group.Size = new System.Drawing.Size(265, 109);
-            this.Doors_In_Group.TabIndex = 9;
-            this.Doors_In_Group.TabStop = false;
-            this.Doors_In_Group.Text = "Doors";
-            this.Doors_In_Group.Visible = false;
-            // 
             // Check_Btn
             // 
-            this.Check_Btn.Location = new System.Drawing.Point(6, 32);
+            this.Check_Btn.Location = new System.Drawing.Point(26, 5);
             this.Check_Btn.Name = "Check_Btn";
             this.Check_Btn.Size = new System.Drawing.Size(75, 23);
             this.Check_Btn.TabIndex = 14;
@@ -180,16 +168,16 @@
             this.Check_Btn.UseVisualStyleBackColor = true;
             this.Check_Btn.Click += new System.EventHandler(this.Check_Btn_Click_1);
             // 
-            // Incorrect_Info_Lab
+            // Incorrect_Info_Lab1
             // 
-            this.Incorrect_Info_Lab.AutoSize = true;
-            this.Incorrect_Info_Lab.ForeColor = System.Drawing.Color.Crimson;
-            this.Incorrect_Info_Lab.Location = new System.Drawing.Point(6, 16);
-            this.Incorrect_Info_Lab.Name = "Incorrect_Info_Lab";
-            this.Incorrect_Info_Lab.Size = new System.Drawing.Size(253, 13);
-            this.Incorrect_Info_Lab.TabIndex = 13;
-            this.Incorrect_Info_Lab.Text = "Some of the info provided is not in the correct format";
-            this.Incorrect_Info_Lab.Visible = false;
+            this.Incorrect_Info_Lab1.AutoSize = true;
+            this.Incorrect_Info_Lab1.ForeColor = System.Drawing.Color.Crimson;
+            this.Incorrect_Info_Lab1.Location = new System.Drawing.Point(23, 45);
+            this.Incorrect_Info_Lab1.Name = "Incorrect_Info_Lab1";
+            this.Incorrect_Info_Lab1.Size = new System.Drawing.Size(128, 13);
+            this.Incorrect_Info_Lab1.TabIndex = 13;
+            this.Incorrect_Info_Lab1.Text = "Some of the info provided";
+            this.Incorrect_Info_Lab1.Visible = false;
             // 
             // Create_Btn
             // 
@@ -203,7 +191,7 @@
             // 
             // Min_Spacing
             // 
-            this.Min_Spacing.Location = new System.Drawing.Point(88, 139);
+            this.Min_Spacing.Location = new System.Drawing.Point(104, 139);
             this.Min_Spacing.Name = "Min_Spacing";
             this.Min_Spacing.Size = new System.Drawing.Size(100, 20);
             this.Min_Spacing.TabIndex = 7;
@@ -213,27 +201,27 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 142);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 13);
+            this.label4.Size = new System.Drawing.Size(92, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Min Spacing:";
+            this.label4.Text = "Min Spacing (cm):";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 99);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.Size = new System.Drawing.Size(61, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Width:";
+            this.label3.Text = "Width (cm):";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 60);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Length:";
+            this.label2.Text = "Length (cm):";
             // 
             // label1
             // 
@@ -246,21 +234,21 @@
             // 
             // _Width
             // 
-            this._Width.Location = new System.Drawing.Point(88, 96);
+            this._Width.Location = new System.Drawing.Point(104, 96);
             this._Width.Name = "_Width";
             this._Width.Size = new System.Drawing.Size(100, 20);
             this._Width.TabIndex = 2;
             // 
             // _Length
             // 
-            this._Length.Location = new System.Drawing.Point(88, 57);
+            this._Length.Location = new System.Drawing.Point(104, 57);
             this._Length.Name = "_Length";
             this._Length.Size = new System.Drawing.Size(100, 20);
             this._Length.TabIndex = 1;
             // 
             // Garage_Name
             // 
-            this.Garage_Name.Location = new System.Drawing.Point(88, 21);
+            this.Garage_Name.Location = new System.Drawing.Point(104, 21);
             this.Garage_Name.Name = "Garage_Name";
             this.Garage_Name.Size = new System.Drawing.Size(100, 20);
             this.Garage_Name.TabIndex = 0;
@@ -276,7 +264,7 @@
             this.Load_File_Box.Size = new System.Drawing.Size(621, 426);
             this.Load_File_Box.TabIndex = 14;
             this.Load_File_Box.TabStop = false;
-            this.Load_File_Box.Text = "groupBox2";
+            this.Load_File_Box.Text = "Load Garage";
             this.Load_File_Box.Visible = false;
             // 
             // Find_File
@@ -316,6 +304,31 @@
             this.File_Err.Text = "File Couldn\'t be found";
             this.File_Err.Visible = false;
             // 
+            // Doors_In_Group
+            // 
+            this.Doors_In_Group.AutoScroll = true;
+            this.Doors_In_Group.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Doors_In_Group.Controls.Add(this.Check_Btn);
+            this.Doors_In_Group.Controls.Add(this.Incorrect_Info_Label2);
+            this.Doors_In_Group.Controls.Add(this.Incorrect_Info_Lab1);
+            this.Doors_In_Group.Location = new System.Drawing.Point(339, 19);
+            this.Doors_In_Group.Name = "Doors_In_Group";
+            this.Doors_In_Group.Size = new System.Drawing.Size(255, 401);
+            this.Doors_In_Group.TabIndex = 14;
+            this.Doors_In_Group.Tag = "";
+            this.Doors_In_Group.Visible = false;
+            // 
+            // Incorrect_Info_Label2
+            // 
+            this.Incorrect_Info_Label2.AutoSize = true;
+            this.Incorrect_Info_Label2.ForeColor = System.Drawing.Color.Crimson;
+            this.Incorrect_Info_Label2.Location = new System.Drawing.Point(23, 64);
+            this.Incorrect_Info_Label2.Name = "Incorrect_Info_Label2";
+            this.Incorrect_Info_Label2.Size = new System.Drawing.Size(129, 13);
+            this.Incorrect_Info_Label2.TabIndex = 15;
+            this.Incorrect_Info_Label2.Text = "is not in the correct format";
+            this.Incorrect_Info_Label2.Visible = false;
+            // 
             // LoadMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -329,10 +342,10 @@
             this.groupBox1.ResumeLayout(false);
             this.New_Inputs.ResumeLayout(false);
             this.New_Inputs.PerformLayout();
-            this.Doors_In_Group.ResumeLayout(false);
-            this.Doors_In_Group.PerformLayout();
             this.Load_File_Box.ResumeLayout(false);
             this.Load_File_Box.PerformLayout();
+            this.Doors_In_Group.ResumeLayout(false);
+            this.Doors_In_Group.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -352,9 +365,8 @@
         private System.Windows.Forms.Button Create_Btn;
         private System.Windows.Forms.TextBox No_Doors;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.GroupBox Doors_In_Group;
         private System.Windows.Forms.Label Incorrect_Warn;
-        private System.Windows.Forms.Label Incorrect_Info_Lab;
+        private System.Windows.Forms.Label Incorrect_Info_Lab1;
         private System.Windows.Forms.Button Check_Btn;
         private System.Windows.Forms.Button Load_New_Btn;
         private System.Windows.Forms.Button Load_Btn;
@@ -363,5 +375,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox File_Name_Txt;
         private System.Windows.Forms.Label File_Err;
+        private System.Windows.Forms.Panel Doors_In_Group;
+        private System.Windows.Forms.Label Incorrect_Info_Label2;
     }
 }

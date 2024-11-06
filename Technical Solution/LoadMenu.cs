@@ -25,11 +25,19 @@ namespace Technical_Solution
         public LoadMenu()
         {
             InitializeComponent();
+            this.FormClosing += new FormClosingEventHandler(this.LoadMenu_Res);
         }
 
         private void New_Btn_Click(object sender, EventArgs e)
         {
+            Load_File_Box.Hide();
             New_Inputs.Show();
+        }
+
+        private void LoadMenu_Res(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
         }
 
         private void Create_Btn_Click(object sender, EventArgs e)
@@ -57,7 +65,8 @@ namespace Technical_Solution
 
         private void Check_Btn_Click_1(object sender, EventArgs e)
         {
-            Incorrect_Info_Lab.Hide();
+            Incorrect_Info_Lab1.Hide();
+            Incorrect_Info_Label2.Hide();
             bool correct = true;
             int count = 0;
             foreach (GroupBox gb in Doors_In_Group.Controls.OfType<GroupBox>())
@@ -85,6 +94,8 @@ namespace Technical_Solution
                     DoorVals.Add(cb.SelectedIndex);
                 }
 
+                if (!correct) break;
+
                 if (count == 0)
                 {
                     if (DoorVals[2] == 0) NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], 0);
@@ -101,7 +112,11 @@ namespace Technical_Solution
                 }
                 count++;
             }
-            if (!correct) Incorrect_Info_Lab.Show();
+            if (!correct)
+            {
+                Incorrect_Info_Lab1.Show();
+                Incorrect_Info_Label2.Show();
+            }
             else Load_New_Btn.Show();
         }
 
@@ -165,18 +180,21 @@ namespace Technical_Solution
             int offset = 20 + numDoors * 150;
             Check_Btn.Location = new Point(10, offset);
 
-            Incorrect_Info_Lab.Location = new Point(10, offset + 25);
+            Incorrect_Info_Lab1.Location = new Point(10, offset + 25);
+            Incorrect_Info_Label2.Location = new Point(10, offset + 38);
         }
 
         private void Load_New_Btn_Click(object sender, EventArgs e)
         {
             Forms.MainWindow.garage = NewGarage;
+            Forms.MainWindow.Reset();
             Forms.MainWindow.Draw();
             this.Hide();
         }
 
         private void Load_Btn_Click(object sender, EventArgs e)
         {
+            New_Inputs.Hide();
             Load_File_Box.Show();
         }
 

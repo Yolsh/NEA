@@ -22,7 +22,6 @@ namespace Technical_Solution
         public Garage garage;
         public List<Box> Box_Queue;
         private double Scale;
-        private int BoxCount = 0;
         private System.Timers.Timer KeyPressTimeOut;
         private bool keyAllow;
 
@@ -51,6 +50,7 @@ namespace Technical_Solution
             this.Add_Box_Group.Location = new Point(this.FloorView.Location.X, this.FloorView.Location.Y + this.FloorView.Size.Height + Space);
             this.OrganBox.Location = new Point(this.Add_Box_Group.Location.X + this.Add_Box_Group.Size.Width + Space, this.Add_Box_Group.Location.Y);
             this.SearchGroupBox.Location = new Point(this.OrganBox.Location.X + this.OrganBox.Size.Width + Space, this.OrganBox.Location.Y);
+            this.ClearGB.Location = new Point(this.SearchGroupBox.Location.X + this.SearchGroupBox.Size.Width + Space, this.SearchGroupBox.Location.Y);
         }
 
         private void LoadLastOpened() 
@@ -255,32 +255,45 @@ namespace Technical_Solution
                 Math.Abs(Col_Pan.BackColor.G - 127) > 5 && 
                 Math.Abs(Col_Pan.BackColor.B - 80) > 5)
             {
+                double weight;
+                Size BoxSize;
                 try
                 {
-                    Box NewBox = new Box(BoxCount + garage.BoxCount, Name_Txt.Text, double.Parse(Weight_Txt.Text), new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text)), garage.bufferWidth, Col_Pan.BackColor);
-                    BoxCount++;
-                    Box_Queue.Add(NewBox);
-                    DrawQueue();
-
-                    Name_Txt.Text = "";
-                    Weight_Txt.Text = "";
-                    Length_Txt.Text = "";
-                    Width_Txt.Text = "";
-                    Colour_Txt.Text = "";
+                    weight = double.Parse(Weight_Txt.Text);
+                    BoxSize = new Size(int.Parse(Length_Txt.Text), int.Parse(Width_Txt.Text));
                 }
                 catch (NullReferenceException)
                 {
                     Err_Lbl.Show();
+                    return;
                 }
+
+                if (weight != 0 && BoxSize.Width > 0 && BoxSize.Height > 0 && BoxSize.Width < garage.Length && BoxSize.Height < garage.Width)
+                {
+                    Box NewBox = new Box(Box_Queue.Count() + garage.BoxCount, Name_Txt.Text, weight, BoxSize, garage.bufferWidth, Col_Pan.BackColor);
+                    Box_Queue.Add(NewBox);
+                    DrawQueue();
+                }
+                else
+                {
+                    Err_Lbl.Show();
+                    return;
+                }
+
+                Name_Txt.Text = "";
+                Weight_Txt.Text = "";
+                Length_Txt.Text = "";
+                Width_Txt.Text = "";
+                Colour_Txt.Text = "";
             }
             else Err_Lbl.Show();
         }
 
         private void Colour_Txt_TextChanged(object sender, EventArgs e)
         {
-            Col_Pan.BackColor = Regex.IsMatch(Colour_Txt.Text,
-                "(#([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9])([a-f]|[A-F]|[0-9]))") ? 
-                ColorTranslator.FromHtml(Colour_Txt.Text) : Regex.Match(Colour_Txt.Text, "((25[0-5]|2[0-4][0-9])|1?[0-9][0-9]), ?((25[0-5]|2[0-4][0-9])|1?[0-9][0-9]), ?((25[0-5]|2[0-4][0-9])|1?[0-9][0-9])").Length == Colour_Txt.Text.Length ? 
+            Col_Pan.BackColor = Regex.Match(Colour_Txt.Text,
+                "#([a-f]|[A-F]|[0-9]){6}").Length == Colour_Txt.Text.Length ? 
+                ColorTranslator.FromHtml(Colour_Txt.Text) : Regex.Match(Colour_Txt.Text, "(((25[0-5]|2[0-4][0-9])|1?[0-9]?[0-9]), ){2}((25[0-5]|2[0-4][0-9])|1?[0-9]?[0-9])").Length == Colour_Txt.Text.Length ? 
                 RGBString(Colour_Txt.Text): Color.FromName(Colour_Txt.Text);
         }
 
@@ -457,7 +470,7 @@ namespace Technical_Solution
         }
 
         [DllImport("user32.dll")]
-        private static extern short GetKeyState(Keys key); // had to find this on the internet worlds best hidden function
+        private static extern short GetKeyState(Keys key); // had to find this on the internet, worlds best hidden function
 
         private void Rotate(object sender, EventArgs e)
         {
@@ -472,6 +485,18 @@ namespace Technical_Solution
                 keyAllow = false;
                 KeyPressTimeOut.Start();
             }
+        }
+
+        private void ClearQueueButton_Click(object sender, EventArgs e)
+        {
+            Box_Queue.Clear();
+            DrawQueue();
+        }
+
+        public void Reset()
+        {
+            FloorView.Controls.Clear();
+            Box_Queue.Clear();
         }
     }
 }

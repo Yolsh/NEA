@@ -53,6 +53,8 @@ namespace Technical_Solution
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OrganBox = new System.Windows.Forms.GroupBox();
+            this.FailOrg1 = new System.Windows.Forms.Label();
+            this.FailOrg2 = new System.Windows.Forms.Label();
             this.IncBoxQueueCheck = new System.Windows.Forms.CheckBox();
             this.OrgGarageBtn = new System.Windows.Forms.Button();
             this.SearchGroupBox = new System.Windows.Forms.GroupBox();
@@ -60,8 +62,6 @@ namespace Technical_Solution
             this.SearchButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.SearchBar = new System.Windows.Forms.TextBox();
-            this.FailOrg2 = new System.Windows.Forms.Label();
-            this.FailOrg1 = new System.Windows.Forms.Label();
             this.ClearGB = new System.Windows.Forms.GroupBox();
             this.ClearQueueButton = new System.Windows.Forms.Button();
             this.FloorView.SuspendLayout();
@@ -255,7 +255,7 @@ namespace Technical_Solution
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.MenuStrip.Size = new System.Drawing.Size(1468, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(1300, 24);
             this.MenuStrip.TabIndex = 3;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -296,6 +296,28 @@ namespace Technical_Solution
             this.OrganBox.TabIndex = 4;
             this.OrganBox.TabStop = false;
             this.OrganBox.Text = "Organise Garage";
+            // 
+            // FailOrg1
+            // 
+            this.FailOrg1.AutoSize = true;
+            this.FailOrg1.ForeColor = System.Drawing.Color.Crimson;
+            this.FailOrg1.Location = new System.Drawing.Point(12, 84);
+            this.FailOrg1.Name = "FailOrg1";
+            this.FailOrg1.Size = new System.Drawing.Size(232, 13);
+            this.FailOrg1.TabIndex = 3;
+            this.FailOrg1.Text = "sorry but this is not organisable, try rotating your ";
+            this.FailOrg1.Visible = false;
+            // 
+            // FailOrg2
+            // 
+            this.FailOrg2.AutoSize = true;
+            this.FailOrg2.ForeColor = System.Drawing.Color.Crimson;
+            this.FailOrg2.Location = new System.Drawing.Point(12, 97);
+            this.FailOrg2.Name = "FailOrg2";
+            this.FailOrg2.Size = new System.Drawing.Size(241, 13);
+            this.FailOrg2.TabIndex = 2;
+            this.FailOrg2.Text = "boxes or moving some things in order to make it fit";
+            this.FailOrg2.Visible = false;
             // 
             // IncBoxQueueCheck
             // 
@@ -369,28 +391,6 @@ namespace Technical_Solution
             this.SearchBar.Size = new System.Drawing.Size(193, 20);
             this.SearchBar.TabIndex = 0;
             // 
-            // FailOrg2
-            // 
-            this.FailOrg2.AutoSize = true;
-            this.FailOrg2.ForeColor = System.Drawing.Color.Crimson;
-            this.FailOrg2.Location = new System.Drawing.Point(12, 97);
-            this.FailOrg2.Name = "FailOrg2";
-            this.FailOrg2.Size = new System.Drawing.Size(241, 13);
-            this.FailOrg2.TabIndex = 2;
-            this.FailOrg2.Text = "boxes or moving some things in order to make it fit";
-            this.FailOrg2.Visible = false;
-            // 
-            // FailOrg1
-            // 
-            this.FailOrg1.AutoSize = true;
-            this.FailOrg1.ForeColor = System.Drawing.Color.Crimson;
-            this.FailOrg1.Location = new System.Drawing.Point(12, 84);
-            this.FailOrg1.Name = "FailOrg1";
-            this.FailOrg1.Size = new System.Drawing.Size(232, 13);
-            this.FailOrg1.TabIndex = 3;
-            this.FailOrg1.Text = "sorry but this is not organisable, try rotating your ";
-            this.FailOrg1.Visible = false;
-            // 
             // ClearGB
             // 
             this.ClearGB.Controls.Add(this.ClearQueueButton);
@@ -415,7 +415,6 @@ namespace Technical_Solution
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1300, 699);
             this.Controls.Add(this.ClearGB);
             this.Controls.Add(this.SearchGroupBox);

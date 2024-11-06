@@ -53,7 +53,7 @@ namespace Technical_Solution
             this.ClearGB.Location = new Point(this.SearchGroupBox.Location.X + this.SearchGroupBox.Size.Width + Space, this.SearchGroupBox.Location.Y);
         }
 
-        private void LoadLastOpened() 
+        private void LoadLastOpened()
         {
             string GarageFile = "";
             string JsonFile = "";
@@ -246,6 +246,11 @@ namespace Technical_Solution
         private void Add_Btn_Click(object sender, EventArgs e)
         {
             Err_Lbl.Hide();
+            if (garage is null)
+            {
+                Err_Lbl.Show();
+                return;
+            }
             if (Name_Txt.Text != "" && Weight_Txt.Text != "" && Length_Txt.Text != "" && Width_Txt.Text != "" &&
                 Weight_Txt.Text.Split('.').Length <= 2 &&
                 Regex.IsMatch(Weight_Txt.Text, "[0-9]*\\.*[0-9]+") &&
@@ -314,6 +319,17 @@ namespace Technical_Solution
                 this.Controls.Add(Pan);
                 Pan.BringToFront();
             }
+            else if (FloorView.Controls["Floor"].Controls.Contains(Pan) && 
+                (Pan.Location.X < 0  || 
+                Pan.Location.Y < 0 || 
+                Pan.Location.X + Pan.Size.Width > FloorView.Controls["Floor"].Size.Width || 
+                Pan.Location.Y + Pan.Size.Height > FloorView.Controls["Floor"].Size.Height))
+            {
+                FloorView.Controls["Floor"].Controls.Remove(Pan);
+                Pan.Location = new Point(FloorView.Location.X + FloorView.Controls["Floor"].Location.X + Pan.Location.X, FloorView.Location.Y + FloorView.Controls["Floor"].Location.Y + Pan.Location.Y);
+                this.Controls.Add(Pan);
+                Pan.BringToFront();
+            }
 
             if (e.Button == MouseButtons.Right) OpenBoxMenuRC(sender, e);
             Rotate(Pan, e);
@@ -340,7 +356,9 @@ namespace Technical_Solution
                 {
                     Point NewLoc = new Point((int)Math.Round(Pan.Location.X / Scale), (int)Math.Round(Pan.Location.Y / Scale));
                     if (Pan.Location.X + Pan.Size.Width > FloorView.Controls["Floor"].Size.Width) NewLoc.X = garage.Length - Pan.box.Size.Width;
+                    else if (Pan.Location.X < 0) NewLoc.X = 0;
                     if (Pan.Location.Y + Pan.Size.Height > FloorView.Controls["Floor"].Size.Height) NewLoc.Y = garage.Width - Pan.box.Size.Height;
+                    else if (Pan.Location.Y < 0) NewLoc.Y = 0;
                     Pan.box.buffer.Position = new Point(NewLoc.X - garage.bufferWidth, NewLoc.Y - garage.bufferWidth);
                     OldPos = Pan.box.Position;
                     Pan.box.Position = NewLoc;
@@ -353,6 +371,7 @@ namespace Technical_Solution
                 if (!Box_Queue.Contains(Pan.box))
                 {
                     Box_Queue.Add(Pan.box);
+                    if (garage.Boxes.Contains(Pan.box)) garage.Boxes.Remove(Pan.box);
                 }
                 this.Controls.Remove(Pan);
                 Draw();

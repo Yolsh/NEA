@@ -253,9 +253,9 @@ namespace Technical_Solution
             }
             if (Name_Txt.Text != "" && Weight_Txt.Text != "" && Length_Txt.Text != "" && Width_Txt.Text != "" &&
                 Weight_Txt.Text.Split('.').Length <= 2 &&
-                Regex.IsMatch(Weight_Txt.Text, "[0-9]*\\.*[0-9]+") &&
-                Regex.IsMatch(Length_Txt.Text, "[0-9]+") &&
-                Regex.IsMatch(Width_Txt.Text, "[0-9]+") &&
+                Regex.Match(Weight_Txt.Text, "0|[1-9]+[0-9]*(\\.[0-9]*[1-9]+)?").Length == Weight_Txt.Text.Length &&
+                Regex.IsMatch(Length_Txt.Text, "[1-9][0-9]*") &&
+                Regex.IsMatch(Width_Txt.Text, "[1-9][0-9]*") &&
                 Math.Abs(Col_Pan.BackColor.R - 255) > 5 &&
                 Math.Abs(Col_Pan.BackColor.G - 127) > 5 && 
                 Math.Abs(Col_Pan.BackColor.B - 80) > 5)

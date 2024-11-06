@@ -392,6 +392,12 @@ namespace Technical_Solution
         {
             FailOrg1.Visible = false;
             FailOrg2.Visible = false;
+            if (garage is null)
+            {
+                FailOrg1.Visible = true;
+                FailOrg2.Visible = true;
+                return;
+            }
             if (this.IncBoxQueueCheck.Checked)
             {
                 try

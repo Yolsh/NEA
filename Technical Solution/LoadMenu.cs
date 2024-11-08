@@ -44,10 +44,10 @@ namespace Technical_Solution
         {
             Incorrect_Warn.Hide();
             if (Garage_Name.Text != "" &&
-                Regex.IsMatch(_Length.Text, "[0-9]+") &&
-                Regex.IsMatch(_Width.Text, "[0-9]+") &&
-                Regex.IsMatch(Min_Spacing.Text, "[0-9]+") && 
-                Regex.IsMatch(No_Doors.Text, "[0-9]+") &&
+                Regex.IsMatch(_Length.Text, "[1-9]+[0-9]*") &&
+                Regex.IsMatch(_Width.Text, "[1-9]+[0-9]*") &&
+                Regex.IsMatch(Min_Spacing.Text, "[1-9]+[0-9]*") && 
+                Regex.IsMatch(No_Doors.Text, "[1-9]+[0-9]*") &&
                 _Length.Text != "" && _Width.Text != "" && Min_Spacing.Text != "" && No_Doors.Text != "")
             {
                 GarageName = Garage_Name.Text;

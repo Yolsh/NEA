@@ -13,6 +13,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace Technical_Solution
 {
@@ -111,6 +112,11 @@ namespace Technical_Solution
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (garage is null)
+            {
+                MessageBox.Show("You have not loaded a garage yet. To do so go to file > load and either load a pre existing one or create a new one");
+                return;
+            }
             Forms.JSONContainer collected = new Forms.JSONContainer();
             collected.garage = garage;
             collected.Box_Queue = Box_Queue;
@@ -206,6 +212,7 @@ namespace Technical_Solution
                     Pan = Floor.Controls[b.Boxid.ToString()] as BoxPane;
                     if (Pan.Location != new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale))) Pan.Location = new Point((int)Math.Round(b.Position.X * Scale), (int)Math.Round(b.Position.Y * Scale));
                     if (Pan.Size != new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale))) Pan.Size = new Size((int)Math.Round(b.Size.Width * Scale), (int)Math.Round(b.Size.Height * Scale));
+                    Pan.BackColor = b.col;
                 }
                 else
                 {
@@ -438,12 +445,17 @@ namespace Technical_Solution
             SearchError.Visible = false;
             if (FloorView.Controls.ContainsKey("Floor"))
             {
-                int BID = garage.SearchBoxes(SearchBar.Text);
+                List<int> BIDs = garage.SearchBoxes(SearchBar.Text);
                 Panel Floor = FloorView.Controls["Floor"] as Panel;
-                if (Floor.Controls.ContainsKey(BID.ToString()))
+                if (BIDs.Count() != 0)
                 {
-                    BoxPane FoundBox = Floor.Controls[BID.ToString()] as BoxPane;
-                    Task.Run(() => FlashBox(FoundBox));
+                    foreach (BoxPane b in Floor.Controls.OfType<BoxPane>())
+                    {
+                        if (BIDs.Contains(b.box.Boxid))
+                        {
+                            Task.Run(() => FlashBox(b));
+                        }
+                    }
                 }
                 else
                 {

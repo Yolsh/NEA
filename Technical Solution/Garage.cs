@@ -152,16 +152,17 @@ namespace Technical_Solution
             floorplan = NewFloorplan;
         }
 
-        public int SearchBoxes(string item)
+        public List<int> SearchBoxes(string item)
         {
+            List<int> found = new List<int>();
             foreach (Box b in Boxes)
             {
                 foreach (string S in b.Contents)
                 {
-                    if (Regex.Replace(item, "\\s", "").ToUpper() == Regex.Replace(S, "\\s", "").ToUpper()) return b.Boxid;
+                    if (Regex.Replace(item, "\\s", "").ToUpper() == Regex.Replace(S, "\\s", "").ToUpper()) found.Add(b.Boxid);
                 }
             }
-            return -1;
+            return found;
         }
     }
 }

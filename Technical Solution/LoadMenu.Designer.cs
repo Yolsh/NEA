@@ -32,12 +32,14 @@
             this.Load_Btn = new System.Windows.Forms.Button();
             this.New_Btn = new System.Windows.Forms.Button();
             this.New_Inputs = new System.Windows.Forms.GroupBox();
+            this.Doors_In_Group = new System.Windows.Forms.Panel();
+            this.Check_Btn = new System.Windows.Forms.Button();
+            this.Incorrect_Info_Label2 = new System.Windows.Forms.Label();
+            this.Incorrect_Info_Lab1 = new System.Windows.Forms.Label();
             this.Load_New_Btn = new System.Windows.Forms.Button();
             this.Incorrect_Warn = new System.Windows.Forms.Label();
             this.No_Doors = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.Check_Btn = new System.Windows.Forms.Button();
-            this.Incorrect_Info_Lab1 = new System.Windows.Forms.Label();
             this.Create_Btn = new System.Windows.Forms.Button();
             this.Min_Spacing = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -52,12 +54,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.File_Name_Txt = new System.Windows.Forms.TextBox();
             this.File_Err = new System.Windows.Forms.Label();
-            this.Doors_In_Group = new System.Windows.Forms.Panel();
-            this.Incorrect_Info_Label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.New_Inputs.SuspendLayout();
-            this.Load_File_Box.SuspendLayout();
             this.Doors_In_Group.SuspendLayout();
+            this.Load_File_Box.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -120,9 +120,55 @@
             this.New_Inputs.Text = "Garage Creator";
             this.New_Inputs.Visible = false;
             // 
+            // Doors_In_Group
+            // 
+            this.Doors_In_Group.AutoScroll = true;
+            this.Doors_In_Group.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Doors_In_Group.Controls.Add(this.Check_Btn);
+            this.Doors_In_Group.Controls.Add(this.Incorrect_Info_Label2);
+            this.Doors_In_Group.Controls.Add(this.Incorrect_Info_Lab1);
+            this.Doors_In_Group.Location = new System.Drawing.Point(339, 19);
+            this.Doors_In_Group.Name = "Doors_In_Group";
+            this.Doors_In_Group.Size = new System.Drawing.Size(255, 401);
+            this.Doors_In_Group.TabIndex = 14;
+            this.Doors_In_Group.Tag = "";
+            this.Doors_In_Group.Visible = false;
+            // 
+            // Check_Btn
+            // 
+            this.Check_Btn.Location = new System.Drawing.Point(26, 5);
+            this.Check_Btn.Name = "Check_Btn";
+            this.Check_Btn.Size = new System.Drawing.Size(75, 23);
+            this.Check_Btn.TabIndex = 14;
+            this.Check_Btn.Text = "Check";
+            this.Check_Btn.UseVisualStyleBackColor = true;
+            this.Check_Btn.Click += new System.EventHandler(this.Check_Btn_Click_1);
+            // 
+            // Incorrect_Info_Label2
+            // 
+            this.Incorrect_Info_Label2.AutoSize = true;
+            this.Incorrect_Info_Label2.ForeColor = System.Drawing.Color.Crimson;
+            this.Incorrect_Info_Label2.Location = new System.Drawing.Point(23, 64);
+            this.Incorrect_Info_Label2.Name = "Incorrect_Info_Label2";
+            this.Incorrect_Info_Label2.Size = new System.Drawing.Size(129, 13);
+            this.Incorrect_Info_Label2.TabIndex = 15;
+            this.Incorrect_Info_Label2.Text = "is not in the correct format";
+            this.Incorrect_Info_Label2.Visible = false;
+            // 
+            // Incorrect_Info_Lab1
+            // 
+            this.Incorrect_Info_Lab1.AutoSize = true;
+            this.Incorrect_Info_Lab1.ForeColor = System.Drawing.Color.Crimson;
+            this.Incorrect_Info_Lab1.Location = new System.Drawing.Point(23, 45);
+            this.Incorrect_Info_Lab1.Name = "Incorrect_Info_Lab1";
+            this.Incorrect_Info_Lab1.Size = new System.Drawing.Size(128, 13);
+            this.Incorrect_Info_Lab1.TabIndex = 13;
+            this.Incorrect_Info_Lab1.Text = "Some of the info provided";
+            this.Incorrect_Info_Lab1.Visible = false;
+            // 
             // Load_New_Btn
             // 
-            this.Load_New_Btn.Location = new System.Drawing.Point(7, 267);
+            this.Load_New_Btn.Location = new System.Drawing.Point(9, 263);
             this.Load_New_Btn.Name = "Load_New_Btn";
             this.Load_New_Btn.Size = new System.Drawing.Size(75, 23);
             this.Load_New_Btn.TabIndex = 13;
@@ -135,11 +181,11 @@
             // 
             this.Incorrect_Warn.AutoSize = true;
             this.Incorrect_Warn.ForeColor = System.Drawing.Color.Crimson;
-            this.Incorrect_Warn.Location = new System.Drawing.Point(6, 251);
+            this.Incorrect_Warn.Location = new System.Drawing.Point(101, 230);
             this.Incorrect_Warn.Name = "Incorrect_Warn";
-            this.Incorrect_Warn.Size = new System.Drawing.Size(10, 13);
+            this.Incorrect_Warn.Size = new System.Drawing.Size(194, 13);
             this.Incorrect_Warn.TabIndex = 12;
-            this.Incorrect_Warn.Text = " ";
+            this.Incorrect_Warn.Text = " That is not a valid garage configuration";
             this.Incorrect_Warn.Visible = false;
             // 
             // No_Doors
@@ -158,30 +204,9 @@
             this.label5.TabIndex = 10;
             this.label5.Text = "Num Doors:";
             // 
-            // Check_Btn
-            // 
-            this.Check_Btn.Location = new System.Drawing.Point(26, 5);
-            this.Check_Btn.Name = "Check_Btn";
-            this.Check_Btn.Size = new System.Drawing.Size(75, 23);
-            this.Check_Btn.TabIndex = 14;
-            this.Check_Btn.Text = "Check";
-            this.Check_Btn.UseVisualStyleBackColor = true;
-            this.Check_Btn.Click += new System.EventHandler(this.Check_Btn_Click_1);
-            // 
-            // Incorrect_Info_Lab1
-            // 
-            this.Incorrect_Info_Lab1.AutoSize = true;
-            this.Incorrect_Info_Lab1.ForeColor = System.Drawing.Color.Crimson;
-            this.Incorrect_Info_Lab1.Location = new System.Drawing.Point(23, 45);
-            this.Incorrect_Info_Lab1.Name = "Incorrect_Info_Lab1";
-            this.Incorrect_Info_Lab1.Size = new System.Drawing.Size(128, 13);
-            this.Incorrect_Info_Lab1.TabIndex = 13;
-            this.Incorrect_Info_Lab1.Text = "Some of the info provided";
-            this.Incorrect_Info_Lab1.Visible = false;
-            // 
             // Create_Btn
             // 
-            this.Create_Btn.Location = new System.Drawing.Point(6, 225);
+            this.Create_Btn.Location = new System.Drawing.Point(9, 225);
             this.Create_Btn.Name = "Create_Btn";
             this.Create_Btn.Size = new System.Drawing.Size(75, 23);
             this.Create_Btn.TabIndex = 8;
@@ -304,31 +329,6 @@
             this.File_Err.Text = "File Couldn\'t be found";
             this.File_Err.Visible = false;
             // 
-            // Doors_In_Group
-            // 
-            this.Doors_In_Group.AutoScroll = true;
-            this.Doors_In_Group.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Doors_In_Group.Controls.Add(this.Check_Btn);
-            this.Doors_In_Group.Controls.Add(this.Incorrect_Info_Label2);
-            this.Doors_In_Group.Controls.Add(this.Incorrect_Info_Lab1);
-            this.Doors_In_Group.Location = new System.Drawing.Point(339, 19);
-            this.Doors_In_Group.Name = "Doors_In_Group";
-            this.Doors_In_Group.Size = new System.Drawing.Size(255, 401);
-            this.Doors_In_Group.TabIndex = 14;
-            this.Doors_In_Group.Tag = "";
-            this.Doors_In_Group.Visible = false;
-            // 
-            // Incorrect_Info_Label2
-            // 
-            this.Incorrect_Info_Label2.AutoSize = true;
-            this.Incorrect_Info_Label2.ForeColor = System.Drawing.Color.Crimson;
-            this.Incorrect_Info_Label2.Location = new System.Drawing.Point(23, 64);
-            this.Incorrect_Info_Label2.Name = "Incorrect_Info_Label2";
-            this.Incorrect_Info_Label2.Size = new System.Drawing.Size(129, 13);
-            this.Incorrect_Info_Label2.TabIndex = 15;
-            this.Incorrect_Info_Label2.Text = "is not in the correct format";
-            this.Incorrect_Info_Label2.Visible = false;
-            // 
             // LoadMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -342,10 +342,10 @@
             this.groupBox1.ResumeLayout(false);
             this.New_Inputs.ResumeLayout(false);
             this.New_Inputs.PerformLayout();
-            this.Load_File_Box.ResumeLayout(false);
-            this.Load_File_Box.PerformLayout();
             this.Doors_In_Group.ResumeLayout(false);
             this.Doors_In_Group.PerformLayout();
+            this.Load_File_Box.ResumeLayout(false);
+            this.Load_File_Box.PerformLayout();
             this.ResumeLayout(false);
 
         }

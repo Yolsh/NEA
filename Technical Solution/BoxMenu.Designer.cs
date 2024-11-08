@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.Add_Box_Group = new System.Windows.Forms.GroupBox();
+            this.RemoveBox = new System.Windows.Forms.Button();
             this.Err_Lbl = new System.Windows.Forms.Label();
             this.Edit_Btn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -43,11 +44,10 @@
             this.Length_Txt = new System.Windows.Forms.TextBox();
             this.Weight_Txt = new System.Windows.Forms.TextBox();
             this.Name_Txt = new System.Windows.Forms.TextBox();
-            this.ContentsList = new System.Windows.Forms.GroupBox();
             this.AddContentsBox = new System.Windows.Forms.GroupBox();
-            this.AddContBtn = new System.Windows.Forms.Button();
             this.AddContTxt = new System.Windows.Forms.TextBox();
-            this.RemoveBox = new System.Windows.Forms.Button();
+            this.AddContBtn = new System.Windows.Forms.Button();
+            this.ContentsList = new System.Windows.Forms.Panel();
             this.Add_Box_Group.SuspendLayout();
             this.AddContentsBox.SuspendLayout();
             this.SuspendLayout();
@@ -75,6 +75,16 @@
             this.Add_Box_Group.TabIndex = 3;
             this.Add_Box_Group.TabStop = false;
             this.Add_Box_Group.Text = "Edit Box Data";
+            // 
+            // RemoveBox
+            // 
+            this.RemoveBox.Location = new System.Drawing.Point(175, 165);
+            this.RemoveBox.Name = "RemoveBox";
+            this.RemoveBox.Size = new System.Drawing.Size(62, 23);
+            this.RemoveBox.TabIndex = 14;
+            this.RemoveBox.Text = "Delete";
+            this.RemoveBox.UseVisualStyleBackColor = true;
+            this.RemoveBox.Click += new System.EventHandler(this.RemoveBox_Click);
             // 
             // Err_Lbl
             // 
@@ -197,15 +207,6 @@
             this.Name_Txt.Size = new System.Drawing.Size(100, 20);
             this.Name_Txt.TabIndex = 0;
             // 
-            // ContentsList
-            // 
-            this.ContentsList.Location = new System.Drawing.Point(329, 12);
-            this.ContentsList.Name = "ContentsList";
-            this.ContentsList.Size = new System.Drawing.Size(179, 283);
-            this.ContentsList.TabIndex = 4;
-            this.ContentsList.TabStop = false;
-            this.ContentsList.Text = "List of Box Contents";
-            // 
             // AddContentsBox
             // 
             this.AddContentsBox.Controls.Add(this.AddContTxt);
@@ -217,6 +218,13 @@
             this.AddContentsBox.TabStop = false;
             this.AddContentsBox.Text = "Add New Contents";
             // 
+            // AddContTxt
+            // 
+            this.AddContTxt.Location = new System.Drawing.Point(6, 34);
+            this.AddContTxt.Name = "AddContTxt";
+            this.AddContTxt.Size = new System.Drawing.Size(218, 20);
+            this.AddContTxt.TabIndex = 1;
+            // 
             // AddContBtn
             // 
             this.AddContBtn.Location = new System.Drawing.Point(230, 34);
@@ -227,30 +235,22 @@
             this.AddContBtn.UseVisualStyleBackColor = true;
             this.AddContBtn.Click += new System.EventHandler(this.AddContBtn_Click);
             // 
-            // AddContTxt
+            // ContentsList
             // 
-            this.AddContTxt.Location = new System.Drawing.Point(6, 34);
-            this.AddContTxt.Name = "AddContTxt";
-            this.AddContTxt.Size = new System.Drawing.Size(218, 20);
-            this.AddContTxt.TabIndex = 1;
-            // 
-            // RemoveBox
-            // 
-            this.RemoveBox.Location = new System.Drawing.Point(175, 165);
-            this.RemoveBox.Name = "RemoveBox";
-            this.RemoveBox.Size = new System.Drawing.Size(62, 23);
-            this.RemoveBox.TabIndex = 14;
-            this.RemoveBox.Text = "Delete";
-            this.RemoveBox.UseVisualStyleBackColor = true;
-            this.RemoveBox.Click += new System.EventHandler(this.RemoveBox_Click);
+            this.ContentsList.AutoScroll = true;
+            this.ContentsList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ContentsList.Location = new System.Drawing.Point(329, 12);
+            this.ContentsList.Name = "ContentsList";
+            this.ContentsList.Size = new System.Drawing.Size(178, 283);
+            this.ContentsList.TabIndex = 6;
             // 
             // BoxMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(519, 307);
-            this.Controls.Add(this.AddContentsBox);
             this.Controls.Add(this.ContentsList);
+            this.Controls.Add(this.AddContentsBox);
             this.Controls.Add(this.Add_Box_Group);
             this.Name = "BoxMenu";
             this.Text = "BoxMenu";
@@ -279,10 +279,10 @@
         private System.Windows.Forms.TextBox Length_Txt;
         private System.Windows.Forms.TextBox Weight_Txt;
         private System.Windows.Forms.TextBox Name_Txt;
-        private System.Windows.Forms.GroupBox ContentsList;
         private System.Windows.Forms.GroupBox AddContentsBox;
         private System.Windows.Forms.TextBox AddContTxt;
         private System.Windows.Forms.Button AddContBtn;
         private System.Windows.Forms.Button RemoveBox;
+        private System.Windows.Forms.Panel ContentsList;
     }
 }

@@ -10,13 +10,35 @@ namespace Technical_Solution
     public class Door
     {
         public int radius;
-        public int arc;
         public Point location;
         public int ID;
-        public Door(int radius, int x, int y, int iD)
+        public Wall wall;
+        public enum Wall
+        {
+            Top,
+            Bottom,
+            Left,
+            Right,
+        }
+        public Door(int radius, int Pos, int iD, Wall w, int Height)
         {
             this.radius = radius;
-            this.location = new Point(x, y);
+            wall = w;
+            switch (w)
+            {
+                case Wall.Top:
+                    this.location = new Point(Pos, 0);
+                    break;
+                case Wall.Bottom:
+                    this.location = new Point(Pos, Height);
+                    break;
+                case Wall.Left:
+                    this.location = new Point(0, Pos);
+                    break;
+                case Wall.Right:
+                    this.location = new Point(Height, Pos);
+                    break;
+            }
             ID = iD;
         }
     }

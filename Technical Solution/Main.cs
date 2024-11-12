@@ -238,7 +238,7 @@ namespace Technical_Solution
                     DoorPane Pan = new DoorPane(door);
                     Pan.Name = $"door_{door.ID}";
                     Pan.BackColor = Color.Black;
-                    if (door.location.Y == 0 || door.location.Y == garage.Width) Pan.Size = new Size((int)Math.Round(door.radius * Scale), 4);
+                    if (door.wall == Door.Wall.Top || door.wall == Door.Wall.Bottom) Pan.Size = new Size((int)Math.Round(door.radius * Scale), 4);
                     else Pan.Size = new Size(4, (int)Math.Round(door.radius * Scale));
                     if (door.location.Y == garage.Width) Pan.Location = new Point((int)Math.Round(door.location.X * Scale), (int)Math.Round(door.location.Y * Scale) - 4);
                     else if (door.location.X == garage.Length) Pan.Location = new Point((int)Math.Round(door.location.X * Scale) - 4, (int)Math.Round(door.location.Y * Scale));

@@ -27,7 +27,7 @@ namespace Technical_Solution
         public int BoxCount;
         public int doorCount;
 
-        public Garage(int dc, int bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int x, int y)
+        public Garage(int dc, int bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int dist, Door.Wall wall)
         {
             Width = inWidth;
             Length = inLength;
@@ -37,12 +37,14 @@ namespace Technical_Solution
             Name = inName;
             Boxes = new List<Box>();
             floorplan = new int[Width, Length];
-            doors = new List<Door>{new Door(rad, x, y, doorCount)};
+            doors = new List<Door>{new Door(rad, dist, doorCount, wall, this.Width)};
+            doorCount++;
         }
 
-        public void AddDoor(int rad, int x, int y)
+        public void AddDoor(int rad, int dist, Door.Wall wall)
         {
-            doors.Add(new Door(rad, x, y, doorCount));
+            doors.Add(new Door(rad, dist, doorCount, wall, this.Width));
+            doorCount++;
         }
 
         public Garage AddBox(Box b, Point Pos)

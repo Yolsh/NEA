@@ -31,7 +31,6 @@ namespace Technical_Solution
         private void InitializeComponent()
         {
             this.FloorView = new System.Windows.Forms.GroupBox();
-            this.Debug = new System.Windows.Forms.Label();
             this.Box_Queue_Group = new System.Windows.Forms.GroupBox();
             this.Add_Box_Group = new System.Windows.Forms.GroupBox();
             this.Err_Lbl = new System.Windows.Forms.Label();
@@ -64,7 +63,6 @@ namespace Technical_Solution
             this.SearchBar = new System.Windows.Forms.TextBox();
             this.ClearGB = new System.Windows.Forms.GroupBox();
             this.ClearQueueButton = new System.Windows.Forms.Button();
-            this.FloorView.SuspendLayout();
             this.Add_Box_Group.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             this.OrganBox.SuspendLayout();
@@ -74,23 +72,12 @@ namespace Technical_Solution
             // 
             // FloorView
             // 
-            this.FloorView.Controls.Add(this.Debug);
             this.FloorView.Location = new System.Drawing.Point(12, 27);
             this.FloorView.Name = "FloorView";
             this.FloorView.Size = new System.Drawing.Size(1205, 597);
             this.FloorView.TabIndex = 0;
             this.FloorView.TabStop = false;
             this.FloorView.Text = "Floorplan";
-            // 
-            // Debug
-            // 
-            this.Debug.AutoSize = true;
-            this.Debug.Location = new System.Drawing.Point(5, 559);
-            this.Debug.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.Debug.Name = "Debug";
-            this.Debug.Size = new System.Drawing.Size(35, 13);
-            this.Debug.TabIndex = 5;
-            this.Debug.Text = "label6";
             // 
             // Box_Queue_Group
             // 
@@ -159,18 +146,18 @@ namespace Technical_Solution
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 100);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 13);
+            this.label4.Size = new System.Drawing.Size(61, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Width:";
+            this.label4.Text = "Width (cm):";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 74);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
+            this.label3.Size = new System.Drawing.Size(66, 13);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Length:";
+            this.label3.Text = "Length (cm):";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label2
@@ -178,9 +165,9 @@ namespace Technical_Solution
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 48);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Weight:";
+            this.label2.Text = "Weight (kg):";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
@@ -426,8 +413,6 @@ namespace Technical_Solution
             this.Name = "Main";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FloorView.ResumeLayout(false);
-            this.FloorView.PerformLayout();
             this.Add_Box_Group.ResumeLayout(false);
             this.Add_Box_Group.PerformLayout();
             this.MenuStrip.ResumeLayout(false);
@@ -468,7 +453,6 @@ namespace Technical_Solution
         private GroupBox OrganBox;
         private CheckBox IncBoxQueueCheck;
         private Button OrgGarageBtn;
-        private Label Debug;
         private GroupBox SearchGroupBox;
         private TextBox SearchBar;
         private Label label6;

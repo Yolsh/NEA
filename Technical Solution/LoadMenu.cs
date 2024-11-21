@@ -123,6 +123,8 @@ namespace Technical_Solution
         private void CreateDoorForm(int numDoors)
         {
             List<GroupBox> gbs = new List<GroupBox>();
+            string[] existingGbs = Doors_In_Group.Controls.OfType<GroupBox>().Select(x => x.Name).ToArray();
+            foreach (string key in existingGbs) Doors_In_Group.Controls.RemoveByKey(key);
 
             for (int i = 0; i < numDoors; i++)
             {

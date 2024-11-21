@@ -282,7 +282,7 @@ namespace Technical_Solution
 
                 if (weight != 0 && BoxSize.Width > 0 && BoxSize.Height > 0 && BoxSize.Width < garage.Length && BoxSize.Height < garage.Width)
                 {
-                    Box NewBox = new Box(Box_Queue.Count() + garage.BoxCount, Name_Txt.Text, weight, BoxSize, garage.bufferWidth, Col_Pan.BackColor);
+                    Box NewBox = new Box(garage.BoxCount, Name_Txt.Text, weight, BoxSize, garage.bufferWidth, Col_Pan.BackColor);
                     Box_Queue.Add(NewBox);
                     DrawQueue();
                 }
@@ -445,7 +445,7 @@ namespace Technical_Solution
             SearchError.Visible = false;
             if (FloorView.Controls.ContainsKey("Floor"))
             {
-                List<int> BIDs = garage.SearchBoxes(SearchBar.Text);
+                List<ulong> BIDs = garage.SearchBoxes(SearchBar.Text);
                 Panel Floor = FloorView.Controls["Floor"] as Panel;
                 if (BIDs.Count() != 0)
                 {

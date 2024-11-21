@@ -24,10 +24,10 @@ namespace Technical_Solution
         public int Length;
         public int bufferWidth;
         public string Name;
-        public int BoxCount;
+        public ulong BoxCount;
         public int doorCount;
 
-        public Garage(int dc, int bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int dist, Door.Wall wall)
+        public Garage(int dc, ulong bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int dist, Door.Wall wall)
         {
             Width = inWidth;
             Length = inLength;
@@ -51,7 +51,7 @@ namespace Technical_Solution
         {
             b.Position = Pos;
             Boxes.Add(b);
-            BoxCount = Boxes.Count();
+            BoxCount++;
             return this;
         }
 
@@ -154,9 +154,9 @@ namespace Technical_Solution
             floorplan = NewFloorplan;
         }
 
-        public List<int> SearchBoxes(string item)
+        public List<ulong> SearchBoxes(string item)
         {
-            List<int> found = new List<int>();
+            List<ulong> found = new List<ulong>();
             foreach (Box b in Boxes)
             {
                 foreach (string S in b.Contents)

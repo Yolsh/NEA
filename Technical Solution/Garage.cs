@@ -37,13 +37,20 @@ namespace Technical_Solution
             Name = inName;
             Boxes = new List<Box>();
             floorplan = new int[Width, Length];
-            doors = new List<Door>{new Door(rad, dist, doorCount, wall, this.Width)};
+            doors = new List<Door>{new Door(rad, dist, doorCount, wall)};
             doorCount++;
         }
 
         public void AddDoor(int rad, int dist, Door.Wall wall)
         {
-            doors.Add(new Door(rad, dist, doorCount, wall, this.Width));
+            foreach (Door d in doors)
+            {
+                if (d.wall == wall && ((d.distance > dist && d.distance < rad) || (dist > d.distance && dist < d.radius)))
+                {
+                    throw new IncorrectPlacementException();
+                }
+            }
+            doors.Add(new Door(rad, dist, doorCount, wall));
             doorCount++;
         }
 

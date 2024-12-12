@@ -19,7 +19,6 @@ namespace Technical_Solution
     {
         public List<Box> Boxes;
         public List<Door> doors;
-        private int[,] floorplan;
         public int Width;
         public int Length;
         public int bufferWidth;
@@ -36,7 +35,6 @@ namespace Technical_Solution
             doorCount = dc;
             Name = inName;
             Boxes = new List<Box>();
-            floorplan = new int[Width, Length];
             doors = new List<Door>{new Door(rad, dist, doorCount, wall)};
             doorCount++;
         }
@@ -142,23 +140,6 @@ namespace Technical_Solution
                 SortBoxList(BoxList, midpoint + 1, end);
             }
             Merger(BoxList, start, midpoint, end);
-        }
-
-        public void UpdateFloor()
-        {
-            int[,] NewFloorplan = new int[Width, Length];
-            foreach (Square S in Boxes)
-            {
-                for (int y = S.Position.Y-1; y < S.Position.Y + S.Size.Height-1; y++)
-                {
-                    for (int x = S.Position.X-1; x < S.Position.X + S.Size.Width-1; x++)
-                    {
-                        if (S is BoxBuffer) NewFloorplan[y, x] = 1;
-                        else if (S is Box) NewFloorplan[y, x] = 2;
-                    }
-                }
-            }
-            floorplan = NewFloorplan;
         }
 
         public List<ulong> SearchBoxes(string item)

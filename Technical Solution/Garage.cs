@@ -24,10 +24,10 @@ namespace Technical_Solution
         public int Length;
         public int bufferWidth;
         public string Name;
-        public ulong BoxCount;
+        public int BoxCount;
         public int doorCount;
 
-        public Garage(int dc, ulong bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int dist, Door.Wall wall)
+        public Garage(int dc, int bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int x, int y)
         {
             Width = inWidth;
             Length = inLength;
@@ -37,21 +37,23 @@ namespace Technical_Solution
             Name = inName;
             Boxes = new List<Box>();
             floorplan = new int[Width, Length];
-            doors = new List<Door>{new Door(rad, dist, doorCount, wall, this.Width)};
-            doorCount++;
+            doors = new List<Door>{new Door(rad, x, y, doorCount)};
         }
 
-        public void AddDoor(int rad, int dist, Door.Wall wall)
+        public void AddDoor(int rad, int x, int y)
         {
-            doors.Add(new Door(rad, dist, doorCount, wall, this.Width));
-            doorCount++;
+            foreach (Door d in doors)
+            {
+                if d.location ==
+            }
+            doors.Add(new Door(rad, x, y, doorCount));
         }
 
         public Garage AddBox(Box b, Point Pos)
         {
             b.Position = Pos;
             Boxes.Add(b);
-            BoxCount++;
+            BoxCount = Boxes.Count();
             return this;
         }
 
@@ -154,17 +156,16 @@ namespace Technical_Solution
             floorplan = NewFloorplan;
         }
 
-        public List<ulong> SearchBoxes(string item)
+        public int SearchBoxes(string item)
         {
-            List<ulong> found = new List<ulong>();
             foreach (Box b in Boxes)
             {
                 foreach (string S in b.Contents)
                 {
-                    if (Regex.Replace(item, "\\s", "").ToUpper() == Regex.Replace(S, "\\s", "").ToUpper()) found.Add(b.Boxid);
+                    if (Regex.Replace(item, "\\s", "").ToUpper() == Regex.Replace(S, "\\s", "").ToUpper()) return b.Boxid;
                 }
             }
-            return found;
+            return -1;
         }
     }
 }

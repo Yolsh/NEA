@@ -240,9 +240,21 @@ namespace Technical_Solution
                     Pan.BackColor = Color.Black;
                     if (door.wall == Door.Wall.Top || door.wall == Door.Wall.Bottom) Pan.Size = new Size((int)Math.Round(door.radius * Scale), 4);
                     else Pan.Size = new Size(4, (int)Math.Round(door.radius * Scale));
-                    if (door.location.Y == garage.Width) Pan.Location = new Point((int)Math.Round(door.location.X * Scale), (int)Math.Round(door.location.Y * Scale) - 4);
-                    else if (door.location.X == garage.Length) Pan.Location = new Point((int)Math.Round(door.location.X * Scale) - 4, (int)Math.Round(door.location.Y * Scale));
-                    else Pan.Location = new Point((int)Math.Round(door.location.X * Scale), (int)Math.Round(door.location.Y * Scale));
+                    switch (door.wall)
+                    {
+                        case Door.Wall.Top:
+                            Pan.Location = new Point((int)Math.Round(door.distance * Scale), 0);
+                            break;
+                        case Door.Wall.Bottom:
+                            Pan.Location = new Point((int)Math.Round(door.distance * Scale), (int)Math.Round(garage.Width * Scale) - 4);
+                            break;
+                        case Door.Wall.Left:
+                            Pan.Location = new Point(0, (int)Math.Round(door.distance * Scale));
+                            break;
+                        case Door.Wall.Right:
+                            Pan.Location = new Point((int)Math.Round(garage.Length * Scale) - 4, (int)Math.Round(door.distance * Scale));
+                            break;
+                    }
                     Floor.Controls.Add(Pan);
                     Pan.BringToFront();
                 }

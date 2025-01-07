@@ -98,17 +98,47 @@ namespace Technical_Solution
 
                 if (count == 0)
                 {
-                    if (DoorVals[2] == 0) NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], Door.Wall.Top);
-                    else if (DoorVals[2] == 1) NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], Door.Wall.Bottom);
-                    else if (DoorVals[2] == 2) NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], Door.Wall.Left);
-                    else if (DoorVals[2] == 3) NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], Door.Wall.Right);
+                    switch (DoorVals[2])
+                    {
+                        case 0:
+                            NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], Door.Wall.Top);
+                            break;
+                        case 1:
+                            NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], Door.Wall.Bottom);
+                            break;
+                        case 2:
+                            NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], Door.Wall.Left);
+                            break;
+                        case 3:
+                            NewGarage = new Garage(0, 0, GarageName, GLength, GWidth, MinSpacing, DoorVals[0], DoorVals[1], Door.Wall.Right);
+                            break;
+                    }
                 }
                 else
                 {
-                    if (DoorVals[2] == 0) NewGarage.AddDoor(DoorVals[0], DoorVals[1], Door.Wall.Top);
-                    else if (DoorVals[2] == 1) NewGarage.AddDoor(DoorVals[0], DoorVals[1], Door.Wall.Bottom);
-                    else if (DoorVals[2] == 2) NewGarage.AddDoor(DoorVals[0], DoorVals[1], Door.Wall.Left);
-                    else if (DoorVals[2] == 3) NewGarage.AddDoor(DoorVals[0], DoorVals[1], Door.Wall.Right);
+                    try
+                    {
+                        switch (DoorVals[2])
+                        {
+                            case 0:
+                                NewGarage.AddDoor(DoorVals[0], DoorVals[1], Door.Wall.Top);
+                                break;
+                            case 1:
+                                NewGarage.AddDoor(DoorVals[0], DoorVals[1], Door.Wall.Bottom);
+                                break;
+                            case 2:
+                                NewGarage.AddDoor(DoorVals[0], DoorVals[1], Door.Wall.Left);
+                                break;
+                            case 3:
+                                NewGarage.AddDoor(DoorVals[0], DoorVals[1], Door.Wall.Right);
+                                break;
+                        }
+                    }
+                    catch (IncorrectPlacementException)
+                    {
+                        correct = false;
+                        break;
+                    }
                 }
                 count++;
             }

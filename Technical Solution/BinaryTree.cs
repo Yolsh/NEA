@@ -105,8 +105,8 @@ namespace Technical_Solution
             {
                 if (door.wall == Door.Wall.Left || door.wall == Door.Wall.Right)
                 {
-                    if ((door.location.Y > b.Position.Y || door.location.Y < b.Position.Y + b.Size.Height) ||
-                    (door.location.Y + door.radius > b.Position.Y || door.location.Y + door.radius < b.Position.Y + b.Size.Height)) collideDoor = true;
+                    if ((door.distance > b.Position.Y || door.distance < b.Position.Y + b.Size.Height) ||
+                    (door.distance + door.radius > b.Position.Y || door.distance + door.radius < b.Position.Y + b.Size.Height)) collideDoor = true;
                 }
             }
             return collideDoor;
@@ -119,8 +119,8 @@ namespace Technical_Solution
             {
                 if (door.wall == Door.Wall.Top || door.wall == Door.Wall.Bottom)
                 {
-                    if ((door.location.X > b.Position.X || door.location.X < b.Position.X + b.Size.Width) ||
-                    (door.location.X + door.radius > b.Position.X || door.location.X + door.radius < b.Position.X + b.Size.Width)) collideDoor = true;
+                    if ((door.distance > b.Position.X || door.distance < b.Position.X + b.Size.Width) ||
+                    (door.distance + door.radius > b.Position.X || door.distance + door.radius < b.Position.X + b.Size.Width)) collideDoor = true;
                 }
             }
             return collideDoor;

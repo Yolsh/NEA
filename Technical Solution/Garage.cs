@@ -19,15 +19,14 @@ namespace Technical_Solution
     {
         public List<Box> Boxes;
         public List<Door> doors;
-        private int[,] floorplan;
         public int Width;
         public int Length;
         public int bufferWidth;
         public string Name;
-        public int BoxCount;
+        public ulong BoxCount;
         public int doorCount;
 
-        public Garage(int dc, int bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int x, int y)
+        public Garage(int dc, ulong bc, string inName, int inLength, int inWidth, int inBufferWidth, int rad, int dist, Door.Wall wall)
         {
             Width = inWidth;
             Length = inLength;
@@ -36,24 +35,28 @@ namespace Technical_Solution
             doorCount = dc;
             Name = inName;
             Boxes = new List<Box>();
-            floorplan = new int[Width, Length];
-            doors = new List<Door>{new Door(rad, x, y, doorCount)};
+            doors = new List<Door>{new Door(rad, dist, doorCount, wall)};
+            doorCount++;
         }
 
-        public void AddDoor(int rad, int x, int y)
+        public void AddDoor(int rad, int dist, Door.Wall wall)
         {
             foreach (Door d in doors)
             {
-                if d.location ==
+                if (d.wall == wall && ((d.distance > dist && d.distance < rad) || (dist > d.distance && dist < d.radius)))
+                {
+                    throw new IncorrectPlacementException();
+                }
             }
-            doors.Add(new Door(rad, x, y, doorCount));
+            doors.Add(new Door(rad, dist, doorCount, wall));
+            doorCount++;
         }
 
         public Garage AddBox(Box b, Point Pos)
         {
             b.Position = Pos;
             Boxes.Add(b);
-            BoxCount = Boxes.Count();
+            BoxCount++;
             return this;
         }
 
@@ -139,33 +142,17 @@ namespace Technical_Solution
             Merger(BoxList, start, midpoint, end);
         }
 
-        public void UpdateFloor()
+        public List<ulong> SearchBoxes(string item)
         {
-            int[,] NewFloorplan = new int[Width, Length];
-            foreach (Square S in Boxes)
-            {
-                for (int y = S.Position.Y-1; y < S.Position.Y + S.Size.Height-1; y++)
-                {
-                    for (int x = S.Position.X-1; x < S.Position.X + S.Size.Width-1; x++)
-                    {
-                        if (S is BoxBuffer) NewFloorplan[y, x] = 1;
-                        else if (S is Box) NewFloorplan[y, x] = 2;
-                    }
-                }
-            }
-            floorplan = NewFloorplan;
-        }
-
-        public int SearchBoxes(string item)
-        {
+            List<ulong> found = new List<ulong>();
             foreach (Box b in Boxes)
             {
                 foreach (string S in b.Contents)
                 {
-                    if (Regex.Replace(item, "\\s", "").ToUpper() == Regex.Replace(S, "\\s", "").ToUpper()) return b.Boxid;
+                    if (Regex.Replace(item, "\\s", "").ToUpper() == Regex.Replace(S, "\\s", "").ToUpper()) found.Add(b.Boxid);
                 }
             }
-            return -1;
+            return found;
         }
     }
 }
